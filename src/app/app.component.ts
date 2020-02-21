@@ -12,6 +12,7 @@ import { FuseSplashScreenService } from '@fuse/services/splash-screen.service';
 import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
 
 import { navigation } from 'app/navigation/navigation';
+import { stockNavigation } from 'app/navigation/stockNavigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy
 {
     fuseConfig: any;
     navigation: any;
-
+    stockNavigation: any;
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -53,9 +54,10 @@ export class AppComponent implements OnInit, OnDestroy
     {
         // Get default navigation
         this.navigation = navigation;
-
+        this.stockNavigation = stockNavigation;
         // Register the navigation to the service
         this._fuseNavigationService.register('main', this.navigation);
+        this._fuseNavigationService.register('stockNavigation', this.stockNavigation);
 
         // Set the main navigation as our current navigation
         this._fuseNavigationService.setCurrentNavigation('main');

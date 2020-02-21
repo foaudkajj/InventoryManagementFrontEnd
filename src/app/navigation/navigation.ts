@@ -4,8 +4,9 @@ export const navigation: FuseNavigation[] = [
     {
         id: "mainpage",
         title: 'Ana Sayfa',
-        icon: 'flaticon2-architecture-and-city',
+        // icon: 'flaticon2-architecture-and-city',
         type: 'item',
+        url: 'usertypeselect'
     },
     {
         id: 'sellingModule',
@@ -28,14 +29,14 @@ export const navigation: FuseNavigation[] = [
                 // icon: 'flaticon-price-tag',
                 url: '/dashboard'
                 // translate: 'MENU.SELLING',
-            },            {
+            }, {
                 id: 'recipt_sale',
                 title: 'İade',
                 type: 'item',
                 // icon: 'flaticon-price-tag',
                 url: '/dashboard'
                 // translate: 'MENU.SELLING',
-            },            {
+            }, {
                 id: 'recipt_sale',
                 title: 'Değişim',
                 type: 'item',

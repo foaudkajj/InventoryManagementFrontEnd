@@ -18,28 +18,22 @@ import { fuseConfig } from 'app/fuse-config';
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
-import { UserTypeSelectingPageModule } from './InventoryApp/user-type-selecting-page/user-type-selecting-page.module';
 
 const appRoutes: Routes = [
-    { path: "", redirectTo: "login", pathMatch: "full" },
+    { path: "", redirectTo: "", pathMatch: "full" },
     {
 
         path: 'login',
         loadChildren: () => import('./InventoryApp/login/login.module').then(m => m.LoginModule),
     },
     {
+        path: '',
+        loadChildren: () => import('./InventoryApp/inventory-app.module').then(m => m.InventoryAppModule),
+    },
+
+    {
         path: 'usertypeselect',
         loadChildren: () => import('./InventoryApp/user-type-selecting-page/user-type-selecting-page.module').then(m => m.UserTypeSelectingPageModule),
-    },
-    {
-
-        path: 'dashboard',
-        children: [
-            {
-                path: "",
-                loadChildren: () => import('./InventoryApp/inventory-app.module').then(m => m.InventoryAppModule),
-            },
-        ]
     }
 ];
 
@@ -71,8 +65,7 @@ const appRoutes: Routes = [
 
         // App modules
         LayoutModule,
-        SampleModule,
-        UserTypeSelectingPageModule
+        SampleModule
     ],
     bootstrap: [
         AppComponent

@@ -1,0 +1,144 @@
+<div id="maidDefenetion" class="page-layout carded fullwidth">
+
+    <!-- TOP BACKGROUND -->
+    <!-- <div class="top-bg accent"></div> -->
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- CONTENT HEADER -->
+        <!-- <div class="header accent p-24" fxLayout="row" fxLayoutAlign="start center">
+            <h2 class="m-0">Full width with content scroll</h2>
+        </div> -->
+        <!-- / CONTENT HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT TOOLBAR -->
+            <div class="toolbar px-24 py-8" style="font-size: x-large;    background-color: #293955;color: white;">
+                <span>{{translate.instant('STOCK_MODULE.MASTER_DATA.TITLE')}}</span>
+            </div>
+            <!-- / CONTENT TOOLBAR -->
+
+            <!-- CONTENT -->
+            <div class="p-24" style="width: 70%;">
+
+                <mat-form-field class="ml-3 width-10">
+                <mat-select placeholder="{{translate.instant('COMMON.PLEASE_SELECT')}}" (selectionChange)="MDChanged($event.value)"
+                        autocomplete="off">
+                        <mat-option *ngFor="let MD of MasterData" [value]="MD.Value">
+                            {{ MD.ViewValue }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+
+                <form *ngIf="MDFormShow" class="kt-form kt-font-bold" [formGroup]="MasterDatasFormGroup"
+                    autocomplete="off">
+                    <ng-container *ngIf="SelectedMDNumber !== 2">
+                        <mat-form-field *ngFor="let field of formFields; let i = index;" class="w-25 ml-3">
+                            <input style="font-size: 20px;" matInput [formControlName]="field[0]"
+                                placeholder="{{FormFieldsPlaceholder[i]}}">
+                        </mat-form-field>
+                    </ng-container>
+
+                    <ng-container *ngIf="SelectedMDNumber === 2">
+                        <mat-form-field class="w-25 ml-3">
+                            <input style="font-size: 20px;" matInput [formControlName]="formFields[0][0]"
+                                placeholder="{{FormFieldsPlaceholder[0]}}">
+                        </mat-form-field>
+
+                        <mat-checkbox style="font-size: 20px;" matInput [formControlName]="formFields[1][0]">
+                            {{FormFieldsPlaceholder[1]}}</mat-checkbox>
+                    </ng-container>
+                    <button class="ml-2" mat-raised-button color="primary" [disabled]='MasterDatasFormGroup.invalid'
+                        (click)="AddRowToMDTable()">Ekle</button>
+                </form>
+
+            </div>
+
+            <div class="example-container mat-elevation-z8">
+                <mat-table [dataSource]="dataSource" matSort>
+
+                    <!-- Şube Kısmı -->
+                    <ng-container>
+                        <ng-container matColumnDef="Id">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let row;"> {{row.Color}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="Name">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                {{translate.instant('STOCK_MODULE.MASTER_DATA.BRANCH_NAME')}}
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let row;"> {{ row.Name }} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="Location">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                {{translate.instant('STOCK_MODULE.MASTER_DATA.BRANCH_ADRES')}}
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let row;"> {{ row.Location }} </mat-cell>
+                        </ng-container>
+                    </ng-container>
+                    <!-- Şube Kısmı -->
+
+                    <!-- Renk Kısmı -->
+                    <ng-container>
+                        <ng-container matColumnDef="ColorName">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                {{translate.instant('STOCK_MODULE.MASTER_DATA.COLORS')}}
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let row;"> {{row.ColorName}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="ShortenColor">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                {{translate.instant('STOCK_MODULE.MASTER_DATA.COLORS_SHORTCODES')}}
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let row;"> {{row.ShortenColor}} </mat-cell>
+                        </ng-container>
+                    </ng-container>
+                    <!-- Rnk Kısmı -->
+
+                    <!-- Ödeme Yöntemi Kısmı -->
+                    <ng-container>
+                        <ng-container matColumnDef="PaymentName">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                {{translate.instant('STOCK_MODULE.MASTER_DATA.PAYMENT_NAME')}}
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let row;"> {{row.PaymentName}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="PaymentType">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                {{translate.instant('STOCK_MODULE.MASTER_DATA.PAYMENT_TYPE')}}
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let row;">
+                                <mat-checkbox [checked]="row.PaymentType" disabled="true"></mat-checkbox>
+                            </mat-cell>
+                        </ng-container>
+                    </ng-container>
+                    <!-- Ödeme Yöntemi Kısmı -->
+
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row;">
+                            <button (click)="DeleteFromMDTable(row)" mat-icon-button color="primary"
+                                matTooltip="Göster">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumnsInGrid"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumnsInGrid;">
+                    </mat-row>
+                </mat-table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+            </div>
+        </div>
+    </div>
+</div>

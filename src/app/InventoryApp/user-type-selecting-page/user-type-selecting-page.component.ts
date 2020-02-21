@@ -45,12 +45,12 @@ export class UserTypeSelectingPageComponent implements OnInit {
 
   SellingScreen() {
     this._fuseNavigationService.setCurrentNavigation('main')
-    this.router.navigateByUrl('dashboard');
+    this.router.navigateByUrl('/');
   }
 
   StockScreen() {
     this._fuseNavigationService.setCurrentNavigation('stockNavigation')
-    this.router.navigateByUrl('dashboard');
+    this.router.navigateByUrl('/');
   }
 
 }

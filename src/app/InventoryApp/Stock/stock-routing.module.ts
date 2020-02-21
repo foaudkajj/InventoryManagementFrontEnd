@@ -3,15 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
-  { path: "", redirectTo: "stock", pathMatch: "full" },
-  {
-    path: 'stock',
-    loadChildren: () => import('./Stock/stock.module').then(m => m.StockModule),
-  },
+  { path: 'anaveri', loadChildren: () => import('./master-data/master-data.module').then(m => m.MasterDataModule) },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class InventoryAppRoutingModule { }
+export class StockRoutingModule { }

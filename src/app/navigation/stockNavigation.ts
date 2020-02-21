@@ -3,7 +3,7 @@ import { FuseNavigation } from '@fuse/types';
 export const stockNavigation: FuseNavigation[] = [
     {
         id: "mainpage",
-        title: 'Ana Sayfa',
+        title: 'Ana Sayfa' ,
         // icon: 'flaticon2-architecture-and-city',
         type: 'item',
         url: 'usertypeselect'

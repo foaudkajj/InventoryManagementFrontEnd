@@ -1,65 +1,41 @@
-// Turkey
+// Arabic
 export const locale = {
-	lang: 'tr',
+	lang: 'ar',
 	data: {
 		TRANSLATOR: {
-			SELECT: 'Dil Seçiniz ...',
+			SELECT: 'اختر اللغة ...',
 		},
 		MENU: {
-			SELLING: 'Satış İşlemleri'
+			SELLING: 'عمليات البيع'
 		},
 		COMMON: {
-			ADD: "Ekle",
-			MALE: "Erkek",
-			FEMALE: "Kadın",
-			SEARCH: "Ara ...",
-			START_DATE: "Başlangıç Tarihi",
-            END_DATE: "Bitiş Tarihi",
-            PLEASE_SELECT: "Lütfen Seçiniz ..."
+			ADD: "إضافة"
 		},
 		SELLING_MODULE: {
 			NORMAL_SALE: {
-				DATE: "Tarih",
-				TOTAL: "Toplam",
-				USER_CODE:"Satıcı Kodu",
-				BRANCH_NAME: "Şube",
-				PRODUCT_NAME: "Ürün",
-				PRODUCT_FULL_CODE: "Ürün Tam Kodu",
-				PRODUCT_CODE: "Ürün Kodu",
-				COLOR_NAME: "Renk",
-				GENDER: "Cinsiyet",
-				PRODUCT_YEAR: "Model Tarihi",
-				SIZE: "Beden",
-				PRODUCT_COUNT: "Adet",
-				PAYMENT_NAME: "Ödeme Yöntemi",
-				PAYMENT_TYPE: "Vade",
-				DEFFEREDED_PAYMENT_COUNT: "Vade Sayısı",
-				RECEIPT: "Dekont No.",
-				AMOUNT: "Miktar",
 				SALES_SCREEN: {
-					SELECT_PAYMENT: "Ödeme Seçiniz",
-					CASH: "Nakit",
-					BANK_PAYMENT: "Banka Ödemesi",
-					PAYMENT_TYPE: "Ödeme Yötemi",
-					DEFFERED_PAYMENT_COUNT: "Vade",
-					AMOUNT: "Tutar",
-					TOTAL: "Toplam",
-					COMPLETE_PAYMENT: "Ödemeyi Tamamla"
+					SELECT_PAYMENT: "اختر طريقة الدفع",
+					CASH: "دفع نقدي",
+					BANK_PAYMENT: "دفع عن طريق البنك",
+					PAYMENT_TYPE: "طريقة الدفع",
+					DEFFERED_PAYMENT_COUNT: "عدد التقيسط",
+					AMOUNT: "المبلغ",
+					TOTAL: "المجموع",
+					COMPLETE_PAYMENT: "أتمم عملية الدفع"
 				}
 			}
 
 		},
 		STOCK_MODULE: {
 			MASTER_DATA: {
-                TITLE: "Ana Veri",
-				PAYMENT_METHODS: "Ödeme Yöntemleri",
-				COLORS: "Renk",
-				BRANCHES: 'Şube',
-				COLORS_SHORTCODES: "Renk Kısaltması",
-				BRANCH_NAME: "Şube Adı",
-				BRANCH_ADRES: "Adres",
-				PAYMENT_NAME: "Ödeme İsmi",
-				PAYMENT_TYPE: "Vadeli Ödeme İmkanı"
+				PAYMENT_METHODS: "طرق الدفع",
+				COLORS: "الألوان",
+				BRANCHES: "الفروع",
+				COLORS_SHORTCODES: "اختصار اللون",
+				BRANCH_NAME: "اسم الفرع",
+				BRANCH_ADRES: "العنوان",
+				PAYMENT_NAME: "اسم طريقة الدفع",
+				PAYMENT_TYPE: "إمكانية الدفع بالتقسيط"
 			}
 		},
 		AUTH: {

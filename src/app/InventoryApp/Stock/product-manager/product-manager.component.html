@@ -1,0 +1,208 @@
+<div id="maidDefenetion" class="page-layout carded fullwidth">
+
+    <!-- TOP BACKGROUND -->
+    <!-- <div class="top-bg accent"></div> -->
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- CONTENT HEADER -->
+        <!-- <div class="header accent p-24" fxLayout="row" fxLayoutAlign="start center">
+            <h2 class="m-0">Full width with content scroll</h2>
+        </div> -->
+        <!-- / CONTENT HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT TOOLBAR -->
+            <div class="toolbar px-24 py-8" style="font-size: x-large;    background-color: #293955;color: white;">
+                <span>{{translate.instant('STOCK_MODULE.MASTER_DATA.TITLE')}}</span>
+            </div>
+            <!-- / CONTENT TOOLBAR -->
+
+            <!-- CONTENT -->
+            <div class="p-24">
+                <form class="kt-form kt-font-bold" [formGroup]="ProductForm" autocomplete="off">
+                    <mat-form-field class="custom-css" style="width: 15%;">
+                        <input matInput formControlName="ProductName" autocomplete="off" placeholder="Ürün Adı">
+                        <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
+                    </mat-form-field>
+                    <mat-form-field class="ml-8 custom-css">
+                        <input matInput formControlName="Price" autocomplete="off" placeholder="Fiyat">
+                        <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
+                    </mat-form-field>
+                    <mat-form-field class="ml-8 custom-css">
+                        <mat-select formControlName="Gender" autocomplete="off" placeholder="Cinsiyet">
+                            <mat-option *ngFor="let Gender of Genders" [value]="Gender.Value">
+                                {{ Gender.ViewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="ml-8 custom-css">
+                        <input matInput formControlName="ProductYear" autocomplete="off" placeholder="Yıl">
+                        <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
+                    </mat-form-field>
+                    <mat-form-field class="ml-8 custom-css">
+                        <input matInput formControlName="ProductCode" autocomplete="off" placeholder="Ürün Kodu">
+                        <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
+                    </mat-form-field>
+
+
+                    <mat-form-field class="ml-8 custom-css">
+                        <mat-select formControlName="Color" autocomplete="off" placeholder="Renk">
+                            <mat-option *ngFor="let color of colorsList" [value]="color.Id">
+                                {{ color.ColorName }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="ml-8 custom-css">
+                        <input type="number" formControlName="Size" matInput placeholder="Beden">
+                        <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
+                    </mat-form-field>
+
+                    <mat-form-field class="ml-8 custom-css">
+                        <input type="number" formControlName="Count" matInput placeholder="Adet">
+                        <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
+                    </mat-form-field>
+
+                    <mat-form-field class="ml-8 custom-css">
+                        <mat-select formControlName="Branch" autocomplete="off" placeholder="Şube">
+                            <mat-option *ngFor="let branch of branchesList" [value]="branch.Id">
+                                {{ branch.Name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+
+                    <button [disabled]="!ProductForm.valid" class="ml-8" mat-raised-button color="primary"
+                        (click)="AddRow()">Ekle</button>&nbsp;
+                    <button [disabled]="!ProductForm.valid" mat-raised-button color="warn"
+                        (click)="Fill()">Doldur</button>
+                </form>
+
+            </div>
+
+            <div class="example-container mat-elevation-z8">
+                <dx-data-grid id="gridContainer" [(selectedRowKeys)]="selectedProducts" [dataSource]="dataSource"
+                    [showBorders]="true" (onToolbarPreparing)="onToolbarPreparing($event)">
+                    <dxi-column dataField="ProductName"></dxi-column>
+                    <dxi-column dataField="ProductFullCode"></dxi-column>
+                    <dxi-column dataField="ColorName"></dxi-column>
+                    <dxi-column dataField="Gender"></dxi-column>
+                    <dxi-column dataField="Price"></dxi-column>
+                    <dxi-column dataField="ProductYear"></dxi-column>
+                    <dxi-column dataField="ProductCode"></dxi-column>
+                    <dxi-column dataField="Size"></dxi-column>
+                    <dxi-column dataField="Count"></dxi-column>
+                    <dxi-column dataField="BranchName"></dxi-column>
+                    <dxi-column [width]="100" [allowFiltering]="false" [allowSorting]="false"
+                        cellTemplate="cellTemplate"></dxi-column>
+                    <dxo-selection [selectAllMode]="'page'" [showCheckBoxesMode]="'onClick'" mode="multiple">
+                    </dxo-selection>
+
+                    <div *dxTemplate="let data of 'cellTemplate'">
+                        <button (click)="DeleteFromColorTB(data.data)" mat-icon-button color="primary"
+                            matTooltip="Göster">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <button (click)="ShowProductTag(data.data)" mat-icon-button color="warn" type="button"
+                            matTooltip="Sil">
+                            <mat-icon>remove_red_eye</mat-icon>
+                        </button>
+                    </div>
+
+                    <div *dxTemplate="let data of 'printButton'">
+                        <button [disabled]="selectedProducts.length == 0" (click)="PrintButton(data)" mat-icon-button
+                            color="primary" type="button" matTooltip="Sil">
+                            <mat-icon>print</mat-icon>
+                        </button>
+                    </div>
+                </dx-data-grid>
+                <!-- <mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="ProductName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Ürün Adı
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row;"> {{row.ProductName}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ProductFullCode">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Tam Kod
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row;"> {{row.ProductFullCode}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ColorName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Renk
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row;" [style.color]="row.ColorName">
+                            {{row.ColorName}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Gender">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Cinsiyet
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row;"> {{getGendere(row.Gender)}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Price">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Fiyat
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row;"> {{row.Price}} TL </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ProductYear">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Yıl
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row;"> {{row.ProductYear}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ProductCode">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Ürün Kodu
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row;"> {{row.ProductCode}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Size">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Beden
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row;"> {{row.Size}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Count">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Adet
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row;"> {{row.Count}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="BranchName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Şube
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row;"> {{row.BranchName}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row;">
+                            <button (click)="DeleteFromColorTB(row)" mat-icon-button color="primary"
+                                matTooltip="Göster">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                            <button (click)="ShowProductTag(row)" mat-icon-button color="warn" type="button"
+                                matTooltip="Sil">
+                                <mat-icon>remove_red_eye</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </mat-row>
+                </mat-table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+            </div>
+            <eticket-template [barcodeValue]="BarcodeObject?.BarcodeValue" [Color]="BarcodeObject?.Color"
+                [Date]="'01.31.2020'" [Size]="BarcodeObject?.Size"></eticket-template>
+        </div>
+    </div>
+</div>

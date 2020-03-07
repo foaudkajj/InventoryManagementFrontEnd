@@ -1,0 +1,43 @@
+@import "src/@fuse/scss/fuse";
+// table {
+//     border-collapse: collapse;
+//     border: 1px solid black;
+//   }
+
+//   td{
+//     font-size: x-small;
+//     font-weight: bold;
+
+
+//   }
+
+.barcode-row {
+    ::ng-deep {
+        &:last-child {
+            width: 3.95cm;
+        }
+    }
+}
+
+p {
+    font-size: smaller;
+    margin: 0px;
+    font-weight: bold;
+}
+
+
+
+//   .div{
+//     // overflow-y: auto;
+//     // overflow-x: auto;
+//     width: 4cm;
+//     height:2cm;
+//   }
+
+//   td{
+//     padding: 0px;
+//   }
+
+//   p{
+//     margin: 0px;
+//   }

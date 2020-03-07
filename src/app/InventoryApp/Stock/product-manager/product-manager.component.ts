@@ -29,7 +29,7 @@ export class ProductManagerComponent implements OnInit {
   displayedColumns = ['ProductName', 'ProductCode', 'ColorName', 'Gender', 'Price', 'ProductYear', 'Size', 'BranchName', 'Count', 'ProductFullCode', 'actions'];
   dataSource: any; //MatTableDataSource<ProductView> = new MatTableDataSource();
   selectedProducts: [] = [];
-  constructor(private fb: FormBuilder, private colorService: ColorsService, private productService: ProductService, private branchesService: BranchesService, public translate: TranslateService) { }
+  constructor(private fb: FormBuilder, private colorService: ColorsService, private productService: ProductService, private branchesService: BranchesService, public _translate: TranslateService) { }
 
   ngOnInit() {
     //   var dataSource = new DevExpress.data.DataSource({

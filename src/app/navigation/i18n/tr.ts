@@ -59,7 +59,18 @@ export const locale = {
 				BRANCH_NAME: "Şube Adı",
 				BRANCH_ADRES: "Adres",
 				PAYMENT_NAME: "Ödeme İsmi",
-				PAYMENT_TYPE: "Vadeli Ödeme İmkanı"
+				PAYMENT_TYPE: "Vadeli Ödeme İmkanı",
+				ADD: "Ekle",
+				FILL: "Doldu",
+				PRODUCT_NAME: "Ürün İsmi",
+				PRODUCT_FULL_CODE: "Ürün barkodu",
+				COLOR_NAME: "Renk",
+				GENDER: "Cinsiyet",
+				PRICE: "Fiyat",
+				PRODUCT_YEAR: "Ürün tarihi",
+				PRODUCT_CODE:"Ürün Kodu",
+				SIZE: "Beden",
+				COUNT: "Adet",
 			}
 		},
 		AUTH: {

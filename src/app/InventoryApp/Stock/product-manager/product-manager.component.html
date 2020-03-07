@@ -18,7 +18,7 @@
 
             <!-- CONTENT TOOLBAR -->
             <div class="toolbar px-24 py-8" style="font-size: x-large;    background-color: #293955;color: white;">
-                <span>{{translate.instant('STOCK_MODULE.MASTER_DATA.TITLE')}}</span>
+                <span>{{_translate.instant('STOCK_MODULE.MASTER_DATA.TITLE')}}</span>
             </div>
             <!-- / CONTENT TOOLBAR -->
 
@@ -77,9 +77,9 @@
 
 
                     <button [disabled]="!ProductForm.valid" class="ml-8" mat-raised-button color="primary"
-                        (click)="AddRow()">Ekle</button>&nbsp;
+                        (click)="AddRow()">{{_translate.instant('STOCK_MODULE.MASTER_DATA.ADD')}}</button>&nbsp;
                     <button [disabled]="!ProductForm.valid" mat-raised-button color="warn"
-                        (click)="Fill()">Doldur</button>
+                        (click)="Fill()">{{_translate.instant('STOCK_MODULE.MASTER_DATA.FILL')}}</button>
                 </form>
 
             </div>
@@ -87,20 +87,31 @@
             <div class="example-container mat-elevation-z8">
                 <dx-data-grid id="gridContainer" [(selectedRowKeys)]="selectedProducts" [dataSource]="dataSource"
                     [showBorders]="true" (onToolbarPreparing)="onToolbarPreparing($event)">
-                    <dxi-column dataField="ProductName"></dxi-column>
-                    <dxi-column dataField="ProductFullCode"></dxi-column>
-                    <dxi-column dataField="ColorName"></dxi-column>
-                    <dxi-column dataField="Gender"></dxi-column>
-                    <dxi-column dataField="Price"></dxi-column>
-                    <dxi-column dataField="ProductYear"></dxi-column>
-                    <dxi-column dataField="ProductCode"></dxi-column>
-                    <dxi-column dataField="Size"></dxi-column>
-                    <dxi-column dataField="Count"></dxi-column>
-                    <dxi-column dataField="BranchName"></dxi-column>
-                    <dxi-column [width]="100" [allowFiltering]="false" [allowSorting]="false"
-                        cellTemplate="cellTemplate"></dxi-column>
+                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_NAME')"
+                        dataField="ProductName"></dxi-column>
+                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_FULL_CODE')"
+                        dataField="ProductFullCode"></dxi-column>
+                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.COLOR_NAME')"
+                        dataField="ColorName"></dxi-column>
+                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.GENDER')" dataField="Gender">
+                    </dxi-column>
+                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRICE')" dataField="Price">
+                    </dxi-column>
+                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_YEAR')"
+                        dataField="ProductYear"></dxi-column>
+                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_CODE')"
+                        dataField="ProductCode"></dxi-column>
+                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.SIZE')" dataField="Size">
+                    </dxi-column>
+                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.COUNT')" dataField="Count">
+                    </dxi-column>
+                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.BRANCH_NAME')"
+                        dataField="BranchName"></dxi-column>
+
                     <dxo-selection [selectAllMode]="'page'" [showCheckBoxesMode]="'onClick'" mode="multiple">
                     </dxo-selection>
+                    <dxi-column [width]="100" [allowFiltering]="false" [allowSorting]="false"
+                        cellTemplate="cellTemplate"></dxi-column>
 
                     <div *dxTemplate="let data of 'cellTemplate'">
                         <button (click)="DeleteFromColorTB(data.data)" mat-icon-button color="primary"

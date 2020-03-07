@@ -28,6 +28,7 @@ export const locale = {
 		},
 		STOCK_MODULE: {
 			MASTER_DATA: {
+				TITLE: "الملومات الرئيسية",
 				PAYMENT_METHODS: "طرق الدفع",
 				COLORS: "الألوان",
 				BRANCHES: "الفروع",
@@ -35,7 +36,19 @@ export const locale = {
 				BRANCH_NAME: "اسم الفرع",
 				BRANCH_ADRES: "العنوان",
 				PAYMENT_NAME: "اسم طريقة الدفع",
-				PAYMENT_TYPE: "إمكانية الدفع بالتقسيط"
+				PAYMENT_TYPE: "إمكانية الدفع بالتقسيط",
+				ADD: "أضف",
+				FILL: "املأ",
+				PRODUCT_NAME: "اسم المنتج",
+				PRODUCT_FULL_CODE: "باركود المنتج",
+				COLOR_NAME: "اللون",
+				GENDER: "الجنس",
+				PRICE: "السعر",
+				PRODUCT_YEAR: "تاريخ المنتج",
+				PRODUCT_CODE:"كود المنتج",
+				SIZE: "القياس",
+				COUNT: "العدد",
+
 			}
 		},
 		AUTH: {

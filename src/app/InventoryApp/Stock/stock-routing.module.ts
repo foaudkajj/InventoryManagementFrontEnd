@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
-  { path: 'anaveri', loadChildren: () => import('./master-data/master-data.module').then(m => m.MasterDataModule) },
+  { path: 'masterdata', loadChildren: () => import('./master-data/master-data.module').then(m => m.MasterDataModule) },
+  { path: 'productmanager', loadChildren: () => import('./product-manager/product-manager.module').then(m => m.ProductManagerModule) },
 ];
 
 @NgModule({

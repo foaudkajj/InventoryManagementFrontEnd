@@ -14,14 +14,16 @@ export const locale = {
 			FEMALE: "Kadın",
 			SEARCH: "Ara ...",
 			START_DATE: "Başlangıç Tarihi",
-            END_DATE: "Bitiş Tarihi",
-            PLEASE_SELECT: "Lütfen Seçiniz ..."
+			END_DATE: "Bitiş Tarihi",
+			PLEASE_SELECT: "Lütfen Seçiniz ..."
 		},
 		SELLING_MODULE: {
 			NORMAL_SALE: {
+				TITLE: "Normal Satış",
+				SELLING_PRICE: "Satış Fiyatı",
 				DATE: "Tarih",
 				TOTAL: "Toplam",
-				USER_CODE:"Satıcı Kodu",
+				USER_CODE: "Satıcı Kodu",
 				BRANCH_NAME: "Şube",
 				PRODUCT_NAME: "Ürün",
 				PRODUCT_FULL_CODE: "Ürün Tam Kodu",
@@ -36,6 +38,14 @@ export const locale = {
 				DEFFEREDED_PAYMENT_COUNT: "Vade Sayısı",
 				RECEIPT: "Dekont No.",
 				AMOUNT: "Miktar",
+				PAYMENT_METHODS: "Ödeme Yöntemleri",
+				COLORS: "Renk",
+				BRANCHES: "Şube",
+				COLORS_SHORTCODES: "Renk Kısaltması",
+				BRANCH_ADRES: "Adres",
+				ADD: "Ekle",
+				PRICE: "Fiyat",
+				SOLED_PRODUCTS: "Satılan Ürünler",
 				SALES_SCREEN: {
 					SELECT_PAYMENT: "Ödeme Seçiniz",
 					CASH: "Nakit",
@@ -51,7 +61,7 @@ export const locale = {
 		},
 		STOCK_MODULE: {
 			MASTER_DATA: {
-                TITLE: "Ana Veri",
+				TITLE: "Ana Veri",
 				PAYMENT_METHODS: "Ödeme Yöntemleri",
 				COLORS: "Renk",
 				BRANCHES: 'Şube',
@@ -68,7 +78,7 @@ export const locale = {
 				GENDER: "Cinsiyet",
 				PRICE: "Fiyat",
 				PRODUCT_YEAR: "Ürün tarihi",
-				PRODUCT_CODE:"Ürün Kodu",
+				PRODUCT_CODE: "Ürün Kodu",
 				SIZE: "Beden",
 				COUNT: "Adet",
 			}

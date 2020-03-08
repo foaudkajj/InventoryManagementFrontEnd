@@ -20,7 +20,7 @@ export const navigation: FuseNavigation[] = [
                 // translate: 'NAV.SAMPLE.TITLE',
                 type: 'item',
                 // icon: 'email',
-                url: '/dashboard'
+                url: '/selling/normalSale'
             },
             {
                 id: 'recipt_sale',

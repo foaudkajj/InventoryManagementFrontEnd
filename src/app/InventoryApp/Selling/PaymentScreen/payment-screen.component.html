@@ -1,0 +1,78 @@
+<div fxLayout="row" fxLayoutAlign="space-around center">
+    <div fxflex="20" fxlayoutalign="center center">
+        <form [formGroup]="PaymentMethodsTableFormGroup" autocomplete="off">
+            <mat-form-field class=" ml-8">
+                <mat-select (selectionChange)="changeValue($event.value)" formControlName="Payment" matInput
+                    [placeholder]="translate.instant('SELLING_MODULE.NORMAL_SALE.SALES_SCREEN.SELECT_PAYMENT')">
+                    <mat-optgroup label="Ödeme Yöntemi">
+                        <mat-option *ngFor="let payment of paymentsMD" [value]="payment">
+                            {{ payment.PaymentName }}
+                        </mat-option>
+                    </mat-optgroup>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="IsDefferedPayment" class=" ml-8">
+                <mat-select placeholder="Vade" formControlName="DefferedPaymentCount" matInput>
+                    <mat-option *ngFor="let number of DefferedPaymentCount" [value]="number">{{number}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class=" ml-8">
+                <input formControlName="Amount" [value]="(data - TotalPaied)" matInput style="font-size: 20px;" type="text" placeholder="Miktar">
+            </mat-form-field>
+
+            <button [disabled]="!PaymentMethodsTableFormGroup.valid" class="ml-8" matInput mat-raised-button
+                color="primary" (click)="AddToPaymentMethodsTable()">{{translate.instant('COMMON.ADD')}}</button>
+        </form>
+    </div>
+    <div fxflex="20" fxlayoutalign="center center">
+        <h1 [ngStyle]="{'color' : (data - TotalPaied) > 0 ? 'red' : 'green'}">{{data - TotalPaied}}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="example-container mat-elevation-z8 ">
+        <mat-table [dataSource]="dataSource" matSort>
+
+            <!-- Şube Kısmı -->
+            <ng-container>
+                <ng-container matColumnDef="PaymentName">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{translate.instant('SELLING_MODULE.NORMAL_SALE.SALES_SCREEN.PAYMENT_TYPE')}}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row;"> {{row.PaymentName}} </mat-cell>
+                    <mat-footer-cell *matFooterCellDef style="font-weight: bold;"> Total </mat-footer-cell>
+                </ng-container>
+                <ng-container matColumnDef="DefferedPaymentCount">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{translate.instant('SELLING_MODULE.NORMAL_SALE.SALES_SCREEN.DEFFERED_PAYMENT_COUNT')}}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row;"> {{ row.DefferedPaymentCount }} </mat-cell>
+                    <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+                </ng-container>
+                <ng-container matColumnDef="Amount">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{translate.instant('SELLING_MODULE.NORMAL_SALE.SALES_SCREEN.AMOUNT')}}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row;"> {{ row.Amount }} </mat-cell>
+                    <mat-footer-cell *matFooterCellDef style="font-weight: bold;"> {{getTotal()}} </mat-footer-cell>
+                </ng-container>
+            </ng-container>
+            <!-- Şube Kısmı -->
+
+            <mat-header-row *matHeaderRowDef="displayedColumnsInGrid"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumnsInGrid ;">
+            </mat-row>
+            <mat-footer-row *matFooterRowDef="displayedColumnsInGrid; sticky: true"> </mat-footer-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+</div>
+
+<div class="row mt-8">
+    <mat-form-field class=" ml-8">
+        <input [(ngModel)]="ReceiptCode" matInput style="font-size: 20px;" type="text" placeholder="Fiş Kodu">
+    </mat-form-field>
+    <button [disabled]="(data - this.getTotal()) != 0" class=" ml-8" mat-raised-button color="accent"
+        (click)="ClosePopup()">{{translate.instant('SELLING_MODULE.NORMAL_SALE.SALES_SCREEN.COMPLETE_PAYMENT')}}</button>
+</div>

@@ -27,7 +27,6 @@ import { DxBoxModule, DxDataGridModule } from 'devextreme-angular';
     MatSelectModule,
     MatTableModule,
     MatIconModule,
-    MatIconModule,
     MatPaginatorModule,
     ReactiveFormsModule,
     FormsModule,

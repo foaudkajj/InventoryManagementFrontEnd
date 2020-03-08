@@ -85,15 +85,21 @@
             </div>
 
             <div class="example-container mat-elevation-z8">
-                <dx-data-grid id="gridContainer" [(selectedRowKeys)]="selectedProducts" [dataSource]="dataSource"
+                <dx-data-grid #productsGrid [(selectedRowKeys)]="selectedProducts" [dataSource]="dataSource"
                     [showBorders]="true" (onToolbarPreparing)="onToolbarPreparing($event)">
                     <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_NAME')"
                         dataField="ProductName"></dxi-column>
                     <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_FULL_CODE')"
-                        dataField="ProductFullCode"></dxi-column>
+                        dataField="ProductFullCode" [allowEditing]="false"></dxi-column>
                     <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.COLOR_NAME')"
-                        dataField="ColorName"></dxi-column>
-                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.GENDER')" dataField="Gender">
+                        dataField="ColorId">
+                        <dxo-lookup [dataSource]="colorsList" displayExpr="ColorName" valueExpr="Id">
+                        </dxo-lookup>
+                    </dxi-column>
+                    <dxi-column dataType="boolean" [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.GENDER')"
+                        dataField="Gender">
+                        <dxo-lookup [dataSource]="Genders" displayExpr="ViewValue" valueExpr="Value">
+                        </dxo-lookup>
                     </dxi-column>
                     <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRICE')" dataField="Price">
                     </dxi-column>
@@ -107,20 +113,27 @@
                     </dxi-column>
                     <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.BRANCH_NAME')"
                         dataField="BranchName"></dxi-column>
-
-                    <dxo-selection [selectAllMode]="'page'" [showCheckBoxesMode]="'onClick'" mode="multiple">
+                    <dxo-editing mode="form">
+                    </dxo-editing>
+                    <dxo-selection [selectAllMode]="'page'" [showCheckBoxesMode]="'always'" mode="multiple">
                     </dxo-selection>
-                    <dxi-column [width]="100" [allowFiltering]="false" [allowSorting]="false"
-                        cellTemplate="cellTemplate"></dxi-column>
-
+                    <dxi-column [allowFiltering]="false" [formItem]="{visible: false}" [allowEditing]="false"
+                        [allowSorting]="false" cellTemplate="cellTemplate">
+                    </dxi-column>
+                    <dxo-search-panel [visible]="true" [width]="240"
+                        [placeholder]="_translate.instant('STOCK_MODULE.MASTER_DATA.SEARCH')"></dxo-search-panel>
+                    <dxo-filter-row [visible]="true" [applyFilter]="'auto'"></dxo-filter-row>
+                    <dxo-header-filter [visible]="true"></dxo-header-filter>
                     <div *dxTemplate="let data of 'cellTemplate'">
-                        <button (click)="DeleteFromColorTB(data.data)" mat-icon-button color="primary"
-                            matTooltip="Göster">
+                        <button (click)="DeleteFromColorTB(data.data)" mat-icon-button color="warn" matTooltip="Göster">
                             <mat-icon>delete</mat-icon>
                         </button>
-                        <button (click)="ShowProductTag(data.data)" mat-icon-button color="warn" type="button"
+                        <button (click)="ShowProductTag(data.data)" mat-icon-button color="primary" type="button"
                             matTooltip="Sil">
                             <mat-icon>remove_red_eye</mat-icon>
+                        </button>
+                        <button (click)="editRow(data)" mat-icon-button color="primary" type="button" matTooltip="Sil">
+                            <mat-icon>edit</mat-icon>
                         </button>
                     </div>
 
@@ -213,7 +226,7 @@
                 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
             </div>
             <eticket-template [barcodeValue]="BarcodeObject?.BarcodeValue" [Color]="BarcodeObject?.Color"
-                [Date]="'01.31.2020'" [Size]="BarcodeObject?.Size"></eticket-template>
+                [Date]="BarcodeObject.Date" [Price]="BarcodeObject.Price" [Size]="BarcodeObject?.Size"></eticket-template>
         </div>
     </div>
 </div>

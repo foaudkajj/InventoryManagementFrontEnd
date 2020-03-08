@@ -3,6 +3,7 @@ export class Barcode {
     Size: number;
     Date: string;
     Color: string;
+    Price: string;
 
     /**
      *

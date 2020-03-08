@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Product } from 'app/InventoryApp/Models/Product';
 import { map } from 'rxjs/operators';
-import { from, interval, timer } from 'rxjs';
+import { from, timer } from 'rxjs';
 import { ProductView } from 'app/InventoryApp/Models/DTOs/ProductView';
 import html2canvas from 'html2canvas';
 import { Color } from 'app/InventoryApp/Models/Color';
 import { Branch } from 'app/InventoryApp/Models/Branch';
-import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ColorsService } from 'app/InventoryApp/services/Colors.service';
 import { ProductService } from 'app/InventoryApp/services/products.service';
@@ -14,6 +13,9 @@ import { Barcode } from 'app/InventoryApp/Models/DTOs/Barcode';
 import * as jsPDF from 'jspdf';
 import { BranchesService } from 'app/InventoryApp/services/branches.service';
 import { TranslateService } from '@ngx-translate/core';
+import { DxDataGridComponent } from 'devextreme-angular';
+import DataSource from 'devextreme/data/data_source';
+import CustomStore from 'devextreme/data/custom_store';
 
 @Component({
   selector: 'app-product-manager',
@@ -21,13 +23,15 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./product-manager.component.scss']
 })
 export class ProductManagerComponent implements OnInit {
+  @ViewChild('productsGrid') productsGrid: DxDataGridComponent
   BarcodeObject: Barcode = new Barcode();
   ProductForm: FormGroup;
   colorsList: Color[];
   branchesList: Branch[];
-  Genders: any = [{ Value: 0, ViewValue: 'Erkek' }, { Value: 1, ViewValue: 'Kadın' }]
+  Genders: any = [{ Value: false, ViewValue: 'Erkek' }, { Value: true, ViewValue: 'Kadın' }]
   displayedColumns = ['ProductName', 'ProductCode', 'ColorName', 'Gender', 'Price', 'ProductYear', 'Size', 'BranchName', 'Count', 'ProductFullCode', 'actions'];
-  dataSource: any; //MatTableDataSource<ProductView> = new MatTableDataSource();
+  dataSource: DataSource; //MatTableDataSource<ProductView> = new MatTableDataSource();
+  store: CustomStore;
   selectedProducts: [] = [];
   constructor(private fb: FormBuilder, private colorService: ColorsService, private productService: ProductService, private branchesService: BranchesService, public _translate: TranslateService) { }
 
@@ -53,7 +57,23 @@ export class ProductManagerComponent implements OnInit {
   }
 
   filTable() {
-    this.productService.GetProducts().toPromise().then((res: ProductView[]) => this.dataSource = res);
+    this.store = new CustomStore({
+      // key: "Id",
+      load: () => this.productService.GetProducts().toPromise().then((res: ProductView[]) => res),
+      insert: (product) => this.productService.AddProducts(product).toPromise(),
+      update: (key, values) => {
+        let newValue: Product = Object.assign({}, key, values);
+        newValue.ProductFullCode = this.GetProductFullCode(newValue);
+        return this.productService.ModifyProduct(key.Id, Object.assign({}, key, newValue)).toPromise()
+      },
+      remove: (key) => this.productService.DeleteProduct(key).toPromise(),
+      onInserted: () => { this.ProductForm.reset(); this.productsGrid.instance.refresh(); },
+      onRemoved: () => { this.productsGrid.instance.refresh(); }
+    })
+    this.dataSource = new DataSource({
+      store: this.store
+    });
+
   }
   getBranches() {
     this.branchesService.GetBranches().toPromise().then(res => this.branchesList = (res as Branch[]))
@@ -103,6 +123,7 @@ export class ProductManagerComponent implements OnInit {
 
   rows: Product[] = [];
   AddRow() {
+    // this.productsGrid.instance.addRow()
     if (!this.ProductForm.invalid) {
 
       // The next object is created to send to DB
@@ -118,13 +139,16 @@ export class ProductManagerComponent implements OnInit {
         BranchId: this.ProductForm.controls.Branch.value,
         Count: this.ProductForm.controls.Count.value
       }];
-      product[0].ProductFullCode = (product[0].Gender ? "K" : "E") + product[0].ProductYear.slice(product[0].ProductYear.length - 3) + product[0].ProductCode + this.colorsList.find(fi => fi.Id == product[0].ColorId).ShortenColor + product[0].Size;
+      product[0].ProductFullCode = this.GetProductFullCode(product[0]);
+      this.store.insert(product);
 
-
-      this.productService.AddProducts(product).toPromise().finally(() => { this.filTable(); this.ProductForm.reset(); });
+      // this.productService.AddProducts(product).toPromise().finally(() => { this.filTable(); this.ProductForm.reset(); });
     }
 
 
+  }
+  GetProductFullCode(product: Product) {
+    return (product.Gender ? "K" : "E") + product.ProductYear.slice(product.ProductYear.length - 3) + product.ProductCode + this.colorsList.find(fi => fi.Id == product.ColorId).ShortenColor + product.Size;
   }
 
   Fill() {
@@ -144,21 +168,24 @@ export class ProductManagerComponent implements OnInit {
 
 
       const shoes: Product[] = [];
-      // Gender 0 ise Erkek demektir
+      // Gender 1 ise Kadin demektir
       if (shoe.Gender == true) {
-        from([35, 36, 37, 38, 39]).subscribe(size => {
-          let fullCode = "K" + shoe.ProductYear + shoe.ProductCode + shoe.ColorId + size;
+        from([35, 36, 37, 38, 39, 40, 41]).subscribe(size => {
+          shoe.Gender = true;
+          shoe.Size = size;
+          let fullCode = this.GetProductFullCode(shoe);
           shoes.push({
-            ColorId: shoe.ColorId, Gender: true, Price: shoe.Price, ProductCode: shoe.ProductCode, ProductFullCode: fullCode, ProductName: shoe.ProductName, ProductYear: shoe.ProductYear, Size: size, BranchId: shoe.BranchId,
+            ColorId: shoe.ColorId, Gender: shoe.Gender, Price: shoe.Price, ProductCode: shoe.ProductCode, ProductFullCode: fullCode, ProductName: shoe.ProductName, ProductYear: shoe.ProductYear, Size: size, BranchId: shoe.BranchId,
             Count: shoe.Count
           });
         });
       } else {
-        from([40, 41, 42, 43, 44, 45, 46]).pipe(map(size => {
-
-          let fullCode = "E" + shoe.ProductYear + shoe.ProductCode + shoe.ColorId + size;
+        from([39, 40, 41, 42, 43, 44, 45, 46]).pipe(map(size => {
+          shoe.Gender = false;
+          shoe.Size = size;
+          let fullCode = this.GetProductFullCode(shoe);
           shoes.push({
-            ColorId: shoe.ColorId, Gender: false, Price: shoe.Price, ProductCode: shoe.ProductCode, ProductFullCode: fullCode, ProductName: shoe.ProductName, ProductYear: shoe.ProductYear, Size: size, BranchId: shoe.BranchId,
+            ColorId: shoe.ColorId, Gender: shoe.Gender, Price: shoe.Price, ProductCode: shoe.ProductCode, ProductFullCode: fullCode, ProductName: shoe.ProductName, ProductYear: shoe.ProductYear, Size: size, BranchId: shoe.BranchId,
             Count: shoe.Count
           });
         })).subscribe();
@@ -169,7 +196,7 @@ export class ProductManagerComponent implements OnInit {
   }
 
   DeleteFromColorTB(row: ProductView) {
-    this.productService.DeleteProduct(row.Id).toPromise().then(_ => this.filTable());
+    this.store.remove(row.Id);
   }
 
   onToolbarPreparing(e) {
@@ -180,10 +207,9 @@ export class ProductManagerComponent implements OnInit {
   }
 
   async PrintButton() {
-    console.log(this.selectedProducts)
     for (const selectedProduct of this.selectedProducts) {
       await this.ShowProductTag(selectedProduct);
-      console.log(selectedProduct)
+      this.productsGrid.instance.clearSelection();
     }
   }
 
@@ -191,12 +217,18 @@ export class ProductManagerComponent implements OnInit {
   timouted: false;
   async ShowProductTag(row: ProductView) {
     this.BarcodeObject.BarcodeValue = row.ProductFullCode;
-    this.BarcodeObject.Color = row.ColorName;
+    this.BarcodeObject.Color = row.Color.ColorName;
     this.BarcodeObject.Size = row.Size;
+    this.BarcodeObject.Price = row.Price;
+    this.BarcodeObject.Date = Date.now().toString();
 
     await timer(1000).toPromise()
     await this.downloadAsPDF();
 
+  }
+
+  editRow(data) {
+    this.productsGrid.instance.editRow(data.rowIndex);
   }
 
   downloadAsPDF() {

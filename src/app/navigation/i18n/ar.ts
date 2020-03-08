@@ -76,7 +76,7 @@ export const locale = {
 				PRODUCT_CODE: "كود المنتج",
 				SIZE: "القياس",
 				COUNT: "العدد",
-
+				SEARCH: "ابحث ..."
 			}
 		},
 		AUTH: {

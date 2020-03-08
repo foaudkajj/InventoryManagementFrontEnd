@@ -81,6 +81,7 @@ export const locale = {
 				PRODUCT_CODE: "Ürün Kodu",
 				SIZE: "Beden",
 				COUNT: "Adet",
+				SEARCH: "Ara"
 			}
 		},
 		AUTH: {

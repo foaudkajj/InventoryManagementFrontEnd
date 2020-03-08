@@ -10,6 +10,7 @@ export class EticketTemplateComponent implements OnInit {
   @Input() Color: string = "Beyaz";
   @Input() Date: string = "01.30.2020"
   @Input() Size: number = 36;
+  @Input() Price: number = 200;
   constructor() { }
 
   ngOnInit() {

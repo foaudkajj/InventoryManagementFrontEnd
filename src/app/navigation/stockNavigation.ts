@@ -20,7 +20,7 @@ export const stockNavigation: FuseNavigation[] = [
                 // translate: 'NAV.SAMPLE.TITLE',
                 type: 'item',
                 // icon: 'email',
-                url: 'stock//productmanager'
+                url: '/stock/productmanager'
             }
         ]
     },
@@ -29,6 +29,6 @@ export const stockNavigation: FuseNavigation[] = [
         title: 'Ana Veri',
         // translate: 'NAV.APPLICATIONS',
         type: 'item',
-        url: 'stock/masterdata'
+        url: '/stock/masterdata'
     }
 ];

@@ -27,11 +27,11 @@
                     <input matInput style="font-size: 20px;" formControlName="ProductFullCode" matInput
                         placeholder="Ürün Kodu...">
                 </mat-form-field>
-                <mat-form-field class="ml-8" style="width: 40%;">
+                <mat-form-field class="ml-8">
                     <input matInput style="font-size: 20px;" formControlName="SellingPrice" matInput
                         placeholder="Fiyat">
                 </mat-form-field>
-                <button [disabled]="!ProductAndPriceFormGroup.valid" mat-raised-button (click)="AddProduct()"
+                <button class="ml-8" [disabled]="!ProductAndPriceFormGroup.valid" mat-raised-button (click)="AddProduct()"
                     color="primary">Ekle</button>
             </form>
             <mat-form-field class="ml-8 w-50 ">

@@ -20,7 +20,7 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
 
 const appRoutes: Routes = [
-    { path: "", redirectTo: "", pathMatch: "full" },
+    { path: "", redirectTo: "usertypeselect", pathMatch: "full" },
     {
 
         path: 'login',

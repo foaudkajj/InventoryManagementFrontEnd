@@ -20,7 +20,7 @@ export class FuseNavigationService
     private _onNavigationItemUpdated: BehaviorSubject<any>;
     private _onNavigationItemRemoved: BehaviorSubject<any>;
 
-    private _currentNavigationKey: string;
+    public _currentNavigationKey: string;
     private _registry: { [key: string]: any } = {};
 
     /**

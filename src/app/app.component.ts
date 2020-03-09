@@ -19,6 +19,7 @@ import { locale as navigationArabic } from 'app/navigation/i18n/ar';
 
 import * as  trMessages from "devextreme/localization/messages/tr.json";
 import { locale, loadMessages } from "devextreme/localization";
+import { Router, NavigationStart } from '@angular/router';
 
 
 
@@ -54,17 +55,30 @@ export class AppComponent implements OnInit, OnDestroy {
         private _fuseSplashScreenService: FuseSplashScreenService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
-        private _platform: Platform
+        private _platform: Platform,
+        private router: Router
     ) {
         // Get default navigation
         this.navigation = navigation;
         this.stockNavigation = stockNavigation;
         // Register the navigation to the service
-        this._fuseNavigationService.register('main', this.navigation);
+        this._fuseNavigationService.register('sellingNavigation', this.navigation);
         this._fuseNavigationService.register('stockNavigation', this.stockNavigation);
 
-        // Set the main navigation as our current navigation
-        this._fuseNavigationService.setCurrentNavigation('main');
+
+        this.router.events.subscribe((event: any) => {
+            if (event instanceof NavigationStart) {
+                if (event.url.toLowerCase().includes('/stock'))
+                    this._fuseNavigationService.setCurrentNavigation('stockNavigation');
+                else
+                    this._fuseNavigationService.setCurrentNavigation('sellingNavigation');
+            }
+        });
+        // // Set the main navigation as our current navigation
+        // if (this.router.url.toLowerCase().includes('/stock')) {
+        //     this._fuseNavigationService.setCurrentNavigation('stockNavigation');
+        // } else
+        //     this._fuseNavigationService.setCurrentNavigation('sellingNavigation');
 
         // Add languages
         this._translateService.addLangs(['en', 'tr', 'ar']);

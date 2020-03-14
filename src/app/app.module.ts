@@ -18,6 +18,7 @@ import { fuseConfig } from 'app/fuse-config';
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 const appRoutes: Routes = [
     { path: "", redirectTo: "usertypeselect", pathMatch: "full" },
@@ -69,6 +70,10 @@ const appRoutes: Routes = [
     ],
     bootstrap: [
         AppComponent
+    ],
+    providers: [
+        // Prevent 404 prblem
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
     ]
 })
 export class AppModule {

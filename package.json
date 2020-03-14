@@ -63,6 +63,7 @@
         "perfect-scrollbar": "1.4.0",
         "prismjs": "1.19.0",
         "rxjs": "6.5.4",
+        "stream": "0.0.2",
         "tslib": "1.10.0",
         "web-animations-js": "2.3.2",
         "zone.js": "0.10.2"

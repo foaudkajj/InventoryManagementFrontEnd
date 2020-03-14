@@ -9,7 +9,13 @@ export const locale = {
 			SELLING: 'عمليات البيع'
 		},
 		COMMON: {
-			ADD: "إضافة"
+			ADD: "إضافة",
+			MALE: "Erkek",
+			FEMALE: "Kadın",
+			SEARCH: "Ara ...",
+			START_DATE: "Başlangıç Tarihi",
+			END_DATE: "Bitiş Tarihi",
+			PLEASE_SELECT: "Lütfen Seçiniz ..."
 		},
 		SELLING_MODULE: {
 			NORMAL_SALE: {
@@ -40,6 +46,7 @@ export const locale = {
 				ADD: "أضف",
 				FILL: "املأ",
 				PRICE: "السعر",
+				SEARCH_IN_SALES: "ابحث في المبيعات",
 				SOLED_PRODUCTS: "المنتجات المباعة",
 				SALES_SCREEN: {
 					SELECT_PAYMENT: "اختر طريقة الدفع",
@@ -56,7 +63,7 @@ export const locale = {
 		},
 		STOCK_MODULE: {
 			MASTER_DATA: {
-				TITLE: "الملومات الرئيسية",
+				TITLE: "المعلومات الرئيسية",
 				PAYMENT_METHODS: "طرق الدفع",
 				COLORS: "الألوان",
 				BRANCHES: "الفروع",
@@ -76,7 +83,8 @@ export const locale = {
 				PRODUCT_CODE: "كود المنتج",
 				SIZE: "القياس",
 				COUNT: "العدد",
-				SEARCH: "ابحث ..."
+				SEARCH: "ابحث ...",
+				SELLING_PRICE: "سعر المبيع",
 			}
 		},
 		AUTH: {

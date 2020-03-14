@@ -45,6 +45,7 @@ export const locale = {
 				BRANCH_ADRES: "Adres",
 				ADD: "Ekle",
 				PRICE: "Fiyat",
+				SEARCH_IN_SALES: "Satılanlar Ürünlerde Ara",
 				SOLED_PRODUCTS: "Satılan Ürünler",
 				SALES_SCREEN: {
 					SELECT_PAYMENT: "Ödeme Seçiniz",
@@ -81,7 +82,8 @@ export const locale = {
 				PRODUCT_CODE: "Ürün Kodu",
 				SIZE: "Beden",
 				COUNT: "Adet",
-				SEARCH: "Ara"
+				SEARCH: "Ara",
+				SELLING_PRICE: "Satış Fiyatı",
 			}
 		},
 		AUTH: {

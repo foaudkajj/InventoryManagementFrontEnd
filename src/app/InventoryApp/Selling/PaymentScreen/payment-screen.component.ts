@@ -80,4 +80,18 @@ export class PaymentScreenComponent implements OnInit {
     return this.TotalPaied;
   }
 
+  onReceiptCodeKeydownEvent(event) {
+    if (event.keyCode === 32) {
+      event.preventDefault();
+    }
+  }
+
+  onReceiptCodePaste(event) {
+    // Removing Spaces from pasted code
+    let paste = (event.clipboardData || window.Clipboard).getData('text');
+    this.ReceiptCode = paste.replace(/ /g, '');
+    event.preventDefault();
+
+  }
+
 }

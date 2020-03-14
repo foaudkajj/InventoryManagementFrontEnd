@@ -9,8 +9,10 @@ import { NormalSatisService } from 'app/InventoryApp/services/normal-satis.servi
 import { PaymentMethodsTable } from 'app/InventoryApp/Models/DTOs/PaymentMethodsTable';
 import { SalePaymentMethod } from 'app/InventoryApp/Models/DTOs/SalePaymentMethod';
 import { Product } from 'app/InventoryApp/Models/Product';
-import { DxDataGridComponent } from 'devextreme-angular';
+import { DxDataGridComponent, DxTextBoxComponent } from 'devextreme-angular';
 import { PaymentScreenComponent } from '../PaymentScreen/payment-screen.component';
+import TextBox from "devextreme/ui/text_box";
+import { SaleUserBranchProductsDTO } from 'app/InventoryApp/Models/DTOs/SaleUserBranchProductsDTO';
 
 @Component({
   selector: 'app-normal-sale',
@@ -20,17 +22,20 @@ import { PaymentScreenComponent } from '../PaymentScreen/payment-screen.componen
 export class NormalSaleComponent implements OnInit {
   RangeStartDate: Date;
   RangeEndDate: Date;
-
+  Genders: any = [{ Value: false, ViewValue: 'Erkek' }, { Value: true, ViewValue: 'Kadın' }]
   // Here I used Material Table
   ProductsToSellDisplayedColumns = ['ProductName', 'ProductFullCode', 'ProductCode', 'ColorName', 'Gender', 'ProductYear', 'SellingPrice', 'Size', 'BranchName', 'actions'];
   ProductsToSellDataSource: any;
   ProductsToSellTableRows: ProductView[] = [];
   @ViewChild("soledProductsGrid") soledProductsGrid: DxDataGridComponent;
+  paymentDetailText: string;
+  soledProductsDetailsText: DxDataGridComponent;
+
   ProductsToSellTotalPrice: number;
 
   // Here I am using DevExtreme
   displayedColumnsSelledProducts = ['ProductName', 'ProductFullCode', 'ProductCode', 'ColorName', 'Gender', 'ProductYear', 'SellingPrice', 'Size', 'BranchName'];
-  SoledProductsDatasource: any[];
+  SoledProductsDatasource: SaleUserBranchProductsDTO[];
 
   // I am using this to unsubscribe after leaving component
   private unsubscribe: Subscription[] = [];
@@ -70,27 +75,17 @@ export class NormalSaleComponent implements OnInit {
   }
 
   InitlizeSelledProductsDatasource() {
-    this.normalSatisSerice.GetSoledProductsByUserID(1).toPromise().then((res: Product[]) => {
+    this.normalSatisSerice.GetSoledProductsByUserID(1).toPromise().then((res: SaleUserBranchProductsDTO[]) => {
       this.SoledProductsDatasource = res
     });
   }
 
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.ProductsToSellDataSource.filter = filterValue;
-  }
-
-
+  productView: ProductView;
   AddProduct() {
-    this.normalSatisSerice.GetProductDetails(this.ProductAndPriceFormGroup.controls.ProductFullCode.value).toPromise().then((res: ProductView) => {
-      let productView = res;
-      productView.SellingPrice = this.ProductAndPriceFormGroup.controls.SellingPrice.value;
-      productView.TempId = this.ProductsToSellTableId++;
-      this.ProductsToSellTableRows.push(productView);
-      this.AssingDataToProductsToSellTable();
-      this.ProductAndPriceFormGroup.reset();
-    });
+    this.productView.SellingPrice = this.ProductAndPriceFormGroup.controls.SellingPrice.value;
+    this.ProductsToSellTableRows.push(this.productView);
+    this.AssingDataToProductsToSellTable();
+    this.ProductAndPriceFormGroup.reset();
   }
 
   AssingDataToProductsToSellTable() {
@@ -115,17 +110,25 @@ export class NormalSaleComponent implements OnInit {
     });
 
     this.unsubscribe.push(dialogRef.afterClosed().subscribe((result: PaymentMethodsTable[]) => {
-      if (result.length > 0) {
+      if (result?.length > 0) {
+        this.ProductsToSellDataSource = [];
         let PaymentMethodIds: number[] = result.map(value => value.PaymentMethodId);
         let ProductIds: number[] = this.ProductsToSellTableRows.map(value => value.Id);
         let salePaymentMethods: SalePaymentMethod[] = result.map(value => <SalePaymentMethod>{ Amount: value.Amount, DefferedPaymentCount: value.DefferedPaymentCount, PaymentMethodId: value.PaymentMethodId });
         let ProductSellingDto: ProductSellingDto = { Receipt: result[0].Receipt, PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, ProductIds: ProductIds, UserId: 1, SalePaymentMethods: salePaymentMethods };
-        console.log(ProductSellingDto)
         this.normalSatisSerice.SellProducts(ProductSellingDto).toPromise().then(_ => this.InitlizeSelledProductsDatasource());
       }
 
     }));
 
+  }
+
+  productCodeFocusOut() {
+    this.normalSatisSerice.GetProductDetails(this.ProductAndPriceFormGroup.controls.ProductFullCode.value).toPromise().then((res: ProductView) => {
+      this.productView = res;
+      this.ProductAndPriceFormGroup.controls.SellingPrice.setValue(this.productView.SellingPrice);
+      this.productView.TempId = this.ProductsToSellTableId++;
+    });
   }
 
   onToolbarPreparing(e) {
@@ -138,17 +141,43 @@ export class NormalSaleComponent implements OnInit {
         location: "before",
         template: "calendar2"
       },
+      // {
+      //   location: "after",
+      //   widget: "dxTextBox",
+      //   options: {
+      //     icon: "find",
+      //     placeholder: this._translate.instant('SELLING_MODULE.NORMAL_SALE.SEARCH_IN_SALES'),
+      //     onOptionChanged: (event) => {
+      //       this.paymentDetailText = event.value;
+      //       this.soledProductsDetailsText = event.value;
+      //       // this.SoledProductsDatasource.filter(fi => fi.)
+      //     }
+      //   }
+
+      // },
       {
         location: "before",
         widget: "dxButton",
         options: {
           icon: "find",
           onClick: () => {
+            this.soledProductsGrid.searchPanel.text = "Hello"
             this.normalSatisSerice.GetSoledProductsByUserID(1, this.RangeStartDate.toISOString(), this.RangeEndDate.toISOString()).toPromise().then((res) => this.SoledProductsDatasource = res)
           }
         }
       },
     );
+  }
+
+  soledProductsDetailsFilterExpression(filterValue, selectedFilterOperation, target) {
+    let column = this as any;
+    // Implementation for the "between" comparison operator
+    // console.log(column)
+    // console.log(selectedFilterOperation)
+    // console.log(filterValue)
+    // console.log(target)
+    // Invokes the default filtering behavior
+    return column.defaultCalculateFilterExpression(arguments);
   }
 
 }

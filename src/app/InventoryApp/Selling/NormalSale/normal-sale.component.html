@@ -20,23 +20,24 @@
         <!-- / CONTENT TOOLBAR -->
 
         <!-- CONTENT -->
-        <div class="mb-24 p-24" style="background-color: white;" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <div class="mb-24 p-24" style="background-color: white;" fxLayout="column" fxLayoutAlign="start"
+            fxLayout.gt-md="row">
             <form class="kt-form kt-font-bold" style="width: 100%;" [formGroup]="ProductAndPriceFormGroup"
                 autocomplete="off">
                 <mat-form-field class="w-50 ml-8">
-                    <input matInput style="font-size: 20px;" formControlName="ProductFullCode" matInput
-                        placeholder="Ürün Kodu...">
+                    <input (focusout)="productCodeFocusOut()" matInput style="font-size: 20px;"
+                        formControlName="ProductFullCode" matInput placeholder="Ürün Kodu...">
                 </mat-form-field>
                 <mat-form-field class="ml-8">
                     <input matInput style="font-size: 20px;" formControlName="SellingPrice" matInput
                         placeholder="Fiyat">
                 </mat-form-field>
-                <button class="ml-8" [disabled]="!ProductAndPriceFormGroup.valid" mat-raised-button (click)="AddProduct()"
-                    color="primary">Ekle</button>
+                <button class="ml-8" [disabled]="!ProductAndPriceFormGroup.valid" mat-raised-button
+                    (click)="AddProduct()" color="primary">{{_translate.instant('COMMON.ADD')}}</button>
             </form>
-            <mat-form-field class="ml-8 w-50 ">
+            <!-- <mat-form-field class="ml-8 w-50 ">
                 <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtre">
-            </mat-form-field>
+            </mat-form-field> -->
 
             <dx-data-grid id="gridContainer" [dataSource]="ProductsToSellDataSource" [showBorders]="true">
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_NAME')"
@@ -44,10 +45,13 @@
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_FULL_CODE')"
                     dataField="ProductFullCode"></dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.COLOR_NAME')"
-                    dataField="ColorName"></dxi-column>
+                    dataField="Color.ColorName"></dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.GENDER')" dataField="Gender">
+                    <dxo-lookup [dataSource]="Genders" displayExpr="ViewValue" valueExpr="Value">
+                    </dxo-lookup>
                 </dxi-column>
-                <dxi-column [caption]="_translate.instant('SELLINGPRICE')" dataField="Price">
+                <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.SELLING_PRICE')"
+                    dataField="SellingPrice">
                 </dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_YEAR')"
                     dataField="ProductYear"></dxi-column>
@@ -65,6 +69,12 @@
                         <mat-icon>delete</mat-icon>
                     </button>
                 </div>
+
+                <dxo-filter-row [visible]="true"></dxo-filter-row>
+                <dxo-header-filter [visible]="true"></dxo-header-filter>
+                <dxo-search-panel [visible]="true" [placeholder]="_translate.instant('COMMON.SEARCH')">
+                </dxo-search-panel>
+                <dxo-group-panel [visible]="true"></dxo-group-panel>
             </dx-data-grid>
             <button mat-raised-button class="mt-5" [disabled]="ProductsToSellTableRows.length == 0"
                 (click)="openSatisDialog()" color="accent">Satışı Tamamla</button>
@@ -83,7 +93,7 @@
                 keyExpr="Id">
                 <dxo-filter-row [visible]="true"></dxo-filter-row>
                 <dxo-header-filter [visible]="true"></dxo-header-filter>
-                <dxo-search-panel [visible]="true" [width]="240" [placeholder]="_translate.instant('COMMON.SEARCH')">
+                <dxo-search-panel [visible]="true" [placeholder]="_translate.instant('COMMON.SEARCH')">
                 </dxo-search-panel>
                 <dxo-group-panel [visible]="true"></dxo-group-panel>
                 <dxo-selection mode="single"></dxo-selection>
@@ -95,7 +105,9 @@
                     dataField="UserCode"></dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.BRANCH_NAME')"
                     dataField="BranchName"></dxi-column>
-
+                <dxi-column [visible]="false" [calculateFilterExpression]="soledProductsDetailsFilterExpression"
+                    dataField="soledProductDetails">
+                </dxi-column>
                 <div class="option" *dxTemplate="let data of 'calendar'">
                     <dx-date-box width="100%" [(value)]="RangeStartDate"
                         placeholder="{{_translate.instant('COMMON.START_DATE')}}">
@@ -110,9 +122,9 @@
 
                 <div *dxTemplate="let sale of 'detail'">
                     <!--	<div class="master-detail-caption">{{employee.data.FirstName + " " + employee.data.LastName + "'s Tasks:"}}</div>-->
-                    <dx-data-grid [showColumnLines]="false" [showRowLines]="true" [showBorders]="true"
-                        [rowAlternationEnabled]="true" [dataSource]="sale.data.SoledProductDetails" [showBorders]="true"
-                        [columnAutoWidth]="false">
+                    <dx-data-grid #soledProductsDetailsGrid [showColumnLines]="false" [showRowLines]="true"
+                        [showBorders]="true" [rowAlternationEnabled]="true" [dataSource]="sale.data.SoledProductDetails"
+                        [showBorders]="true" [columnAutoWidth]="false">
                         <dxi-column width="auto"
                             [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_NAME')"
                             dataField="ProductName"></dxi-column>
@@ -138,14 +150,18 @@
                         <dxi-column width="auto"
                             [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.BRANCH_NAME')"
                             dataField="BranchName"></dxi-column>
+
                         <div *dxTemplate="let data of 'cellTemplate'">
                             {{data.value ? _translate.instant('COMMON.FEMALE') : _translate.instant('COMMON.MALE')}}
                         </div>
+                        <!-- <dxo-search-panel [text]="soledProductsDetailsText" [visible]="false"
+                            [placeholder]="_translate.instant('COMMON.SEARCH')">
+                        </dxo-search-panel> -->
                     </dx-data-grid>
 
-                    <dx-data-grid [showColumnLines]="false" [showRowLines]="true" [showBorders]="true"
-                        [rowAlternationEnabled]="true" [dataSource]="sale.data.PaymentDetails" [showBorders]="true"
-                        [columnAutoWidth]="false" class="mt-5">
+                    <dx-data-grid #paymentDetailGrid [showColumnLines]="false" [showRowLines]="true"
+                        [showBorders]="true" [rowAlternationEnabled]="true" [dataSource]="sale.data.PaymentDetails"
+                        [showBorders]="true" [columnAutoWidth]="false" class="mt-5">
                         <dxi-column width="auto"
                             [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PAYMENT_NAME')"
                             dataField="PaymentName"></dxi-column>
@@ -157,7 +173,8 @@
                             dataField="Receipt"></dxi-column>
                         <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.AMOUNT')"
                             dataField="Amount"></dxi-column>
-
+                        <!-- <dxo-search-panel [visible]="true" [placeholder]="_translate.instant('COMMON.SEARCH')">
+                        </dxo-search-panel> -->
                     </dx-data-grid>
                 </div>
             </dx-data-grid>

@@ -26,49 +26,62 @@
             <div class="p-24">
                 <form class="kt-form kt-font-bold" [formGroup]="ProductForm" autocomplete="off">
                     <mat-form-field class="custom-css" style="width: 15%;">
-                        <input matInput formControlName="ProductName" autocomplete="off" placeholder="Ürün Adı">
+                        <input matInput formControlName="ProductName" autocomplete="off"
+                            placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_NAME')}}">
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
-                        <input matInput formControlName="Price" autocomplete="off" placeholder="Fiyat">
+                        <input matInput formControlName="Price" autocomplete="off"
+                            placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.PRICE')}}">
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
-                        <mat-select formControlName="Gender" autocomplete="off" placeholder="Cinsiyet">
+                        <input matInput formControlName="SellingPrice" autocomplete="off"
+                            placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.SELLING_PRICE')}}">
+                    </mat-form-field>
+                    <mat-form-field class="ml-8 custom-css">
+                        <mat-select formControlName="Gender" autocomplete="off"
+                            placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.GENDER')}}">
                             <mat-option *ngFor="let Gender of Genders" [value]="Gender.Value">
                                 {{ Gender.ViewValue }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
-                        <input matInput formControlName="ProductYear" autocomplete="off" placeholder="Yıl">
+                        <input matInput formControlName="ProductYear" autocomplete="off"
+                            placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_YEAR')}}">
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
-                        <input matInput formControlName="ProductCode" autocomplete="off" placeholder="Ürün Kodu">
+                        <input matInput formControlName="ProductCode" autocomplete="off"
+                            placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_CODE')}}">
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
 
 
                     <mat-form-field class="ml-8 custom-css">
-                        <mat-select formControlName="Color" autocomplete="off" placeholder="Renk">
+                        <mat-select formControlName="Color" autocomplete="off"
+                            placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.COLOR_NAME')}}">
                             <mat-option *ngFor="let color of colorsList" [value]="color.Id">
                                 {{ color.ColorName }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
-                        <input type="number" formControlName="Size" matInput placeholder="Beden">
+                        <input type="number" formControlName="Size" matInput
+                            placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.SIZE')}}">
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
 
                     <mat-form-field class="ml-8 custom-css">
-                        <input type="number" formControlName="Count" matInput placeholder="Adet">
+                        <input type="number" formControlName="Count" matInput
+                            placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.COUNT')}}">
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
 
                     <mat-form-field class="ml-8 custom-css">
-                        <mat-select formControlName="Branch" autocomplete="off" placeholder="Şube">
+                        <mat-select formControlName="Branch" autocomplete="off"
+                            placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.BRANCH_NAME')}}">
                             <mat-option *ngFor="let branch of branchesList" [value]="branch.Id">
                                 {{ branch.Name }}
                             </mat-option>
@@ -102,6 +115,9 @@
                         </dxo-lookup>
                     </dxi-column>
                     <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRICE')" dataField="Price">
+                    </dxi-column>
+                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.SELLING_PRICE')"
+                        dataField="SellingPrice">
                     </dxi-column>
                     <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_YEAR')"
                         dataField="ProductYear"></dxi-column>
@@ -226,7 +242,8 @@
                 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
             </div>
             <eticket-template [barcodeValue]="BarcodeObject?.BarcodeValue" [Color]="BarcodeObject?.Color"
-                [Date]="BarcodeObject.Date" [Price]="BarcodeObject.Price" [Size]="BarcodeObject?.Size"></eticket-template>
+                [Date]="BarcodeObject.Date" [Price]="BarcodeObject.Price" [Size]="BarcodeObject?.Size">
+            </eticket-template>
         </div>
     </div>
 </div>

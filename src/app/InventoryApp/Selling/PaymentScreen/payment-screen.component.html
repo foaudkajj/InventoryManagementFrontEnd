@@ -19,7 +19,8 @@
             </mat-form-field>
 
             <mat-form-field class=" ml-8">
-                <input formControlName="Amount" [value]="(data - TotalPaied)" matInput style="font-size: 20px;" type="text" placeholder="Miktar">
+                <input formControlName="Amount" [ngModel]="data - TotalPaied" matInput style="font-size: 20px;"
+                    type="text" placeholder="Miktar">
             </mat-form-field>
 
             <button [disabled]="!PaymentMethodsTableFormGroup.valid" class="ml-8" matInput mat-raised-button
@@ -71,8 +72,9 @@
 
 <div class="row mt-8">
     <mat-form-field class=" ml-8">
-        <input [(ngModel)]="ReceiptCode" matInput style="font-size: 20px;" type="text" placeholder="Fiş Kodu">
+        <input (paste)="onReceiptCodePaste($event)" (keydown)=onReceiptCodeKeydownEvent($event)
+            [(ngModel)]="ReceiptCode" matInput style="font-size: 20px;" type="text" placeholder="Fiş Kodu">
     </mat-form-field>
-    <button [disabled]="(data - this.getTotal()) != 0" class=" ml-8" mat-raised-button color="accent"
+    <button [disabled]="dataSource.data.length == 0 || !ReceiptCode " class=" ml-8" mat-raised-button color="accent"
         (click)="ClosePopup()">{{translate.instant('SELLING_MODULE.NORMAL_SALE.SALES_SCREEN.COMPLETE_PAYMENT')}}</button>
 </div>

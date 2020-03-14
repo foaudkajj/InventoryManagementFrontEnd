@@ -29,7 +29,7 @@ export class ProductManagerComponent implements OnInit {
   colorsList: Color[];
   branchesList: Branch[];
   Genders: any = [{ Value: false, ViewValue: 'Erkek' }, { Value: true, ViewValue: 'Kadın' }]
-  displayedColumns = ['ProductName', 'ProductCode', 'ColorName', 'Gender', 'Price', 'ProductYear', 'Size', 'BranchName', 'Count', 'ProductFullCode', 'actions'];
+  displayedColumns = ['ProductName', 'ProductCode', 'ColorName', 'Gender', 'Price', 'SellingPrice', 'ProductYear', 'Size', 'BranchName', 'Count', 'ProductFullCode', 'actions'];
   dataSource: DataSource; //MatTableDataSource<ProductView> = new MatTableDataSource();
   store: CustomStore;
   selectedProducts: [] = [];
@@ -109,6 +109,9 @@ export class ProductManagerComponent implements OnInit {
       Price: ['', Validators.compose([
         Validators.required
       ])],
+      SellingPrice: ['', Validators.compose([
+        Validators.required
+      ])],
       ProductCode: ['', Validators.compose([
         Validators.required,
       ])],
@@ -131,6 +134,7 @@ export class ProductManagerComponent implements OnInit {
         ColorId: this.ProductForm.controls.Color.value,
         Gender: this.ProductForm.controls.Gender.value,
         Price: this.ProductForm.controls.Price.value,
+        SellingPrice: this.ProductForm.controls.SellingPrice.value,
         ProductCode: this.ProductForm.controls.ProductCode.value,
         ProductFullCode: null,
         ProductName: this.ProductForm.controls.ProductName.value,
@@ -157,6 +161,7 @@ export class ProductManagerComponent implements OnInit {
         ColorId: this.ProductForm.controls.Color.value,
         Gender: this.ProductForm.controls.Gender.value,
         Price: this.ProductForm.controls.Price.value,
+        SellingPrice: this.ProductForm.controls.SellingPrice.value,
         ProductCode: this.ProductForm.controls.ProductCode.value,
         ProductFullCode: null,
         ProductName: this.ProductForm.controls.ProductName.value,
@@ -176,7 +181,7 @@ export class ProductManagerComponent implements OnInit {
           let fullCode = this.GetProductFullCode(shoe);
           shoes.push({
             ColorId: shoe.ColorId, Gender: shoe.Gender, Price: shoe.Price, ProductCode: shoe.ProductCode, ProductFullCode: fullCode, ProductName: shoe.ProductName, ProductYear: shoe.ProductYear, Size: size, BranchId: shoe.BranchId,
-            Count: shoe.Count
+            Count: shoe.Count, SellingPrice: shoe.SellingPrice
           });
         });
       } else {
@@ -186,7 +191,7 @@ export class ProductManagerComponent implements OnInit {
           let fullCode = this.GetProductFullCode(shoe);
           shoes.push({
             ColorId: shoe.ColorId, Gender: shoe.Gender, Price: shoe.Price, ProductCode: shoe.ProductCode, ProductFullCode: fullCode, ProductName: shoe.ProductName, ProductYear: shoe.ProductYear, Size: size, BranchId: shoe.BranchId,
-            Count: shoe.Count
+            Count: shoe.Count, SellingPrice: shoe.SellingPrice
           });
         })).subscribe();
       }

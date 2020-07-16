@@ -205,7 +205,7 @@ export class MasterDataComponent implements OnInit {
    // Here we get the data for the selected Master Data and refresh the table
    if (dataObs) {
      dataObs.subscribe(result => {
-       this.dataSource.data = result;
+       this.dataSource.data = result.data;
        // this.MDTable.renderRows();
      })
    } else {

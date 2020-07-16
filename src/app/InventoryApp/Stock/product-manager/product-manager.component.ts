@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DxDataGridComponent } from 'devextreme-angular';
 import DataSource from 'devextreme/data/data_source';
 import CustomStore from 'devextreme/data/custom_store';
+import { createStore } from 'devextreme-aspnet-data-nojquery';
 
 @Component({
   selector: 'app-product-manager',
@@ -57,18 +58,18 @@ export class ProductManagerComponent implements OnInit {
   }
 
   filTable() {
-    this.store = new CustomStore({
+    this.store = createStore({
       // key: "Id",
-      load: () => this.productService.GetProducts().toPromise().then((res: ProductView[]) => res),
-      insert: (product) => this.productService.AddProducts(product).toPromise(),
-      update: (key, values) => {
-        let newValue: Product = Object.assign({}, key, values);
-        newValue.ProductFullCode = this.GetProductFullCode(newValue);
-        return this.productService.ModifyProduct(key.Id, Object.assign({}, key, newValue)).toPromise()
-      },
-      remove: (key) => this.productService.DeleteProduct(key).toPromise(),
-      onInserted: () => { this.ProductForm.reset(); this.productsGrid.instance.refresh(); },
-      onRemoved: () => { this.productsGrid.instance.refresh(); }
+      loadUrl: "https://localhost:44382/api/Products",
+      // insert: (product) => this.productService.AddProducts(product).toPromise(),
+      // update: (key, values) => {
+      //   let newValue: Product = Object.assign({}, key, values);
+      //   newValue.ProductFullCode = this.GetProductFullCode(newValue);
+      //   return this.productService.ModifyProduct(key.Id, Object.assign({}, key, newValue)).toPromise()
+      // },
+      // remove: (key) => this.productService.DeleteProduct(key).toPromise(),
+      // onInserted: () => { this.ProductForm.reset(); this.productsGrid.instance.refresh(); },
+      // onRemoved: () => { this.productsGrid.instance.refresh(); }
     })
     this.dataSource = new DataSource({
       store: this.store
@@ -76,10 +77,10 @@ export class ProductManagerComponent implements OnInit {
 
   }
   getBranches() {
-    this.branchesService.GetBranches().toPromise().then(res => this.branchesList = (res as Branch[]))
+    this.branchesService.GetBranches().toPromise().then(res => this.branchesList = (res.data as Branch[]))
   }
   getColors() {
-    this.colorService.GetColors().toPromise().then(res => this.colorsList = (res as Color[]));
+    this.colorService.GetColors().toPromise().then(res => this.colorsList = (res.data as Color[]));
   }
 
   initLoginForm() {

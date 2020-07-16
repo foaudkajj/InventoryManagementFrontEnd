@@ -98,7 +98,7 @@
             </div>
 
             <div class="example-container mat-elevation-z8">
-                <dx-data-grid #productsGrid [(selectedRowKeys)]="selectedProducts" [dataSource]="dataSource"
+                <dx-data-grid [remoteOperations]="true" #productsGrid [(selectedRowKeys)]="selectedProducts" [dataSource]="dataSource"
                     [showBorders]="true" (onToolbarPreparing)="onToolbarPreparing($event)">
                     <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_NAME')"
                         dataField="ProductName"></dxi-column>
@@ -128,7 +128,10 @@
                     <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.COUNT')" dataField="Count">
                     </dxi-column>
                     <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.BRANCH_NAME')"
-                        dataField="BranchName"></dxi-column>
+                        dataField="BranchId">
+                        <dxo-lookup [dataSource]="branchesList" displayExpr="Location" valueExpr="Id">
+                        </dxo-lookup>
+                    </dxi-column>
                     <dxo-editing mode="form">
                     </dxo-editing>
                     <dxo-selection [selectAllMode]="'page'" [showCheckBoxesMode]="'always'" mode="multiple">

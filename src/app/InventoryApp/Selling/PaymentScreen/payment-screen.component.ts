@@ -36,7 +36,7 @@ export class PaymentScreenComponent implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.paymentMethods.GetPaymentMethods().toPromise().then((res: PaymentMethod[]) => this.paymentsMD = res);
+    this.paymentMethods.GetPaymentMethods().toPromise().then((res: { data: PaymentMethod[] }) => this.paymentsMD = res.data);
 
     this.InitlizeFormTable();
 

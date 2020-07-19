@@ -59,21 +59,14 @@ export class ProductManagerComponent implements OnInit {
 
   filTable() {
     this.store = createStore({
-      // key: "Id",
-      loadUrl: "https://localhost:44382/api/Products",
-      // insert: (product) => this.productService.AddProducts(product).toPromise(),
-      // update: (key, values) => {
-      //   let newValue: Product = Object.assign({}, key, values);
-      //   newValue.ProductFullCode = this.GetProductFullCode(newValue);
-      //   return this.productService.ModifyProduct(key.Id, Object.assign({}, key, newValue)).toPromise()
-      // },
-      // remove: (key) => this.productService.DeleteProduct(key).toPromise(),
-      // onInserted: () => { this.ProductForm.reset(); this.productsGrid.instance.refresh(); },
-      // onRemoved: () => { this.productsGrid.instance.refresh(); }
+      key: "Id",
+      loadUrl: "https://localhost:44382/api/Products/",
+      insertUrl: "https://localhost:44382/api/Products",
+      updateUrl: "https://localhost:44382/api/Products/PutProduct",
+      deleteUrl: "https://localhost:44382/api/Products",
+      onInserted: () => { this.ProductForm.reset(); this.productsGrid.instance.refresh(); },
+      onRemoved: () => { this.productsGrid.instance.refresh(); }
     })
-    this.dataSource = new DataSource({
-      store: this.store
-    });
 
   }
   getBranches() {
@@ -145,8 +138,8 @@ export class ProductManagerComponent implements OnInit {
         Count: this.ProductForm.controls.Count.value
       }];
       product[0].ProductFullCode = this.GetProductFullCode(product[0]);
-      this.store.insert(product);
 
+      this.store.insert(product);
       // this.productService.AddProducts(product).toPromise().finally(() => { this.filTable(); this.ProductForm.reset(); });
     }
 
@@ -158,7 +151,7 @@ export class ProductManagerComponent implements OnInit {
 
   Fill() {
     if (!this.ProductForm.invalid) {
-      let shoe: Product = {
+      let product: Product = {
         ColorId: this.ProductForm.controls.Color.value,
         Gender: this.ProductForm.controls.Gender.value,
         Price: this.ProductForm.controls.Price.value,
@@ -173,31 +166,31 @@ export class ProductManagerComponent implements OnInit {
       };
 
 
-      const shoes: Product[] = [];
+      const products: Product[] = [];
       // Gender 1 ise Kadin demektir
-      if (shoe.Gender == true) {
+      if (product.Gender == true) {
         from([35, 36, 37, 38, 39, 40, 41]).subscribe(size => {
-          shoe.Gender = true;
-          shoe.Size = size;
-          let fullCode = this.GetProductFullCode(shoe);
-          shoes.push({
-            ColorId: shoe.ColorId, Gender: shoe.Gender, Price: shoe.Price, ProductCode: shoe.ProductCode, ProductFullCode: fullCode, ProductName: shoe.ProductName, ProductYear: shoe.ProductYear, Size: size, BranchId: shoe.BranchId,
-            Count: shoe.Count, SellingPrice: shoe.SellingPrice
+          product.Gender = true;
+          product.Size = size;
+          let fullCode = this.GetProductFullCode(product);
+          products.push({
+            ColorId: product.ColorId, Gender: product.Gender, Price: product.Price, ProductCode: product.ProductCode, ProductFullCode: fullCode, ProductName: product.ProductName, ProductYear: product.ProductYear, Size: size, BranchId: product.BranchId,
+            Count: product.Count, SellingPrice: product.SellingPrice
           });
         });
       } else {
         from([39, 40, 41, 42, 43, 44, 45, 46]).pipe(map(size => {
-          shoe.Gender = false;
-          shoe.Size = size;
-          let fullCode = this.GetProductFullCode(shoe);
-          shoes.push({
-            ColorId: shoe.ColorId, Gender: shoe.Gender, Price: shoe.Price, ProductCode: shoe.ProductCode, ProductFullCode: fullCode, ProductName: shoe.ProductName, ProductYear: shoe.ProductYear, Size: size, BranchId: shoe.BranchId,
-            Count: shoe.Count, SellingPrice: shoe.SellingPrice
+          product.Gender = false;
+          product.Size = size;
+          let fullCode = this.GetProductFullCode(product);
+          products.push({
+            ColorId: product.ColorId, Gender: product.Gender, Price: product.Price, ProductCode: product.ProductCode, ProductFullCode: fullCode, ProductName: product.ProductName, ProductYear: product.ProductYear, Size: size, BranchId: product.BranchId,
+            Count: product.Count, SellingPrice: product.SellingPrice
           });
         })).subscribe();
       }
-
-      this.productService.AddProducts(shoes).toPromise().finally(() => { this.filTable(); this.ProductForm.reset(); });
+      this.store.insert(products);
+      // this.productService.AddProducts(shoes).toPromise().finally(() => { this.filTable(); this.ProductForm.reset(); });
     }
   }
 
@@ -213,7 +206,7 @@ export class ProductManagerComponent implements OnInit {
   }
 
   async PrintButton() {
-    for (const selectedProduct of this.selectedProducts) {
+    for (const selectedProduct of this.productsGrid.instance.getSelectedRowsData()) {
       await this.ShowProductTag(selectedProduct);
       this.productsGrid.instance.clearSelection();
     }
@@ -223,6 +216,7 @@ export class ProductManagerComponent implements OnInit {
   timouted: false;
   async ShowProductTag(row: ProductView) {
     this.BarcodeObject.BarcodeValue = row.ProductFullCode;
+    console.log(row)
     this.BarcodeObject.Color = row.Color.ColorName;
     this.BarcodeObject.Size = row.Size;
     this.BarcodeObject.Price = row.Price;

@@ -12,7 +12,9 @@ export class BaseService {
 		return this.httpClient.get(environment.apiUrl + url, options);
 	}
 	post(url: string, payload: any, options?: Object) {
-		return this.httpClient.post(environment.apiUrl + url, payload, options);
+		const formData = new FormData();
+		formData.append('values', JSON.stringify(payload));
+		return this.httpClient.post(environment.apiUrl + url, formData, options);
 	}
 	put(url: string, payload: any, options?: Object) {
 		return this.httpClient.put(environment.apiUrl + url, payload, options);

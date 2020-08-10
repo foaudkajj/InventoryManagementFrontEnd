@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { NormalSaleRoutingModule } from './normal-sale-routing.module';
 import { NormalSaleComponent } from './normal-sale.component';
-import { DxDataGridModule, DxDateBoxModule } from 'devextreme-angular';
+import { DxDataGridModule, DxDateBoxModule, DxLookupModule, DxSelectBoxModule } from 'devextreme-angular';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -15,10 +15,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { PaymentMethodsService } from 'app/InventoryApp/services/payment-methods.service';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { ConsumerInfosService } from 'app/InventoryApp/services/ConsumerInfo.service';
 
 
 @NgModule({
-  declarations: [NormalSaleComponent,PaymentScreenComponent],
+  declarations: [NormalSaleComponent, PaymentScreenComponent],
   imports: [
     CommonModule,
     NormalSaleRoutingModule,
@@ -33,9 +35,12 @@ import { PaymentMethodsService } from 'app/InventoryApp/services/payment-methods
     MatPaginatorModule,
     FormsModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    DxLookupModule,
+    MatGridListModule,
+    DxSelectBoxModule
   ],
   entryComponents: [PaymentScreenComponent],
-  providers: [PaymentMethodsService]
+  providers: [PaymentMethodsService, ConsumerInfosService]
 })
 export class NormalSaleModule { }

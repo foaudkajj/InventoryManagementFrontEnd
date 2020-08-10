@@ -1,11 +1,14 @@
-import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { PaymentMethod } from 'app/InventoryApp/Models/PaymentMethod';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PaymentMethodsService } from 'app/InventoryApp/services/payment-methods.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { PaymentMethodsTable } from 'app/InventoryApp/Models/DTOs/PaymentMethodsTable';
+import { PaymentPopup } from 'app/InventoryApp/Models/DTOs/PaymentPopup';
+import { CustomerInfoDto } from 'app/InventoryApp/Models/DTOs/CustomerInfoDto';
+import { ConsumerInfosService } from 'app/InventoryApp/services/ConsumerInfo.service';
+import { DxLookupComponent } from 'devextreme-angular';
 
 @Component({
   selector: 'app-payment-screen',
@@ -22,14 +25,17 @@ export class PaymentScreenComponent implements OnInit {
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   // This is used to specify the columns we need to show in the grid.
   displayedColumnsInGrid = ['PaymentName', 'DefferedPaymentCount', 'Amount']
-  AddedPayments: PaymentMethodsTable[] = [];
+  AddedPayments: PaymentPopup[] = [];
   TotalPaied: number = 0;
   PaymentMethodsTableFormGroup: FormGroup;
   ReceiptCode: string;
-
+  customerInfo: CustomerInfoDto = { CustomerName: '', CustomerPhone: '' };
+  customerInfoList: CustomerInfoDto[];
+  @ViewChild("customerInfoSelectBox") customerInfoSelectbox: DxLookupComponent;
 
   constructor(public translate: TranslateService,
     private paymentMethods: PaymentMethodsService,
+    private consumerInfo: ConsumerInfosService,
     public dialogRef: MatDialogRef<PaymentScreenComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cdr: ChangeDetectorRef,
@@ -37,7 +43,7 @@ export class PaymentScreenComponent implements OnInit {
 
   ngOnInit() {
     this.paymentMethods.GetPaymentMethods().toPromise().then((res: { data: PaymentMethod[] }) => this.paymentsMD = res.data);
-
+    this.consumerInfo.GetConsumerInfos().toPromise().then((res: { data: CustomerInfoDto[] }) => this.customerInfoList = res.data)
     this.InitlizeFormTable();
 
   }
@@ -62,7 +68,7 @@ export class PaymentScreenComponent implements OnInit {
   }
 
   AddToPaymentMethodsTable() {
-    this.AddedPayments.push({ Receipt: this.ReceiptCode, PaymentMethodId: this.PaymentMethodsTableFormGroup.controls.Payment.value.Id, Amount: this.PaymentMethodsTableFormGroup.controls.Amount.value, PaymentName: this.PaymentMethodsTableFormGroup.controls.Payment.value.PaymentName, DefferedPaymentCount: (this.PaymentMethodsTableFormGroup.controls.DefferedPaymentCount.value || 1) });
+    this.AddedPayments.push({ CustomerInfo: { CustomerName: this.customerInfo.CustomerName, CustomerPhone: this.customerInfo.CustomerPhone }, Receipt: this.ReceiptCode, PaymentMethodId: this.PaymentMethodsTableFormGroup.controls.Payment.value.Id, Amount: this.PaymentMethodsTableFormGroup.controls.Amount.value, PaymentName: this.PaymentMethodsTableFormGroup.controls.Payment.value.PaymentName, DefferedPaymentCount: (this.PaymentMethodsTableFormGroup.controls.DefferedPaymentCount.value || 1) });
     this.dataSource.data = this.AddedPayments;
     this.PaymentMethodsTableFormGroup.controls.Amount.setValidators(Validators.max((this.data - this.getTotal())));
     this.PaymentMethodsTableFormGroup.updateValueAndValidity();
@@ -71,7 +77,14 @@ export class PaymentScreenComponent implements OnInit {
   }
 
   ClosePopup() {
-    this.AddedPayments = this.dataSource.data.map(value => { value.Receipt = this.ReceiptCode; return value; });
+    this.AddedPayments = this.dataSource.data.map(value => {
+      value.Receipt = this.ReceiptCode;
+      value.CustomerInfo.CustomerName = this.customerInfo.CustomerName;
+      value.CustomerInfo.CustomerPhone = this.customerInfo.CustomerPhone;
+      value.CustomerInfo.Id = this.customerInfoSelectbox.instance.option('value')?.Id ?? 0;
+      console.log(this.customerInfoSelectbox.instance.option('value'))
+      return value;
+    });
     this.dialogRef.close(this.dataSource.data)
   }
 
@@ -92,6 +105,19 @@ export class PaymentScreenComponent implements OnInit {
     this.ReceiptCode = paste.replace(/ /g, '');
     event.preventDefault();
 
+  }
+
+  customerInfoValueChanged(e) {
+
+    if (e.value) {
+      this.customerInfo.CustomerName = e.value.CustomerName;
+      this.customerInfo.CustomerPhone = e.value.CustomerPhone;
+      this.customerInfo.Id = e.value.Id;
+    } else {
+      this.customerInfo.CustomerName = null;
+      this.customerInfo.CustomerPhone = null;
+      this.customerInfo.Id = 0;
+    }
   }
 
 }

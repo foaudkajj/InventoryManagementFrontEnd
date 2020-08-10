@@ -71,10 +71,46 @@
 </div>
 
 <div class="row mt-8">
+    <mat-grid-list cols="4" rowHeight="2:1">
+        <mat-grid-tile>
+            <!-- <dx-lookup #customerInfoLookup width="100%" [items]='customerInfoList' [displayExpr]="'CustomerName'"
+                [valueExpr]="'Id'" (onValueChanged)="customerInfoValueChanged($event)">
+                <dxo-drop-down-options [showTitle]="false"></dxo-drop-down-options>
+            </dx-lookup> -->
+            <dx-select-box #customerInfoSelectBox [items]="customerInfoList" displayExpr="CustomerName"
+                [searchMode]="'contains'" [searchExpr]="'CustomerName'" [searchTimeout]="200"
+                (onValueChanged)="customerInfoValueChanged($event)" [minSearchLength]="0" [searchEnabled]="true">
+            </dx-select-box>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field class=" ml-8">
+                <input [disabled]="customerInfoSelectBox.instance.option('value')"
+                    [(ngModel)]="customerInfo.CustomerName" matInput style="font-size: 20px;" type="text"
+                    placeholder="Isim">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field class=" ml-8">
+                <input [disabled]="customerInfoSelectBox.instance.option('value')"
+                    [(ngModel)]="customerInfo.CustomerPhone" matInput style="font-size: 20px;" type="text"
+                    placeholder="Tel">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <button
+                [disabled]="dataSource.data.length == 0 || (!customerInfoSelectBox.instance.option('value') && (!customerInfo.CustomerName || !customerInfo.CustomerPhone))"
+                class=" ml-8" mat-raised-button color="accent"
+                (click)="ClosePopup()">{{translate.instant('SELLING_MODULE.NORMAL_SALE.SALES_SCREEN.COMPLETE_PAYMENT')}}</button>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+</div>
+
+<!-- <div class="row mt-8">
     <mat-form-field class=" ml-8">
-        <input (paste)="onReceiptCodePaste($event)" (keydown)=onReceiptCodeKeydownEvent($event)
+        <input (paste)="onReceiptCodePaste($event)" 
             [(ngModel)]="ReceiptCode" matInput style="font-size: 20px;" type="text" placeholder="Fiş Kodu">
     </mat-form-field>
     <button [disabled]="dataSource.data.length == 0 || !ReceiptCode " class=" ml-8" mat-raised-button color="accent"
         (click)="ClosePopup()">{{translate.instant('SELLING_MODULE.NORMAL_SALE.SALES_SCREEN.COMPLETE_PAYMENT')}}</button>
-</div>
+</div> -->

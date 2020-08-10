@@ -6,10 +6,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductSellingDto } from 'app/InventoryApp/Models/DTOs/ProductSellingDTO';
 import { MatDialog } from '@angular/material/dialog';
 import { NormalSatisService } from 'app/InventoryApp/services/normal-satis.service';
-import { PaymentMethodsTable } from 'app/InventoryApp/Models/DTOs/PaymentMethodsTable';
+import { PaymentPopup } from 'app/InventoryApp/Models/DTOs/PaymentPopup';
 import { SalePaymentMethod } from 'app/InventoryApp/Models/DTOs/SalePaymentMethod';
 import { Product } from 'app/InventoryApp/Models/Product';
-import { DxDataGridComponent, DxTextBoxComponent } from 'devextreme-angular';
+import { DxDataGridComponent, DxTextBoxComponent, DxLookupComponent } from 'devextreme-angular';
 import { PaymentScreenComponent } from '../PaymentScreen/payment-screen.component';
 import TextBox from "devextreme/ui/text_box";
 import { SaleUserBranchProductsDTO } from 'app/InventoryApp/Models/DTOs/SaleUserBranchProductsDTO';
@@ -28,8 +28,9 @@ export class NormalSaleComponent implements OnInit {
   ProductsToSellDataSource: any;
   ProductsToSellTableRows: ProductView[] = [];
   @ViewChild("soledProductsGrid") soledProductsGrid: DxDataGridComponent;
+  @ViewChild("customerInfoLookup") customerInfoLookup: DxLookupComponent;
   paymentDetailText: string;
-  soledProductsDetailsText: DxDataGridComponent;
+  // soledProductsDetailsText: DxDataGridComponent;
 
   ProductsToSellTotalPrice: number;
 
@@ -49,7 +50,7 @@ export class NormalSaleComponent implements OnInit {
   constructor(public _translate: TranslateService,
     private normalSatisSerice: NormalSatisService,
     public dialog: MatDialog,
-    private fb: FormBuilder, ) { }
+    private fb: FormBuilder,) { }
 
   ngOnInit() {
     this.InitlizeSelledProductsDatasource();
@@ -76,7 +77,8 @@ export class NormalSaleComponent implements OnInit {
 
   InitlizeSelledProductsDatasource() {
     this.normalSatisSerice.GetSoledProductsByUserID(1).toPromise().then((res: SaleUserBranchProductsDTO[]) => {
-      this.SoledProductsDatasource = res
+      this.SoledProductsDatasource = res;
+      this.ProductsToSellTableRows = [];
     });
   }
 
@@ -109,13 +111,13 @@ export class NormalSaleComponent implements OnInit {
       data: this.ProductsToSellTotalPrice = this.ProductsToSellDataSource.map(t => t.SellingPrice).reduce((acc, value) => +acc + +value, 0)
     });
 
-    this.unsubscribe.push(dialogRef.afterClosed().subscribe((result: PaymentMethodsTable[]) => {
+    this.unsubscribe.push(dialogRef.afterClosed().subscribe((result: PaymentPopup[]) => {
       if (result?.length > 0) {
         this.ProductsToSellDataSource = [];
         let PaymentMethodIds: number[] = result.map(value => value.PaymentMethodId);
         let ProductIds: number[] = this.ProductsToSellTableRows.map(value => value.Id);
         let salePaymentMethods: SalePaymentMethod[] = result.map(value => <SalePaymentMethod>{ Amount: value.Amount, DefferedPaymentCount: value.DefferedPaymentCount, PaymentMethodId: value.PaymentMethodId });
-        let ProductSellingDto: ProductSellingDto = { Receipt: result[0].Receipt, PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, ProductIds: ProductIds, UserId: 1, SalePaymentMethods: salePaymentMethods };
+        let ProductSellingDto: ProductSellingDto = { CustomerInfoId: result[0].CustomerInfo.Id, CustomerName: result[0].CustomerInfo.CustomerName, CustomerPhone: result[0].CustomerInfo.CustomerPhone, Receipt: result[0].Receipt, PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, ProductIds: ProductIds, UserId: 1, SalePaymentMethods: salePaymentMethods };
         this.normalSatisSerice.SellProducts(ProductSellingDto).toPromise().then(_ => this.InitlizeSelledProductsDatasource());
       }
 

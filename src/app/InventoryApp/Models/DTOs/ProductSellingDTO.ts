@@ -8,6 +8,9 @@ export interface ProductSellingDto {
     UserId: number;
     BranchId: number;
     Receipt: string;
+    CustomerName: string;
+    CustomerPhone: string;
+    CustomerInfoId: number;
     PaymentMethodIds: number[];
     ProductIds: number[];
     SalePaymentMethods: SalePaymentMethod[];

@@ -100,7 +100,7 @@
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.DATE')" dataType="date"
                     dataField="Date" caption="Title"></dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.TOTAL')" alignment="left"
-                    dataField="Total"></dxi-column>
+                    dataField="Total" dataType="Currency"></dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.USER_CODE')" alignment="left"
                     dataField="UserCode"></dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.BRANCH_NAME')"
@@ -118,7 +118,10 @@
                         placeholder="{{_translate.instant('COMMON.END_DATE')}}">
                     </dx-date-box>
                 </div>
-
+                <dxo-summary>
+                    <dxi-total-item column="Total" summaryType="sum" valueFormat="currency">
+                    </dxi-total-item>
+                </dxo-summary>
 
                 <div *dxTemplate="let sale of 'detail'">
                     <!--	<div class="master-detail-caption">{{employee.data.FirstName + " " + employee.data.LastName + "'s Tasks:"}}</div>-->

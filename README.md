@@ -1,3 +1,5 @@
+Inventory Management FrontEnd
+
 # Fuse - Angular
 
 Material Design Admin Template with Angular 8 and Angular Material

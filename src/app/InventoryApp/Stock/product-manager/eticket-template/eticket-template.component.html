@@ -65,7 +65,7 @@
                 <p style="margin-bottom: 0px;" class="text-center">{{barcodeValue}}
                 </p>
                 <ngx-barcode bc-margin-top="1" [bc-value]="barcodeValue" bc-element-type="img" bc-display-value="false"
-                    bc-height="20" bc-width="1"></ngx-barcode>
+                    bc-height="20" bc-width="1" format="EAN8"></ngx-barcode>
             </dxi-item>
             <!-- <dxi-item class="rect demo-light" [ratio]="2">
                 <p class="text-right">{{Date | date:'dd.MM.yyyy'}}</p>
@@ -74,7 +74,7 @@
     </dxi-item>
     <dxi-item class="rect demo-light" [ratio]="0.5">
         <dx-box direction="row" width="100%">
-            <dxi-item class="rect demo-dark" [ratio]="1" >
+            <dxi-item class="rect demo-dark" [ratio]="1">
                 <p class="text-left"> Fiyat: {{Price}} TL</p>
             </dxi-item>
         </dx-box>

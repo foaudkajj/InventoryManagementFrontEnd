@@ -17,6 +17,7 @@ import { DxDataGridComponent } from 'devextreme-angular';
 import DataSource from 'devextreme/data/data_source';
 import CustomStore from 'devextreme/data/custom_store';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-manager',
@@ -34,7 +35,12 @@ export class ProductManagerComponent implements OnInit {
   dataSource: DataSource; //MatTableDataSource<ProductView> = new MatTableDataSource();
   store: CustomStore;
   selectedProducts: [] = [];
-  constructor(private fb: FormBuilder, private colorService: ColorsService, private productService: ProductService, private branchesService: BranchesService, public _translate: TranslateService) { }
+  constructor(private fb: FormBuilder,
+    private colorService: ColorsService,
+    private productService: ProductService,
+    private branchesService: BranchesService,
+    public _translate: TranslateService,
+    private router: Router) { }
 
   ngOnInit() {
     //   var dataSource = new DevExpress.data.DataSource({
@@ -146,7 +152,7 @@ export class ProductManagerComponent implements OnInit {
 
   }
   GetProductFullCode(product: Product) {
-    return (product.Gender ? "K" : "E") + product.ProductYear.slice(product.ProductYear.length - 3) + product.ProductCode + this.colorsList.find(fi => fi.Id == product.ColorId).ShortenColor + product.Size;
+    return (product.Gender ? 1 : 2) + "000" + product.ProductCode;
   }
 
   Fill() {
@@ -215,15 +221,21 @@ export class ProductManagerComponent implements OnInit {
 
   timouted: false;
   async ShowProductTag(row: ProductView) {
-    this.BarcodeObject.BarcodeValue = row.ProductFullCode;
-    console.log(row)
-    this.BarcodeObject.Color = row.Color.ColorName;
-    this.BarcodeObject.Size = row.Size;
-    this.BarcodeObject.Price = row.Price;
-    this.BarcodeObject.Date = Date.now().toString();
+    // this.router.navigate(['ReportViewer'], {
+    //   queryParams: { ProductFullCode: row.ProductFullCode }
+    // });
+    let url = this.router.createUrlTree(['ReportViewer'], { queryParams: { ProductFullCode: row.ProductFullCode } })
+    console.log(url.toString())
+    window.open('#' + url.toString(), '_blank')
+    // this.BarcodeObject.BarcodeValue = row.ProductFullCode;
+    // console.log(row)
+    // this.BarcodeObject.Color = row.Color.ColorName;
+    // this.BarcodeObject.Size = row.Size;
+    // this.BarcodeObject.Price = row.Price;
+    // this.BarcodeObject.Date = Date.now().toString();
 
-    await timer(1000).toPromise()
-    await this.downloadAsPDF();
+    // await timer(1000).toPromise()
+    // await this.downloadAsPDF();
 
   }
 

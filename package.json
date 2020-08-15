@@ -67,7 +67,11 @@
         "stream": "0.0.2",
         "tslib": "2.0.0",
         "web-animations-js": "2.3.2",
-        "zone.js": "0.10.3"
+        "zone.js": "0.10.3",
+        "devexpress-reporting-angular": "20.1.6",
+        "@devexpress/analytics-core": "20.1.6",
+        "core-js": "^3.4.3",
+        "devexpress-reporting": "20.1.6"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "0.1000.3",

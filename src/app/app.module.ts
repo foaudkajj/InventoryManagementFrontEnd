@@ -28,6 +28,11 @@ const appRoutes: Routes = [
         loadChildren: () => import('./InventoryApp/login/login.module').then(m => m.LoginModule),
     },
     {
+
+        path: 'ReportViewer',
+        loadChildren: () => import('./InventoryApp/ReportViewer/report-viewer.module').then(m => m.ReportViewerModule),
+    },
+    {
         path: '',
         loadChildren: () => import('./InventoryApp/inventory-app.module').then(m => m.InventoryAppModule),
     },

@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ColorsService } from 'app/InventoryApp/services/Colors.service';
 import { ProductService } from 'app/InventoryApp/services/products.service';
 import { Barcode } from 'app/InventoryApp/Models/DTOs/Barcode';
-import * as jsPDF from 'jspdf';
+import jsPDF from 'jspdf';
 import { BranchesService } from 'app/InventoryApp/services/branches.service';
 import { TranslateService } from '@ngx-translate/core';
 import { DxDataGridComponent } from 'devextreme-angular';
@@ -18,6 +18,7 @@ import DataSource from 'devextreme/data/data_source';
 import CustomStore from 'devextreme/data/custom_store';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
 import { Router } from '@angular/router';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-product-manager',
@@ -66,10 +67,10 @@ export class ProductManagerComponent implements OnInit {
   filTable() {
     this.store = createStore({
       key: "Id",
-      loadUrl: "https://localhost:44382/api/Products/",
-      insertUrl: "https://localhost:44382/api/Products",
-      updateUrl: "https://localhost:44382/api/Products/PutProduct",
-      deleteUrl: "https://localhost:44382/api/Products",
+      loadUrl: environment.apiUrl + "Products",
+      insertUrl: environment.apiUrl + "Products",
+      updateUrl: environment.apiUrl + "Products/PutProduct",
+      deleteUrl: environment.apiUrl + "Products/PutProduct",
       onInserted: () => { this.ProductForm.reset(); this.productsGrid.instance.refresh(); },
       onRemoved: () => { this.productsGrid.instance.refresh(); }
     })

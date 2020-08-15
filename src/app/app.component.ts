@@ -17,10 +17,10 @@ import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 import { locale as navigationArabic } from 'app/navigation/i18n/ar';
 
-import * as  trMessages from "devextreme/localization/messages/tr.json";
+import trMessages from "devextreme/localization/messages/tr.json";
 import { locale, loadMessages } from "devextreme/localization";
 import { Router, NavigationStart } from '@angular/router';
-
+import config from 'devextreme/core/config';
 
 
 @Component({
@@ -58,6 +58,11 @@ export class AppComponent implements OnInit, OnDestroy {
         private _platform: Platform,
         private router: Router
     ) {
+        // Load messages for Devextreme
+        loadMessages(trMessages);
+        locale('tr');
+        config({ defaultCurrency: 'TRY' });
+
         // Get default navigation
         this.navigation = navigation;
         this.stockNavigation = stockNavigation;
@@ -92,9 +97,7 @@ export class AppComponent implements OnInit, OnDestroy {
         // Use a language
         this._translateService.use('tr');
 
-        // Load messages for Devextreme
-        loadMessages(trMessages);
-        locale('tr');
+
         /**
          * ----------------------------------------------------------------------------------------------------
          * ngxTranslate Fix Start

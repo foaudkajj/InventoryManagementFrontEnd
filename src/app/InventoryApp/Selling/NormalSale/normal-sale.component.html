@@ -25,7 +25,7 @@
             <form class="kt-form kt-font-bold" style="width: 100%;" [formGroup]="ProductAndPriceFormGroup"
                 autocomplete="off">
                 <mat-form-field class="w-50 ml-8">
-                    <input (focusout)="productCodeFocusOut()" matInput style="font-size: 20px;"
+                    <input (focusout)="productCodeFocusOut()" maxlength="6" matInput style="font-size: 20px;"
                         formControlName="ProductFullCode" matInput placeholder="Ürün Kodu...">
                 </mat-form-field>
                 <mat-form-field class="ml-8">

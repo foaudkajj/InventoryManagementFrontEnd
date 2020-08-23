@@ -69,8 +69,8 @@ export class ProductManagerComponent implements OnInit {
       key: "Id",
       loadUrl: environment.apiUrl + "Products",
       insertUrl: environment.apiUrl + "Products",
-      updateUrl: environment.apiUrl + "Products/PutProduct",
-      deleteUrl: environment.apiUrl + "Products/PutProduct",
+      updateUrl: environment.apiUrl + "Products",
+      deleteUrl: environment.apiUrl + "Products",
       onInserted: () => { this.ProductForm.reset(); this.productsGrid.instance.refresh(); },
       onRemoved: () => { this.productsGrid.instance.refresh(); }
     })
@@ -153,7 +153,8 @@ export class ProductManagerComponent implements OnInit {
 
   }
   GetProductFullCode(product: Product) {
-    return (product.Gender ? 1 : 2) + "000" + product.ProductCode;
+    console.log(((product.Gender ? 1 : 2) + product.ProductCode))
+    return ((product.Gender ? 1 : 2).toString() + product.ProductCode);
   }
 
   Fill() {

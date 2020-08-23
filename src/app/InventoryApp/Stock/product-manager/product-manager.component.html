@@ -25,7 +25,7 @@
             <!-- CONTENT -->
             <div class="p-24">
                 <form class="kt-form kt-font-bold" [formGroup]="ProductForm" autocomplete="off">
-                    <mat-form-field class="custom-css" style="width: 15%;">
+                    <mat-form-field class="custom-css">
                         <input matInput formControlName="ProductName" autocomplete="off"
                             placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_NAME')}}">
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
@@ -53,7 +53,9 @@
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
-                        <input type="number" oninput="javascript: if (this.value.length > 6) this.value = this.value.slice(0, 6);" matInput formControlName="ProductCode" autocomplete="off"
+                        <input type="number"
+                            oninput="javascript: if (this.value.length > 6) this.value = this.value.slice(0, 6);"
+                            matInput formControlName="ProductCode" autocomplete="off"
                             placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_CODE')}}">
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
@@ -97,73 +99,73 @@
 
             </div>
 
-            <div class="example-container mat-elevation-z8">
-                <dx-data-grid [remoteOperations]="true" #productsGrid [(selectedRowKeys)]="selectedProducts" [dataSource]="store"
-                    [showBorders]="true" (onToolbarPreparing)="onToolbarPreparing($event)">
-                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_NAME')"
-                        dataField="ProductName"></dxi-column>
-                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_FULL_CODE')"
-                        dataField="ProductFullCode" [allowEditing]="false"></dxi-column>
-                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.COLOR_NAME')"
-                        dataField="ColorId">
-                        <dxo-lookup [dataSource]="colorsList" displayExpr="ColorName" valueExpr="Id">
-                        </dxo-lookup>
-                    </dxi-column>
-                    <dxi-column dataType="boolean" [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.GENDER')"
-                        dataField="Gender">
-                        <dxo-lookup [dataSource]="Genders" displayExpr="ViewValue" valueExpr="Value">
-                        </dxo-lookup>
-                    </dxi-column>
-                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRICE')" dataField="Price">
-                    </dxi-column>
-                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.SELLING_PRICE')"
-                        dataField="SellingPrice">
-                    </dxi-column>
-                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_YEAR')"
-                        dataField="ProductYear"></dxi-column>
-                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_CODE')"
-                        dataField="ProductCode"></dxi-column>
-                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.SIZE')" dataField="Size">
-                    </dxi-column>
-                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.COUNT')" dataField="Count">
-                    </dxi-column>
-                    <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.BRANCH_NAME')"
-                        dataField="BranchId">
-                        <dxo-lookup [dataSource]="branchesList" displayExpr="Name" valueExpr="Id">
-                        </dxo-lookup>
-                    </dxi-column>
-                    <dxo-editing mode="form">
-                    </dxo-editing>
-                    <dxo-selection [selectAllMode]="'page'" [showCheckBoxesMode]="'always'" mode="multiple">
-                    </dxo-selection>
-                    <dxi-column [allowFiltering]="false" [formItem]="{visible: false}" [allowEditing]="false"
-                        [allowSorting]="false" cellTemplate="cellTemplate">
-                    </dxi-column>
-                    <dxo-search-panel [visible]="true" [width]="240"
-                        [placeholder]="_translate.instant('STOCK_MODULE.MASTER_DATA.SEARCH')"></dxo-search-panel>
-                    <dxo-filter-row [visible]="true" [applyFilter]="'auto'"></dxo-filter-row>
-                    <dxo-header-filter [visible]="true"></dxo-header-filter>
-                    <div *dxTemplate="let data of 'cellTemplate'">
-                        <button (click)="DeleteFromColorTB(data.data)" mat-icon-button color="warn" matTooltip="Göster">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                        <button (click)="ShowProductTag(data.data)" mat-icon-button color="primary" type="button"
-                            matTooltip="Sil">
-                            <mat-icon>remove_red_eye</mat-icon>
-                        </button>
-                        <button (click)="editRow(data)" mat-icon-button color="primary" type="button" matTooltip="Sil">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                    </div>
+            <!-- <div class="example-container mat-elevation-z8"> -->
+            <dx-data-grid [remoteOperations]="true" #productsGrid [(selectedRowKeys)]="selectedProducts"
+                [dataSource]="store" [columnHidingEnabled]="true" [showBorders]="true"
+                (onToolbarPreparing)="onToolbarPreparing($event)">
+                <dxi-column [allowFiltering]="false" [formItem]="{visible: false}" [allowEditing]="false"
+                    [allowSorting]="false" cellTemplate="cellTemplate">
+                </dxi-column>
+                <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_NAME')"
+                    dataField="ProductName"></dxi-column>
+                <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_FULL_CODE')"
+                    dataField="ProductFullCode" [allowEditing]="false"></dxi-column>
+                <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.COLOR_NAME')" dataField="ColorId">
+                    <dxo-lookup [dataSource]="colorsList" displayExpr="ColorName" valueExpr="Id">
+                    </dxo-lookup>
+                </dxi-column>
+                <dxi-column dataType="boolean" [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.GENDER')"
+                    dataField="Gender">
+                    <dxo-lookup [dataSource]="Genders" displayExpr="ViewValue" valueExpr="Value">
+                    </dxo-lookup>
+                </dxi-column>
+                <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRICE')" dataField="Price">
+                </dxi-column>
+                <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.SELLING_PRICE')"
+                    dataField="SellingPrice">
+                </dxi-column>
+                <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_YEAR')"
+                    dataField="ProductYear"></dxi-column>
+                <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_CODE')"
+                    dataField="ProductCode"></dxi-column>
+                <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.SIZE')" dataField="Size">
+                </dxi-column>
+                <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.COUNT')" dataField="Count">
+                </dxi-column>
+                <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.BRANCH_NAME')" dataField="BranchId">
+                    <dxo-lookup [dataSource]="branchesList" displayExpr="Name" valueExpr="Id">
+                    </dxo-lookup>
+                </dxi-column>
+                <dxo-editing mode="form">
+                </dxo-editing>
+                <dxo-selection [selectAllMode]="'page'" [showCheckBoxesMode]="'always'" mode="multiple">
+                </dxo-selection>
 
-                    <div *dxTemplate="let data of 'printButton'">
-                        <button [disabled]="selectedProducts.length == 0" (click)="PrintButton(data)" mat-icon-button
-                            color="primary" type="button" matTooltip="Sil">
-                            <mat-icon>print</mat-icon>
-                        </button>
-                    </div>
-                </dx-data-grid>
-                <!-- <mat-table [dataSource]="dataSource" matSort>
+                <dxo-search-panel [visible]="true" [width]="240"
+                    [placeholder]="_translate.instant('STOCK_MODULE.MASTER_DATA.SEARCH')"></dxo-search-panel>
+                <dxo-filter-row [visible]="true" [applyFilter]="'auto'"></dxo-filter-row>
+                <dxo-header-filter [visible]="true"></dxo-header-filter>
+                <div *dxTemplate="let data of 'cellTemplate'">
+                    <button (click)="DeleteFromColorTB(data.data)" mat-icon-button color="warn" matTooltip="Göster">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button (click)="ShowProductTag(data.data)" mat-icon-button color="primary" type="button"
+                        matTooltip="Sil">
+                        <mat-icon>remove_red_eye</mat-icon>
+                    </button>
+                    <button (click)="editRow(data)" mat-icon-button color="primary" type="button" matTooltip="Sil">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </div>
+
+                <div *dxTemplate="let data of 'printButton'">
+                    <button [disabled]="selectedProducts.length == 0" (click)="PrintButton(data)" mat-icon-button
+                        color="primary" type="button" matTooltip="Sil">
+                        <mat-icon>print</mat-icon>
+                    </button>
+                </div>
+            </dx-data-grid>
+            <!-- <mat-table [dataSource]="dataSource" matSort>
                     <ng-container matColumnDef="ProductName">
                         <mat-header-cell *matHeaderCellDef mat-sort-header> Ürün Adı
                         </mat-header-cell>
@@ -243,10 +245,10 @@
                     </mat-row>
                 </mat-table>
                 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
-            </div>
-            <eticket-template [barcodeValue]="BarcodeObject?.BarcodeValue" [Color]="BarcodeObject?.Color"
+            <!-- </div> -->
+            <!-- <eticket-template [barcodeValue]="BarcodeObject?.BarcodeValue" [Color]="BarcodeObject?.Color"
                 [Date]="BarcodeObject.Date" [Price]="BarcodeObject.Price" [Size]="BarcodeObject?.Size">
-            </eticket-template>
+            </eticket-template> -->
         </div>
     </div>
 </div>

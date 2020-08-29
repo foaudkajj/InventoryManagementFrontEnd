@@ -8,12 +8,13 @@ import { MatInputModule } from '@angular/material/input';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 import { LoginComponent } from './login.component';
+import { UserService } from '../services/user.service';
 
 
 
 const routes = [
     {
-        path     : '',
+        path: '',
         component: LoginComponent
     }
 ];
@@ -22,7 +23,7 @@ const routes = [
     declarations: [
         LoginComponent
     ],
-    imports     : [
+    imports: [
         RouterModule.forChild(routes),
 
         MatButtonModule,
@@ -32,8 +33,8 @@ const routes = [
         MatInputModule,
 
         FuseSharedModule
-    ]
+    ],
+    providers: [UserService]
 })
-export class LoginModule
-{
+export class LoginModule {
 }

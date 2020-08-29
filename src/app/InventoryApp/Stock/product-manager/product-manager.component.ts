@@ -19,6 +19,8 @@ import CustomStore from 'devextreme/data/custom_store';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
 import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
+import { DxStoreOptions } from 'app/InventoryApp/Models/DxStoreOptions';
+import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
 
 @Component({
   selector: 'app-product-manager',
@@ -41,7 +43,8 @@ export class ProductManagerComponent implements OnInit {
     private productService: ProductService,
     private branchesService: BranchesService,
     public _translate: TranslateService,
-    private router: Router) { }
+    private router: Router,
+    private dxStore: DxStoreService) { }
 
   ngOnInit() {
     //   var dataSource = new DevExpress.data.DataSource({
@@ -65,15 +68,12 @@ export class ProductManagerComponent implements OnInit {
   }
 
   filTable() {
-    this.store = createStore({
-      key: "Id",
-      loadUrl: environment.apiUrl + "Products",
-      insertUrl: environment.apiUrl + "Products",
-      updateUrl: environment.apiUrl + "Products",
-      deleteUrl: environment.apiUrl + "Products",
+    let storeOption: DxStoreOptions = {
+      loadUrl: "Products", insertUrl: "Products", updateUrl: "Products", deleteUrl: "Products", Key: "Id",
       onInserted: () => { this.ProductForm.reset(); this.productsGrid.instance.refresh(); },
-      onRemoved: () => { this.productsGrid.instance.refresh(); }
-    })
+      onRemoved: () => this.productsGrid.instance.refresh()
+    };
+    this.store = this.dxStore.GetStore(storeOption);
 
   }
   getBranches() {
@@ -153,8 +153,7 @@ export class ProductManagerComponent implements OnInit {
 
   }
   GetProductFullCode(product: Product) {
-    console.log(((product.Gender ? 1 : 2) + product.ProductCode))
-    return ((product.Gender ? 1 : 2).toString() + product.ProductCode);
+    return ((product.Gender ? 1 : 2).toString() + product.ProductYear.slice(product.ProductYear.length - 2) + product.Size + product.ColorId.toString().padStart(2, '0') + product.ProductCode);
   }
 
   Fill() {

@@ -31,12 +31,12 @@
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
-                        <input matInput formControlName="Price" autocomplete="off"
+                        <input matInput formControlName="Price" type="number" autocomplete="off"
                             placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.PRICE')}}">
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
-                        <input matInput formControlName="SellingPrice" autocomplete="off"
+                        <input matInput formControlName="SellingPrice" type="number" autocomplete="off"
                             placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.SELLING_PRICE')}}">
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
@@ -48,13 +48,15 @@
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
-                        <input matInput formControlName="ProductYear" autocomplete="off"
+                        <input type="text" minlength="4" maxlength="4"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                            matInput formControlName="ProductYear" autocomplete="off"
                             placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_YEAR')}}">
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
-                        <input type="number"
-                            oninput="javascript: if (this.value.length > 6) this.value = this.value.slice(0, 6);"
+                        <input type="text" minlength="5" maxlength="5"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                             matInput formControlName="ProductCode" autocomplete="off"
                             placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_CODE')}}">
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
@@ -70,7 +72,9 @@
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
-                        <input type="number" formControlName="Size" matInput
+                        <input type="text" minlength="2" maxlength="2"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                            formControlName="Size" matInput
                             placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.SIZE')}}">
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>

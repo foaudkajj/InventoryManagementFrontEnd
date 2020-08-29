@@ -13,6 +13,7 @@ import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.
 
 import { navigation } from 'app/navigation/navigation';
 import { stockNavigation } from 'app/navigation/stockNavigation';
+import { adminNavigation } from 'app/navigation/adminNavigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 import { locale as navigationArabic } from 'app/navigation/i18n/ar';
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
     fuseConfig: any;
     navigation: any;
     stockNavigation: any;
+    adminNavigation: any;
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -66,17 +68,22 @@ export class AppComponent implements OnInit, OnDestroy {
         // Get default navigation
         this.navigation = navigation;
         this.stockNavigation = stockNavigation;
+        this.adminNavigation = adminNavigation;
         // Register the navigation to the service
         this._fuseNavigationService.register('sellingNavigation', this.navigation);
         this._fuseNavigationService.register('stockNavigation', this.stockNavigation);
+        this._fuseNavigationService.register('adminNavigation', this.adminNavigation);
 
 
         this.router.events.subscribe((event: any) => {
             if (event instanceof NavigationStart) {
                 if (event.url.toLowerCase().includes('/stock'))
                     this._fuseNavigationService.setCurrentNavigation('stockNavigation');
-                else
+                else if (event.url.toLowerCase().includes('/selling'))
                     this._fuseNavigationService.setCurrentNavigation('sellingNavigation');
+                else
+                    this._fuseNavigationService.setCurrentNavigation('adminNavigation');
+
             }
         });
         // // Set the main navigation as our current navigation

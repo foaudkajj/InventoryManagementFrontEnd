@@ -53,4 +53,9 @@ export class UserTypeSelectingPageComponent implements OnInit {
     this.router.navigateByUrl('/stock');
   }
 
+  AdminScreen() {
+    this._fuseNavigationService.setCurrentNavigation('adminNavigation')
+    this.router.navigateByUrl('/admin');
+  }
+
 }

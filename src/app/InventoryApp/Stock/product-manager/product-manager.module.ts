@@ -17,9 +17,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { EticketTemplateComponent } from './eticket-template/eticket-template.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { DxBoxModule, DxDataGridModule } from 'devextreme-angular';
+import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
 
 @NgModule({
-  declarations: [ProductManagerComponent,EticketTemplateComponent],
+  declarations: [ProductManagerComponent, EticketTemplateComponent],
   imports: [
     CommonModule,
     ProductManagerRoutingModule,
@@ -36,6 +37,6 @@ import { DxBoxModule, DxDataGridModule } from 'devextreme-angular';
     DxBoxModule,
     DxDataGridModule
   ],
-  providers:[ColorsService,ProductService,BranchesService]
+  providers: [ColorsService, ProductService, BranchesService, DxStoreService]
 })
 export class ProductManagerModule { }

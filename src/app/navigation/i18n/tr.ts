@@ -86,6 +86,25 @@ export const locale = {
 				SELLING_PRICE: "Satış Fiyatı",
 			}
 		},
+		ADMIN_MODULE: {
+			USER_MANAGEMENT: {
+				TITLE: "Kullanıcı Yönetimi",
+				USER_NAME: "K. Adı",
+				USER_CODE: "K. Kodu",
+				USER_STATUS: "K. Durumu",
+				PASSWORD: "Şifre",
+				IMAGE_PATH: "Foto.",
+				EMAIL: "Email",
+				CELLPHONE: "TEL.",
+				NAME: "İsim",
+				LASTNAME: "Soy İsim",
+				BRANCH: "Şube",
+			},
+			LOGIN: {
+				LOGIN_TITLE: "Lütfen Giriş Yapınız",
+				LOGIN_BUTTON: "Giriş Yap"
+			}
+		},
 		AUTH: {
 			GENERAL: {
 				OR: 'Or',

@@ -2,20 +2,20 @@ import { FuseNavigation } from '@fuse/types';
 
 export const stockNavigation: FuseNavigation[] = [
     {
-        id: "mainpage",
+        key: "mainpage",
         title: 'Ana Sayfa' ,
         // icon: 'flaticon2-architecture-and-city',
         type: 'item',
         url: 'usertypeselect'
     },
     {
-        id: 'stockModule',
+        key: 'stockModule',
         title: 'Stok Modulü',
         // translate: 'NAV.APPLICATIONS',
         type: 'collapsable',
         children: [
             {
-                id: 'product_manager',
+                key: 'product_manager',
                 title: 'Ürün Ekleme/Silme',
                 // translate: 'NAV.SAMPLE.TITLE',
                 type: 'item',
@@ -25,7 +25,7 @@ export const stockNavigation: FuseNavigation[] = [
         ]
     },
     {
-        id: 'masterdata',
+        key: 'masterdata',
         title: 'Ana Veri',
         // translate: 'NAV.APPLICATIONS',
         type: 'item',

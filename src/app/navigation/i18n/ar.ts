@@ -87,6 +87,25 @@ export const locale = {
 				SELLING_PRICE: "سعر المبيع",
 			}
 		},
+		ADMIN_MODULE: {
+			USER_MANAGEMENT: {
+				TITLE: "إدارة المستخدمين",
+				USER_NAME: "اسم المستخدم",
+				USER_CODE: "كود المستخدم",
+				USER_STATUS: "الحالة",
+				PASSWORD: "كلمة السر",
+				IMAGE_PATH: "الصورة",
+				EMAIL: "الايميل",
+				CELLPHONE: "رقم الهاتف",
+				NAME: "الاسم",
+				LASTNAME: "الكنية",
+				BRANCH: "الفرع"
+			},
+			LOGIN: {
+				LOGIN_TITLE: "لطفاً قم بتسجيل الدخول",
+				LOGIN_BUTTON: "تسجيل الدخول"
+			}
+		},
 		AUTH: {
 			GENERAL: {
 				OR: 'Or',

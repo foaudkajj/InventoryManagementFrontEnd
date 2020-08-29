@@ -1,6 +1,6 @@
 export interface FuseNavigationItem
 {
-    id: string;
+    key: string;
     title: string;
     type: 'item' | 'group' | 'collapsable';
     translate?: string;

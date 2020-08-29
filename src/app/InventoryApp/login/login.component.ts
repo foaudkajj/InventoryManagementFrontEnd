@@ -4,6 +4,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { UserService } from '../services/user.service';
+import { LoginRequest } from '../Models/LoginRequest';
+import { LoginResponse } from '../Models/LoginResponse';
 
 @Component({
     selector: 'login',
@@ -24,7 +28,9 @@ export class LoginComponent implements OnInit {
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
-        private router: Router
+        private router: Router,
+        public translate: TranslateService,
+        private userSerivce: UserService
     ) {
         // Configure the layout
         this._fuseConfigService.config = {
@@ -54,12 +60,18 @@ export class LoginComponent implements OnInit {
      */
     ngOnInit(): void {
         this.loginForm = this._formBuilder.group({
-            email: ['', [Validators.required, Validators.email]],
+            email: ['', [Validators.required]],
             password: ['', Validators.required]
         });
     }
 
-    LoginButton() {
-        this.router.navigate(['usertypeselect'])
+    async LoginButton() {
+        let loginRequest: LoginRequest = { userName: this.loginForm.controls.email.value, password: this.loginForm.controls.password.value }
+        let loginResponse = await this.userSerivce.Login(loginRequest).toPromise() as LoginResponse;
+        if (loginResponse.IsAuthenticated) {
+            console.log("Authenticated")
+            sessionStorage.setItem("Authorization", loginResponse.Token)
+            this.router.navigate(['usertypeselect'])
+        }
     }
 }

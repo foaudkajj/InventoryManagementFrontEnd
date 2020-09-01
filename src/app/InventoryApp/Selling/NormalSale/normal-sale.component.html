@@ -29,10 +29,10 @@
                         formControlName="ProductFullCode" matInput placeholder="Ürün Kodu...">
                 </mat-form-field>
                 <mat-form-field class="ml-8">
-                    <input matInput style="font-size: 20px;" formControlName="SellingPrice" matInput
+                    <input matInput style="font-size: 20px;" #PriceInput formControlName="SellingPrice" matInput
                         placeholder="Fiyat">
                 </mat-form-field>
-                <button class="ml-8" [disabled]="!ProductAndPriceFormGroup.valid" mat-raised-button
+                <button [disabled]="isProductExist" class="ml-8" [disabled]="!ProductAndPriceFormGroup.valid" mat-raised-button
                     (click)="AddProduct()" color="primary">{{_translate.instant('COMMON.ADD')}}</button>
             </form>
             <!-- <mat-form-field class="ml-8 w-50 ">
@@ -65,7 +65,7 @@
                 </dxi-column>
 
                 <div *dxTemplate="let row of 'cellTemplate'">
-                    <button (click)="DeleteFromProductsToSellTable(row)" mat-icon-button color="primary">
+                    <button (click)="DeleteFromProductsToSellTable(row.data)" mat-icon-button color="primary">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </div>

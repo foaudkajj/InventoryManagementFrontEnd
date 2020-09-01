@@ -106,6 +106,11 @@ export const locale = {
 				LOGIN_BUTTON: "تسجيل الدخول"
 			}
 		},
+		EXCEPTIONS: {
+			NO_ENOUGHT_COUNT: "لم يتبق من هذا المنتج",
+			NO_SUCH_PRODUCT: ".لايوجد منتج بهذا الرقم في المخزن",
+			ERROR: "خطأ"
+		},
 		AUTH: {
 			GENERAL: {
 				OR: 'Or',

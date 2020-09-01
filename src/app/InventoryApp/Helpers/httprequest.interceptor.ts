@@ -6,10 +6,11 @@ import { Observable, throwError } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { SwalService } from '../services/Swal.Service';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
-    constructor(private router: Router) { }
+    constructor(private router: Router, private swalService: SwalService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -21,20 +22,11 @@ export class RequestInterceptor implements HttpInterceptor {
         const authReq = request.clone({ headers: headers });
         return next.handle(authReq).pipe(
             catchError(error => {
-                console.log(error)
+
                 if (error instanceof HttpErrorResponse && error.status === 401) {
                     this.router.navigate(["login"]);
                 } else {
-                    let errorResponse = {
-                        message: "",
-                        exceptionMessage: "",
-                        exceptionType: "",
-                        stackTrace: ""
-                    };
-
-                    console.log(errorResponse)
-
-                    // <b>${this.translate.instant("Error_Messages.STACK_TRACE")}:</b> ${errorResponse.stackTrace}
+                    this.swalService.showErrorMessage(error.error.error.message);
                 }
                 return throwError(error);
             }));

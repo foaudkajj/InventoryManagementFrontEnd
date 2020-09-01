@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductView } from 'app/InventoryApp/Models/DTOs/ProductView';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,7 @@ import { DxDataGridComponent, DxTextBoxComponent, DxLookupComponent } from 'deve
 import { PaymentScreenComponent } from '../PaymentScreen/payment-screen.component';
 import TextBox from "devextreme/ui/text_box";
 import { SaleUserBranchProductsDTO } from 'app/InventoryApp/Models/DTOs/SaleUserBranchProductsDTO';
+import { UIResponse } from 'app/InventoryApp/Models/UIResponse';
 
 @Component({
   selector: 'app-normal-sale',
@@ -47,6 +48,7 @@ export class NormalSaleComponent implements OnInit {
 
   ProductsToSellTableId: number = 0;
   ProductSellingDto: ProductSellingDto;
+  @ViewChild('PriceInput') PriceInput: ElementRef;
   constructor(public _translate: TranslateService,
     private normalSatisSerice: NormalSatisService,
     public dialog: MatDialog,
@@ -76,8 +78,8 @@ export class NormalSaleComponent implements OnInit {
   }
 
   InitlizeSelledProductsDatasource() {
-    this.normalSatisSerice.GetSoledProductsByUserID(1).toPromise().then((res: SaleUserBranchProductsDTO[]) => {
-      this.SoledProductsDatasource = res;
+    this.normalSatisSerice.GetSoledProductsByUserID(1).toPromise().then((res: UIResponse<SaleUserBranchProductsDTO[]>) => {
+      this.SoledProductsDatasource = res.Entity;
       this.ProductsToSellTableRows = [];
     });
   }
@@ -118,19 +120,27 @@ export class NormalSaleComponent implements OnInit {
         let ProductIds: number[] = this.ProductsToSellTableRows.map(value => value.Id);
         let salePaymentMethods: SalePaymentMethod[] = result.map(value => <SalePaymentMethod>{ Amount: value.Amount, DefferedPaymentCount: value.DefferedPaymentCount, PaymentMethodId: value.PaymentMethodId });
         let ProductSellingDto: ProductSellingDto = { CustomerInfoId: result[0].CustomerInfo.Id, CustomerName: result[0].CustomerInfo.CustomerName, CustomerPhone: result[0].CustomerInfo.CustomerPhone, Receipt: result[0].Receipt, PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, ProductIds: ProductIds, UserId: 1, SalePaymentMethods: salePaymentMethods };
-        this.normalSatisSerice.SellProducts(ProductSellingDto).toPromise().then(_ => this.InitlizeSelledProductsDatasource());
+        this.normalSatisSerice.SellProducts(ProductSellingDto).toPromise().then(_ => this.InitlizeSelledProductsDatasource(), () => this.ProductsToSellTableRows = []);
       }
 
     }));
 
   }
 
-  productCodeFocusOut() {
-    this.normalSatisSerice.GetProductDetails(this.ProductAndPriceFormGroup.controls.ProductFullCode.value).toPromise().then((res: ProductView) => {
-      this.productView = res;
+  isProductExist = false;
+  async productCodeFocusOut() {
+    this.PriceInput.nativeElement.focus();
+    let res: UIResponse<ProductView> = await this.normalSatisSerice.GetProductDetails(this.ProductAndPriceFormGroup.controls.ProductFullCode.value).toPromise();
+    if (!res.isError) {
+      this.isProductExist = true;
+      this.productView = res.Entity;
       this.ProductAndPriceFormGroup.controls.SellingPrice.setValue(this.productView.SellingPrice);
       this.productView.TempId = this.ProductsToSellTableId++;
-    });
+    } else {
+      this.isProductExist = false;
+      this.ProductAndPriceFormGroup.controls.SellingPrice.setValue(0);
+    }
+
   }
 
   onToolbarPreparing(e) {
@@ -164,7 +174,7 @@ export class NormalSaleComponent implements OnInit {
           icon: "find",
           onClick: () => {
             this.soledProductsGrid.searchPanel.text = "Hello"
-            this.normalSatisSerice.GetSoledProductsByUserID(1, this.RangeStartDate.toISOString(), this.RangeEndDate.toISOString()).toPromise().then((res) => this.SoledProductsDatasource = res)
+            this.normalSatisSerice.GetSoledProductsByUserID(1, this.RangeStartDate.toISOString(), this.RangeEndDate.toISOString()).toPromise().then((res: UIResponse<any>) => this.SoledProductsDatasource = res.Entity)
           }
         }
       },

@@ -20,9 +20,10 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { RequestInterceptor } from './InventoryApp/Helpers/httprequest.interceptor';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 const appRoutes: Routes = [
-    { path: "", redirectTo: "usertypeselect", pathMatch: "full" },
+    { path: "", redirectTo: "login", pathMatch: "full" },
     {
 
         path: 'login',
@@ -72,7 +73,10 @@ const appRoutes: Routes = [
 
         // App modules
         LayoutModule,
-        SampleModule
+        SampleModule,
+
+
+        SweetAlert2Module.forRoot()
     ],
     bootstrap: [
         AppComponent

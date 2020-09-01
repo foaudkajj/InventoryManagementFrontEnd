@@ -105,6 +105,11 @@ export const locale = {
 				LOGIN_BUTTON: "Giriş Yap"
 			}
 		},
+		EXCEPTIONS: {
+			NO_ENOUGHT_COUNT: "Stokta bu üründen kalmamıştır.",
+			NO_SUCH_PRODUCT: "Stokta nolu bir ürün bulunmamaktadır.",
+			ERROR: "HATA !"
+		},
 		AUTH: {
 			GENERAL: {
 				OR: 'Or',

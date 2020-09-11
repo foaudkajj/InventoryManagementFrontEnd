@@ -153,7 +153,7 @@ export class ProductManagerComponent implements OnInit {
 
   }
   GetProductFullCode(product: Product) {
-    return ((product.Gender ? 1 : 2).toString() + product.ProductYear.slice(product.ProductYear.length - 2) + product.Size + product.ColorId.toString().padStart(2, '0') + product.ProductCode);
+    return ((product.Gender ? 1 : 2).toString() + product.ProductYear.slice(product.ProductYear.length - 2) + product.Size + product.ColorId.toString().slice(product.ColorId.toString().length - 2, product.ColorId.toString().length).padStart(2, '0') + product.ProductCode);
   }
 
   Fill() {

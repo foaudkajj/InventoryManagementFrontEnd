@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductView } from 'app/InventoryApp/Models/DTOs/ProductView';
 import { Subscription } from 'rxjs';
@@ -14,19 +14,20 @@ import { PaymentScreenComponent } from '../PaymentScreen/payment-screen.componen
 import TextBox from "devextreme/ui/text_box";
 import { SaleUserBranchProductsDTO } from 'app/InventoryApp/Models/DTOs/SaleUserBranchProductsDTO';
 import { UIResponse } from 'app/InventoryApp/Models/UIResponse';
+import { SwalService } from 'app/InventoryApp/services/Swal.Service';
 
 @Component({
   selector: 'app-normal-sale',
   templateUrl: './normal-sale.component.html',
   styleUrls: ['./normal-sale.component.scss']
 })
-export class NormalSaleComponent implements OnInit {
+export class NormalSaleComponent implements OnInit, AfterViewInit {
   RangeStartDate: Date;
   RangeEndDate: Date;
   Genders: any = [{ Value: false, ViewValue: 'Erkek' }, { Value: true, ViewValue: 'Kadın' }]
   // Here I used Material Table
   ProductsToSellDisplayedColumns = ['ProductName', 'ProductFullCode', 'ProductCode', 'ColorName', 'Gender', 'ProductYear', 'SellingPrice', 'Size', 'BranchName', 'actions'];
-  ProductsToSellDataSource: any;
+  ProductsToSellDataSource: ProductView[] = [];
   ProductsToSellTableRows: ProductView[] = [];
   @ViewChild("soledProductsGrid") soledProductsGrid: DxDataGridComponent;
   @ViewChild("customerInfoLookup") customerInfoLookup: DxLookupComponent;
@@ -49,8 +50,11 @@ export class NormalSaleComponent implements OnInit {
   ProductsToSellTableId: number = 0;
   ProductSellingDto: ProductSellingDto;
   @ViewChild('PriceInput') PriceInput: ElementRef;
+  @ViewChild('productCode') productCode: ElementRef;
+
   constructor(public _translate: TranslateService,
     private normalSatisSerice: NormalSatisService,
+    private swal: SwalService,
     public dialog: MatDialog,
     private fb: FormBuilder,) { }
 
@@ -75,6 +79,10 @@ export class NormalSaleComponent implements OnInit {
         Validators.required,
       ])],
     });
+  }
+
+  public hasError = (controlName: string, errorName: string) => {
+    return this.ProductAndPriceFormGroup.controls[controlName].hasError(errorName);
   }
 
   InitlizeSelledProductsDatasource() {
@@ -128,17 +136,37 @@ export class NormalSaleComponent implements OnInit {
   }
 
   isProductExist = false;
+  lowProductCount = false;
+  isProductCountEnough = false;
   async productCodeFocusOut() {
     this.PriceInput.nativeElement.focus();
-    let res: UIResponse<ProductView> = await this.normalSatisSerice.GetProductDetails(this.ProductAndPriceFormGroup.controls.ProductFullCode.value).toPromise();
-    if (!res.isError) {
-      this.isProductExist = true;
-      this.productView = res.Entity;
-      this.ProductAndPriceFormGroup.controls.SellingPrice.setValue(this.productView.SellingPrice);
-      this.productView.TempId = this.ProductsToSellTableId++;
-    } else {
-      this.isProductExist = false;
-      this.ProductAndPriceFormGroup.controls.SellingPrice.setValue(0);
+    const productCode = this.ProductAndPriceFormGroup.controls.ProductFullCode.value;
+    if (productCode && productCode.length == 12) {
+      let res: UIResponse<ProductView> = await this.normalSatisSerice.GetProductDetails(productCode).toPromise();
+      if (!res.isError) {
+        this.isProductExist = true;
+        this.productView = res.Entity;
+        this.ProductAndPriceFormGroup.controls.SellingPrice.setValue(this.productView.SellingPrice);
+        this.productView.TempId = this.ProductsToSellTableId++;
+
+        let ProductCount = this.ProductsToSellDataSource.filter(fi => fi.Id == this.productView.Id).length;
+        this.productView.Count -= ProductCount;
+        if (this.productView.Count <= 10) {
+          this.lowProductCount = true;
+        } else {
+          this.lowProductCount = false;
+        }
+
+        if (this.productView.Count == 0) {
+          this.isProductCountEnough = false;
+        } else {
+          this.isProductCountEnough = true;
+        }
+
+      } else {
+        this.isProductExist = false;
+        this.ProductAndPriceFormGroup.controls.SellingPrice.setValue(0);
+      }
     }
 
   }
@@ -190,6 +218,16 @@ export class NormalSaleComponent implements OnInit {
     // console.log(target)
     // Invokes the default filtering behavior
     return column.defaultCalculateFilterExpression(arguments);
+  }
+
+  focusOutWhenProductCodeEntered(value: string) {
+    if (value.length == 12) {
+      this.PriceInput.nativeElement.focus();
+    }
+  }
+
+  ngAfterViewInit() {
+    this.productCode.nativeElement.focus();
   }
 
 }

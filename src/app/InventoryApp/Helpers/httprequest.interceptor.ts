@@ -22,11 +22,14 @@ export class RequestInterceptor implements HttpInterceptor {
         const authReq = request.clone({ headers: headers });
         return next.handle(authReq).pipe(
             catchError(error => {
-
                 if (error instanceof HttpErrorResponse && error.status === 401) {
                     this.router.navigate(["login"]);
                 } else {
-                    this.swalService.showErrorMessage(error.error.error.message);
+                    if (error.error) {
+                        this.swalService.showErrorMessage(error.error.Message);
+                    } else {
+                        this.swalService.showErrorMessage(error.message);
+                    }
                 }
                 return throwError(error);
             }));

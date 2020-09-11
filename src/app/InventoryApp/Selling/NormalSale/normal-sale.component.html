@@ -22,18 +22,49 @@
         <!-- CONTENT -->
         <div class="mb-24 p-24" style="background-color: white;" fxLayout="column" fxLayoutAlign="start"
             fxLayout.gt-md="row">
-            <form class="kt-form kt-font-bold" style="width: 100%;" [formGroup]="ProductAndPriceFormGroup"
-                autocomplete="off">
-                <mat-form-field class="w-50 ml-8">
-                    <input (focusout)="productCodeFocusOut()" maxlength="12" matInput style="font-size: 20px;"
-                        formControlName="ProductFullCode" matInput placeholder="Ürün Kodu...">
+            <form class=" p-24 mr-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto"
+                [formGroup]="ProductAndPriceFormGroup" autocomplete="off">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <input #productCode type="text" minlength="12" maxlength="12"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                            (focusout)="productCodeFocusOut()"
+                            (change)="focusOutWhenProductCodeEntered($event.target.value)" matInput
+                            style="font-size: 20px;" formControlName="ProductFullCode" id="ProductFullCode" matInput
+                            [placeholder]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')">
+                        <mat-error *ngIf="hasError('ProductFullCode', 'required')">
+                            {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName: _translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')} }}
+                        </mat-error>
+                        <mat-error *ngIf="hasError('ProductFullCode', 'maxlength')">
+                            {{'VALIDATIONS.MAX_LENGTH' | translate:{'maxLength': 12} }}
+                        </mat-error>
+                        <mat-error *ngIf="hasError('ProductFullCode', 'minlength')">
+                            {{'VALIDATIONS.MIN_LENGTH' | translate:{'minLength': 12} }}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                        <input matInput style="font-size: 20px;" #PriceInput formControlName="SellingPrice"
+                            id="SellingPrice" matInput placeholder="Fiyat">
+                    </mat-form-field>
+                    <span class="status h6 p-4" [ngClass]="'red-500'" *ngIf="lowProductCount">
+                        {{'MESSAGES.REMAINING_PRODUCTS_COUNT' | translate:{'count': productView.Count} }}
+                    </span>
+                </div>
+                <button class="ml-8"
+                    [disabled]="!ProductAndPriceFormGroup.valid || !isProductExist || !isProductCountEnough"
+                    mat-raised-button (click)="AddProduct()"
+                    color="primary">{{_translate.instant('COMMON.ADD')}}</button>
+                <!-- <mat-form-field class="w-50 ml-8">
+
                 </mat-form-field>
+                <p class="status text-truncate h6 p-4" *ngIf="lowProductCount">
+                    This is a warning alert—check it out!
+                </p>
                 <mat-form-field class="ml-8">
-                    <input matInput style="font-size: 20px;" #PriceInput formControlName="SellingPrice" matInput
-                        placeholder="Fiyat">
-                </mat-form-field>
-                <button [disabled]="isProductExist" class="ml-8" [disabled]="!ProductAndPriceFormGroup.valid" mat-raised-button
-                    (click)="AddProduct()" color="primary">{{_translate.instant('COMMON.ADD')}}</button>
+
+                </mat-form-field> -->
+
             </form>
             <!-- <mat-form-field class="ml-8 w-50 ">
                 <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtre">

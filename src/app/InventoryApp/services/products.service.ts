@@ -3,7 +3,7 @@ import { BaseService } from './base.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Product } from '../Models/Product';
+import { ProductDto } from '../Models/ProductDto';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +22,12 @@ export class ProductService extends BaseService {
     return result$;
   }
 
-  ModifyProduct(id: number, Product: Product): Observable<any> {
+  ModifyProduct(id: number, Product: ProductDto): Observable<any> {
     let result$ = this.put(`Products/${id}`, Product);
     return result$;
   }
 
-  AddProducts(Products: Product[]): Observable<any> {
+  AddProducts(Products: ProductDto[]): Observable<any> {
     let result$ = this.post(`Products`, Products);
     return result$;
   }

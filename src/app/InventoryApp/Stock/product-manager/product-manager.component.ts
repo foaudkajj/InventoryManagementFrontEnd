@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Product } from 'app/InventoryApp/Models/Product';
+import { ProductDto } from 'app/InventoryApp/Models/ProductDto';
 import { map } from 'rxjs/operators';
 import { from, timer } from 'rxjs';
 import { ProductView } from 'app/InventoryApp/Models/DTOs/ProductView';
@@ -21,6 +21,9 @@ import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { DxStoreOptions } from 'app/InventoryApp/Models/DxStoreOptions';
 import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
+import { UIResponse } from 'app/InventoryApp/Models/UIResponse';
+import { AddProductsDto } from 'app/InventoryApp/Models/DTOs/AddProductsDto';
+import { SwalService } from 'app/InventoryApp/services/Swal.Service';
 
 @Component({
   selector: 'app-product-manager',
@@ -44,7 +47,9 @@ export class ProductManagerComponent implements OnInit {
     private branchesService: BranchesService,
     public _translate: TranslateService,
     private router: Router,
-    private dxStore: DxStoreService) { }
+    private dxStore: DxStoreService,
+    private swal: SwalService
+  ) { }
 
   ngOnInit() {
     //   var dataSource = new DevExpress.data.DataSource({
@@ -70,7 +75,22 @@ export class ProductManagerComponent implements OnInit {
   filTable() {
     let storeOption: DxStoreOptions = {
       loadUrl: "Products", insertUrl: "Products", updateUrl: "Products", deleteUrl: "Products", Key: "Id",
-      onInserted: () => { this.ProductForm.reset(); this.productsGrid.instance.refresh(); },
+      onInserted: (values: UIResponse<AddProductsDto>, key) => {
+        // this.ProductForm.reset();
+        this.productsGrid.instance.refresh();
+        console.log(values)
+        console.log(values.IsError)
+        if (values.IsError) {
+          let html = this._translate.instant(values.Message) as string;
+          values.Entity.ExistedProducts.forEach(fe => {
+            console.log(fe)
+            html = html.concat(`<br/> ${fe.ProductName} | ${fe.ProductCode} | ${fe.ProductFullCode} | ${fe.Size}`)
+            console.log(html)
+          });
+          console.log(html);
+          this.swal.showErrorMessageWithData(html);
+        }
+      },
       onRemoved: () => this.productsGrid.instance.refresh()
     };
     this.store = this.dxStore.GetStore(storeOption);
@@ -125,13 +145,13 @@ export class ProductManagerComponent implements OnInit {
     });
   }
 
-  rows: Product[] = [];
+  rows: ProductDto[] = [];
   AddRow() {
     // this.productsGrid.instance.addRow()
     if (!this.ProductForm.invalid) {
 
       // The next object is created to send to DB
-      const product: Product[] = [{
+      const product: ProductDto[] = [{
         ColorId: this.ProductForm.controls.Color.value,
         Gender: this.ProductForm.controls.Gender.value,
         Price: this.ProductForm.controls.Price.value,
@@ -152,13 +172,13 @@ export class ProductManagerComponent implements OnInit {
 
 
   }
-  GetProductFullCode(product: Product) {
-    return ((product.Gender ? 1 : 2).toString() + product.ProductYear.slice(product.ProductYear.length - 2) + product.Size + product.ColorId.toString().padStart(2, '0') + product.ProductCode);
+  GetProductFullCode(product: ProductDto) {
+    return ((product.Gender ? 1 : 2).toString() + product.ProductYear.slice(product.ProductYear.length - 2) + product.Size + product.ColorId.toString().slice(product.ColorId.toString().length - 2, product.ColorId.toString().length).padStart(2, '0') + product.ProductCode);
   }
 
   Fill() {
     if (!this.ProductForm.invalid) {
-      let product: Product = {
+      let product: ProductDto = {
         ColorId: this.ProductForm.controls.Color.value,
         Gender: this.ProductForm.controls.Gender.value,
         Price: this.ProductForm.controls.Price.value,
@@ -173,7 +193,7 @@ export class ProductManagerComponent implements OnInit {
       };
 
 
-      const products: Product[] = [];
+      const products: ProductDto[] = [];
       // Gender 1 ise Kadin demektir
       if (product.Gender == true) {
         from([35, 36, 37, 38, 39, 40, 41]).subscribe(size => {

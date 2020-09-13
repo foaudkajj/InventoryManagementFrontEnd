@@ -17,28 +17,27 @@ import { MatButtonModule } from '@angular/material/button';
 import { PaymentMethodsService } from 'app/InventoryApp/services/payment-methods.service';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ConsumerInfosService } from 'app/InventoryApp/services/ConsumerInfo.service';
+import { InventorySharedModule } from 'app/InventoryApp/inventory-shared.module';
 
 
 @NgModule({
   declarations: [NormalSaleComponent, PaymentScreenComponent],
   imports: [
-    CommonModule,
     NormalSaleRoutingModule,
     DxDataGridModule,
     DxDateBoxModule,
     MatFormFieldModule,
     MatIconModule,
-    ReactiveFormsModule,
     MatDialogModule,
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
-    FormsModule,
     MatInputModule,
     MatButtonModule,
     DxLookupModule,
     MatGridListModule,
-    DxSelectBoxModule
+    DxSelectBoxModule,
+    InventorySharedModule
   ],
   entryComponents: [PaymentScreenComponent],
   providers: [PaymentMethodsService, ConsumerInfosService]

@@ -105,7 +105,7 @@
 
             <!-- <div class="example-container mat-elevation-z8"> -->
             <dx-data-grid [remoteOperations]="true" #productsGrid [(selectedRowKeys)]="selectedProducts"
-                [dataSource]="store" [columnHidingEnabled]="true" [showBorders]="true"
+                [dataSource]="store" [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true"
                 (onToolbarPreparing)="onToolbarPreparing($event)">
                 <dxi-column [allowFiltering]="false" [formItem]="{visible: false}" [allowEditing]="false"
                     [allowSorting]="false" cellTemplate="cellTemplate">
@@ -144,7 +144,7 @@
                 </dxo-editing>
                 <dxo-selection [selectAllMode]="'page'" [showCheckBoxesMode]="'always'" mode="multiple">
                 </dxo-selection>
-
+                <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
                 <dxo-search-panel [visible]="true" [width]="240"
                     [placeholder]="_translate.instant('STOCK_MODULE.MASTER_DATA.SEARCH')"></dxo-search-panel>
                 <dxo-filter-row [visible]="true" [applyFilter]="'auto'"></dxo-filter-row>
@@ -157,9 +157,9 @@
                         matTooltip="Sil">
                         <mat-icon>remove_red_eye</mat-icon>
                     </button>
-                    <button (click)="editRow(data)" mat-icon-button color="primary" type="button" matTooltip="Sil">
+                    <!-- <button (click)="editRow(data)" mat-icon-button color="primary" type="button" matTooltip="Sil">
                         <mat-icon>edit</mat-icon>
-                    </button>
+                    </button> -->
                 </div>
 
                 <div *dxTemplate="let data of 'printButton'">

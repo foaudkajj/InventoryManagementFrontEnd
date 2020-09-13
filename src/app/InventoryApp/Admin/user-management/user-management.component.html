@@ -26,8 +26,8 @@
 
             <div class="example-container mat-elevation-z8">
 
-                <dx-data-grid #UsersGrid id="gridContainer" [columnHidingEnabled]="true" [remoteOperations]="true" [dataSource]="store"
-                    [showBorders]="true">
+                <dx-data-grid #UsersGrid id="gridContainer" [allowColumnResizing]="true" [columnAutoWidth]="true"
+                    [remoteOperations]="true" [dataSource]="store" [showBorders]="true">
                     <dxi-column [caption]="'Id'" dataField="Id" [visible]="false" [formItem]="{visible: false}"
                         dataType="number">
                     </dxi-column>
@@ -55,7 +55,7 @@
                         <dxi-validation-rule type="required"></dxi-validation-rule>
                     </dxi-column>
                     <dxi-column [caption]="translate.instant('ADMIN_MODULE.USER_MANAGEMENT.PASSWORD')"
-                        dataField="Password"></dxi-column>
+                        dataField="Password" [visible]="false"></dxi-column>
                     <dxi-column [caption]="translate.instant('ADMIN_MODULE.USER_MANAGEMENT.IMAGE_PATH')"
                         dataField="ImagePath"></dxi-column>
                     <dxi-column [caption]="translate.instant('ADMIN_MODULE.USER_MANAGEMENT.EMAIL')" dataField="Email">
@@ -71,6 +71,7 @@
                     </dxi-column>
                     <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
                     </dxo-editing>
+                    <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
                 </dx-data-grid>
 
             </div>

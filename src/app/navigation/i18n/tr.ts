@@ -105,6 +105,22 @@ export const locale = {
 				LOGIN_BUTTON: "Giriş Yap"
 			}
 		},
+		EXCEPTIONS: {
+			NO_ENOUGHT_COUNT: "Stokta bu üründen kalmamıştır.",
+			NO_SUCH_PRODUCT: "Stokta nolu bir ürün bulunmamaktadır.",
+			ERROR: "HATA !",
+			SQL_RELATIONSHIP: "Silmeye çalıştığınız kayıt başka yerde kullanılmıştır. Lütfen bu kayıtla ilişkili diğer kayıtları silip tekrar deneyiniz.",
+			EXISTING_PRODUCTS: "Bazı ürünler, daha önce eklendiğinden, eklenememiştir."
+
+		},
+		VALIDATIONS: {
+			CONTROL_REQURIRED: "{{formName}} Boş Olamaz.",
+			MAX_LENGTH: "en fazla {{maxLength}} ",
+			MIN_LENGTH: "en az {{minLength}}"
+		},
+		MESSAGES: {
+			REMAINING_PRODUCTS_COUNT: "Bu üründen stokta sadece {{count}} tane kalmıştır."
+		},
 		AUTH: {
 			GENERAL: {
 				OR: 'Or',

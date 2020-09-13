@@ -106,6 +106,21 @@ export const locale = {
 				LOGIN_BUTTON: "تسجيل الدخول"
 			}
 		},
+		EXCEPTIONS: {
+			NO_ENOUGHT_COUNT: "لم يتبق من هذا المنتج",
+			NO_SUCH_PRODUCT: ".لايوجد منتج بهذا الرقم في المخزن",
+			ERROR: "خطأ",
+			SQL_RELATIONSHIP: "القيد الذي تحاول مسحه تم استخدامه في مكان آخر. امسح القيود المتعلقة بهذا القيد ثم حاول مسحه مرة أخرى.",
+			EXISTING_PRODUCTS: "بعض المنتجات لم يتم إضافتها لأنها موجودة مسبقاً"
+		},
+		VALIDATIONS: {
+			CONTROL_REQURIRED: "{{formName}} لا يمكن أن يكون فارغاً",
+			MAX_LENGTH: "الحد الأقصى {{maxLength}}",
+			MIN_LENGTH: "الحد الأدنى {{minLength}}"
+		},
+		MESSAGES:{
+			REMAINING_PRODUCTS_COUNT: "بقي {{count}} قطع من هذا المنتج في المخزن."
+		},
 		AUTH: {
 			GENERAL: {
 				OR: 'Or',

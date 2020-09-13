@@ -1,5 +1,5 @@
 import { Branch } from '../Branch';
-import { Product } from '../Product';
+import { ProductDto } from '../ProductDto';
 import { PaymentMethod } from '../PaymentMethod';
 import { SalePaymentMethod } from './SalePaymentMethod';
 

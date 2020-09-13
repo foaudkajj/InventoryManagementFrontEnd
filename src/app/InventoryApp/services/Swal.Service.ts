@@ -12,4 +12,12 @@ export class SwalService {
             "error"
         );
     }
+
+    showErrorMessageWithData(message?: string) {
+        swal.fire(
+            this.translate.instant("EXCEPTIONS.ERROR"),
+            this.translate.instant(message),
+            "error"
+        );
+    }
 }

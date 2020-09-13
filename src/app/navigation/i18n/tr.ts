@@ -109,7 +109,8 @@ export const locale = {
 			NO_ENOUGHT_COUNT: "Stokta bu üründen kalmamıştır.",
 			NO_SUCH_PRODUCT: "Stokta nolu bir ürün bulunmamaktadır.",
 			ERROR: "HATA !",
-			SQL_RELATIONSHIP: "Silmeye çalıştığınız kayıt başka yerde kullanılmıştır. Lütfen bu kayıtla ilişkili diğer kayıtları silip tekrar deneyiniz."
+			SQL_RELATIONSHIP: "Silmeye çalıştığınız kayıt başka yerde kullanılmıştır. Lütfen bu kayıtla ilişkili diğer kayıtları silip tekrar deneyiniz.",
+			EXISTING_PRODUCTS: "Bazı ürünler, daha önce eklendiğinden, eklenememiştir."
 
 		},
 		VALIDATIONS: {

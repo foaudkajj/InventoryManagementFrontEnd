@@ -1,12 +1,12 @@
 export interface UIResponse<T> {
-    data: any[];
+    Data: any[];
     Entity: T;
-    totalCount: number;
-    groupCount: number;
-    summary: any[];
-    type: string;
-    message: string;
-    isError: boolean;
-    error: any;
-    statusCode: number;
+    TotalCount: number;
+    GroupCount: number;
+    Summary: any[];
+    Type: string;
+    Message: string;
+    IsError: boolean;
+    Error: any;
+    StatusCode: number;
 }

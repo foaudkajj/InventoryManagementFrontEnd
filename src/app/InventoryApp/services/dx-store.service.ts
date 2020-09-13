@@ -9,11 +9,12 @@ import CustomStore from 'devextreme/data/custom_store';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
 import { environment } from 'environments/environment';
 import { DxStoreOptions } from '../Models/DxStoreOptions';
+import { SwalService } from './Swal.Service';
 
 
 @Injectable()
 export class DxStoreService {
-    constructor() {
+    constructor(private swal: SwalService) {
     }
 
     GetStore(storeOptions: DxStoreOptions): CustomStore {
@@ -30,7 +31,8 @@ export class DxStoreService {
                     "Authorization": "Bearer " + sessionStorage.getItem("Authorization")
                 }
                 return storeOptions.OnBeforeSend;
-            }
+            },
+            errorHandler: (e: Error) => this.swal.showErrorMessage(e.message)
         })
     }
 }

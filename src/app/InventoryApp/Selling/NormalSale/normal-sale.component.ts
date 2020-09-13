@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NormalSatisService } from 'app/InventoryApp/services/normal-satis.service';
 import { PaymentPopup } from 'app/InventoryApp/Models/DTOs/PaymentPopup';
 import { SalePaymentMethod } from 'app/InventoryApp/Models/DTOs/SalePaymentMethod';
-import { Product } from 'app/InventoryApp/Models/Product';
+import { ProductDto } from 'app/InventoryApp/Models/ProductDto';
 import { DxDataGridComponent, DxTextBoxComponent, DxLookupComponent } from 'devextreme-angular';
 import { PaymentScreenComponent } from '../PaymentScreen/payment-screen.component';
 import TextBox from "devextreme/ui/text_box";
@@ -143,7 +143,7 @@ export class NormalSaleComponent implements OnInit, AfterViewInit {
     const productCode = this.ProductAndPriceFormGroup.controls.ProductFullCode.value;
     if (productCode && productCode.length == 12) {
       let res: UIResponse<ProductView> = await this.normalSatisSerice.GetProductDetails(productCode).toPromise();
-      if (!res.isError) {
+      if (!res.IsError) {
         this.isProductExist = true;
         this.productView = res.Entity;
         this.ProductAndPriceFormGroup.controls.SellingPrice.setValue(this.productView.SellingPrice);

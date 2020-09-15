@@ -86,7 +86,7 @@
 
                     <mat-form-field class="ml-8 custom-css">
                         <mat-select formControlName="Color" autocomplete="off"
-                            placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.COLOR_NAME')}}" required>
+                            placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.COLOR_NAME')}}">
                             <mat-option *ngFor="let color of colorsList" [value]="color.Id">
                                 {{ color.ColorName }}
                             </mat-option>

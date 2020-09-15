@@ -72,7 +72,7 @@ export const locale = {
 				PAYMENT_NAME: "Ödeme İsmi",
 				PAYMENT_TYPE: "Vadeli Ödeme İmkanı",
 				ADD: "Ekle",
-				FILL: "Doldu",
+				FILL: "Doldur",
 				PRODUCT_NAME: "Ürün İsmi",
 				PRODUCT_FULL_CODE: "Ürün barkodu",
 				COLOR_NAME: "Renk",

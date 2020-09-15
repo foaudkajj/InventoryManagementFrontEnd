@@ -30,7 +30,7 @@
                         <input #productCode type="text" minlength="12" maxlength="12"
                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                             (focusout)="productCodeFocusOut()"
-                            (change)="focusOutWhenProductCodeEntered($event.target.value)" matInput
+                            (change)="focusOutWhenProductCodeEntered($event.target.value)" 
                             style="font-size: 20px;" formControlName="ProductFullCode" id="ProductFullCode" matInput
                             [placeholder]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')">
                         <mat-error *ngIf="hasError('ProductFullCode', 'required')">
@@ -44,8 +44,11 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
-                        <input matInput style="font-size: 20px;" #PriceInput formControlName="SellingPrice"
-                            id="SellingPrice" matInput placeholder="Fiyat">
+                        <input type="number" style="font-size: 20px;" #PriceInput formControlName="SellingPrice"
+                            id="SellingPrice" matInput placeholder="{{_translate.instant('SELLING_MODULE.NORMAL_SALE.SELLING_PRICE')}}" min="1">
+                            <mat-error *ngIf="hasError('SellingPrice', 'required')">
+                                {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName: _translate.instant('SELLING_MODULE.NORMAL_SALE.SELLING_PRICE')} }}
+                            </mat-error>
                     </mat-form-field>
                     <span class="status h6 p-4" [ngClass]="'red-500'" *ngIf="lowProductCount">
                         {{'MESSAGES.REMAINING_PRODUCTS_COUNT' | translate:{'count': productView.Count} }}

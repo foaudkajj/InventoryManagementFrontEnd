@@ -144,6 +144,9 @@ export class ProductManagerComponent implements OnInit {
       ])]
     });
   }
+  public hasError = (controlName: string, errorName: string) => {
+    return this.ProductForm.controls[controlName].hasError(errorName);
+  }
 
   rows: ProductDto[] = [];
   AddRow() {

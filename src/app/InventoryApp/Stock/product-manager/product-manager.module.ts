@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { ProductManagerRoutingModule } from './product-manager-routing.module';
 import { ProductManagerComponent } from './product-manager.component';
@@ -8,7 +7,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ColorsService } from 'app/InventoryApp/services/Colors.service';
 import { ProductService } from 'app/InventoryApp/services/products.service';
 import { BranchesService } from 'app/InventoryApp/services/branches.service';
@@ -18,19 +16,18 @@ import { EticketTemplateComponent } from './eticket-template/eticket-template.co
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { DxBoxModule, DxDataGridModule } from 'devextreme-angular';
 import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
+import { InventorySharedModule } from 'app/InventoryApp/inventory-shared.module';
 
 @NgModule({
   declarations: [ProductManagerComponent, EticketTemplateComponent],
   imports: [
-    CommonModule,
+    InventorySharedModule,
     ProductManagerRoutingModule,
     MatFormFieldModule,
     MatSelectModule,
     MatTableModule,
     MatIconModule,
     MatPaginatorModule,
-    ReactiveFormsModule,
-    FormsModule,
     MatInputModule,
     MatButtonModule,
     NgxBarcodeModule,

@@ -98,6 +98,7 @@ export class NormalSaleComponent implements OnInit, AfterViewInit {
     this.ProductsToSellTableRows.push(this.productView);
     this.AssingDataToProductsToSellTable();
     this.ProductAndPriceFormGroup.reset();
+    this.lowProductCount = false;
   }
 
   AssingDataToProductsToSellTable() {

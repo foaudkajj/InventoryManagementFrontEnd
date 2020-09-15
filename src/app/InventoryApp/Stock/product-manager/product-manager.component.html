@@ -149,6 +149,10 @@
                     [placeholder]="_translate.instant('STOCK_MODULE.MASTER_DATA.SEARCH')"></dxo-search-panel>
                 <dxo-filter-row [visible]="true" [applyFilter]="'auto'"></dxo-filter-row>
                 <dxo-header-filter [visible]="true"></dxo-header-filter>
+                <dxo-summary>
+                    <dxi-total-item column="Count" summaryType="sum">
+                    </dxi-total-item>
+                </dxo-summary>
                 <div *dxTemplate="let data of 'cellTemplate'">
                     <button (click)="DeleteFromColorTB(data.data)" mat-icon-button color="warn" matTooltip="Göster">
                         <mat-icon>delete</mat-icon>

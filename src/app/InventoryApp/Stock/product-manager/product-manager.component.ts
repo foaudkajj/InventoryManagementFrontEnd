@@ -236,10 +236,21 @@ export class ProductManagerComponent implements OnInit {
   }
 
   async PrintButton() {
-    for (const selectedProduct of this.productsGrid.instance.getSelectedRowsData()) {
-      await this.ShowProductTag(selectedProduct);
-      this.productsGrid.instance.clearSelection();
+    let QueryParams = '';
+
+    for (const selectedProduct of (this.productsGrid.instance.getSelectedRowsData() as ProductView[])) {
+      QueryParams = QueryParams.concat(selectedProduct.ProductFullCode, ',')
+      // if (selectedProduct.Count != 0)
+      //   Array.from({ length: selectedProduct.Count }).map(m => QueryParams = QueryParams.concat(selectedProduct.ProductFullCode, ','));
+      // else
+      //   QueryParams = QueryParams.concat(selectedProduct.ProductFullCode, ',')
+
     }
+
+    let url = this.router.createUrlTree(['ReportViewer'], { queryParams: { ProductFullCode: QueryParams.substring(0, QueryParams.length - 1) } })
+    console.log(url.toString())
+    window.open('#' + url.toString(), '_blank')
+
   }
 
 

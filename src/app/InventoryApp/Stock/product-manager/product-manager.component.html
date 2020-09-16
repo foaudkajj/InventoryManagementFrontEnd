@@ -28,25 +28,25 @@
                     <mat-form-field class="custom-css">
                         <input matInput formControlName="ProductName" autocomplete="off"
                             placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_NAME')}}">
-                            <mat-error *ngIf="hasError('ProductName', 'required')">
-                                {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_NAME')} }}
-                            </mat-error>
+                        <mat-error *ngIf="hasError('ProductName', 'required')">
+                            {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_NAME')} }}
+                        </mat-error>
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
                         <input matInput formControlName="Price" type="number" min="0" autocomplete="off"
                             placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.PRICE')}}">
-                            <mat-error *ngIf="hasError('Price', 'required')">
-                                {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:_translate.instant('STOCK_MODULE.MASTER_DATA.PRICE')} }}
-                            </mat-error>
+                        <mat-error *ngIf="hasError('Price', 'required')">
+                            {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:_translate.instant('STOCK_MODULE.MASTER_DATA.PRICE')} }}
+                        </mat-error>
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
                         <input matInput formControlName="SellingPrice" min="0" type="number" autocomplete="off"
                             placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.SELLING_PRICE')}}">
-                            <mat-error *ngIf="hasError('SellingPrice', 'required')">
-                                {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:_translate.instant('STOCK_MODULE.MASTER_DATA.SELLING_PRICE')} }}
-                            </mat-error>
+                        <mat-error *ngIf="hasError('SellingPrice', 'required')">
+                            {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:_translate.instant('STOCK_MODULE.MASTER_DATA.SELLING_PRICE')} }}
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
                         <mat-select matInput formControlName="Gender" autocomplete="off"
@@ -64,12 +64,12 @@
                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                             matInput formControlName="ProductYear" autocomplete="off"
                             placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_YEAR')}}">
-                            <mat-error *ngIf="hasError('ProductYear', 'required')">
-                                {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_YEAR')} }}
-                            </mat-error>
-                            <mat-error *ngIf="hasError('ProductYear', 'minlength')">
-                                {{'VALIDATIONS.MIN_LENGTH' | translate:{'minLength': 4} }}
-                            </mat-error>
+                        <mat-error *ngIf="hasError('ProductYear', 'required')">
+                            {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_YEAR')} }}
+                        </mat-error>
+                        <mat-error *ngIf="hasError('ProductYear', 'minlength')">
+                            {{'VALIDATIONS.MIN_LENGTH' | translate:{'minLength': 4} }}
+                        </mat-error>
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
@@ -77,9 +77,9 @@
                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                             matInput formControlName="ProductCode" autocomplete="off"
                             placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_CODE')}}">
-                            <mat-error *ngIf="hasError('ProductYear', 'required')">
-                                {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_CODE')} }}
-                            </mat-error>
+                        <mat-error *ngIf="hasError('ProductYear', 'required')">
+                            {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_CODE')} }}
+                        </mat-error>
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
 
@@ -96,22 +96,22 @@
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
-                        <input type="number" minlength="2" maxlength="2" 
+                        <input type="number" minlength="2" maxlength="2"
                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                             formControlName="Size" matInput
                             placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.SIZE')}}">
-                            <mat-error *ngIf="hasError('Size', 'required')">
-                                {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:_translate.instant('STOCK_MODULE.MASTER_DATA.SIZE')} }}
-                            </mat-error>
+                        <mat-error *ngIf="hasError('Size', 'required')">
+                            {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:_translate.instant('STOCK_MODULE.MASTER_DATA.SIZE')} }}
+                        </mat-error>
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
 
                     <mat-form-field class="ml-8 custom-css">
                         <input type="number" formControlName="Count" matInput min="1"
                             placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.COUNT')}}">
-                            <mat-error *ngIf="hasError('Count', 'required')">
-                                {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:_translate.instant('STOCK_MODULE.MASTER_DATA.COUNT')} }}
-                            </mat-error>
+                        <mat-error *ngIf="hasError('Count', 'required')">
+                            {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:_translate.instant('STOCK_MODULE.MASTER_DATA.COUNT')} }}
+                        </mat-error>
                         <!-- <mat-hint align="start">Please enter your full name</mat-hint> -->
                     </mat-form-field>
 
@@ -153,10 +153,13 @@
                     <dxo-lookup [dataSource]="Genders" displayExpr="ViewValue" valueExpr="Value">
                     </dxo-lookup>
                 </dxi-column>
-                <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRICE')" dataField="Price">
+                <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRICE')" dataField="Price"
+                    format="currency">
+                    <dxo-format type="currency" precision="2"></dxo-format>
                 </dxi-column>
                 <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.SELLING_PRICE')"
-                    dataField="SellingPrice">
+                    dataField="SellingPrice" format="currency">
+                    <dxo-format type="currency" precision="2"></dxo-format>
                 </dxi-column>
                 <dxi-column [caption]="_translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_YEAR')"
                     dataField="ProductYear"></dxi-column>
@@ -181,6 +184,11 @@
                 <dxo-header-filter [visible]="true"></dxo-header-filter>
                 <dxo-summary>
                     <dxi-total-item column="Count" summaryType="sum">
+                    </dxi-total-item>
+                    <dxi-total-item column="Price" summaryType="sum" [valueFormat]="{type: 'currency', precision:'2'}">
+                    </dxi-total-item>
+                    <dxi-total-item column="SellingPrice" summaryType="sum"
+                        [valueFormat]="{type: 'currency', precision:'2'}">
                     </dxi-total-item>
                 </dxo-summary>
                 <div *dxTemplate="let data of 'cellTemplate'">

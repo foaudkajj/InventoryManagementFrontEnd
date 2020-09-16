@@ -9,6 +9,7 @@ import { PaymentMethod } from 'app/InventoryApp/Models/PaymentMethod';
 import { Color } from 'app/InventoryApp/Models/Color';
 import { Branch } from 'app/InventoryApp/Models/Branch';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-master-data',
@@ -16,7 +17,6 @@ import { MatTableDataSource, MatTable } from '@angular/material/table';
   styleUrls: ['./master-data.component.scss']
 })
 export class MasterDataComponent implements OnInit {
-
  // Array contains placeholders we want to show.
  FormFieldsPlaceholder = [];
  MasterDatasFormGroup: FormGroup;
@@ -30,7 +30,10 @@ export class MasterDataComponent implements OnInit {
  displayedColumnsInGrid = ['actions'];
  // This is used to get an instance of the table.
  @ViewChild(MatTable, { static: false }) MDTable: MatTable<any>;
-
+ @ViewChild(MatPaginator) paginator: MatPaginator;
+ ngAfterViewInit() {
+  this.dataSource.paginator = this.paginator;
+}
  constructor(private fb: FormBuilder,
    private colorsService: ColorsService,
    private branchesService: BranchesService,

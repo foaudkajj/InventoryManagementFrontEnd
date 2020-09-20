@@ -30,8 +30,8 @@
                         <input #productCode type="text" minlength="12" maxlength="12"
                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                             (focusout)="productCodeFocusOut()"
-                            (change)="focusOutWhenProductCodeEntered($event.target.value)" 
-                            style="font-size: 20px;" formControlName="ProductFullCode" id="ProductFullCode" matInput
+                            (change)="focusOutWhenProductCodeEntered($event.target.value)" style="font-size: 20px;"
+                            formControlName="ProductFullCode" id="ProductFullCode" matInput
                             [placeholder]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')">
                         <mat-error *ngIf="hasError('ProductFullCode', 'required')">
                             {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName: _translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')} }}
@@ -45,10 +45,11 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
                         <input type="number" style="font-size: 20px;" #PriceInput formControlName="SellingPrice"
-                            id="SellingPrice" matInput placeholder="{{_translate.instant('SELLING_MODULE.NORMAL_SALE.SELLING_PRICE')}}" min="1">
-                            <mat-error *ngIf="hasError('SellingPrice', 'required')">
-                                {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName: _translate.instant('SELLING_MODULE.NORMAL_SALE.SELLING_PRICE')} }}
-                            </mat-error>
+                            id="SellingPrice" matInput
+                            placeholder="{{_translate.instant('SELLING_MODULE.NORMAL_SALE.SELLING_PRICE')}}" min="1">
+                        <mat-error *ngIf="hasError('SellingPrice', 'required')">
+                            {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName: _translate.instant('SELLING_MODULE.NORMAL_SALE.SELLING_PRICE')} }}
+                        </mat-error>
                     </mat-form-field>
                     <span class="status h6 p-4" [ngClass]="'red-500'" *ngIf="lowProductCount">
                         {{'MESSAGES.REMAINING_PRODUCTS_COUNT' | translate:{'count': productView.Count} }}
@@ -120,11 +121,10 @@
                 <span>{{_translate.instant('SELLING_MODULE.NORMAL_SALE.SOLED_PRODUCTS')}}</span>
             </div>
             <!-- / CONTENT TOOLBAR -->
-            <dx-data-grid #soledProductsGrid (onToolbarPreparing)="onToolbarPreparing($event)"
-                [hoverStateEnabled]="true" [columnAutoWidth]="true" [showColumnLines]="true" [showRowLines]="true"
-                [showBorders]="true" [rowAlternationEnabled]="true" id="gridContainer"
-                [dataSource]="SoledProductsDatasource" [masterDetail]="{ enabled: true, template: 'detail' }"
-                keyExpr="Id">
+            <dx-data-grid #soledProductsGrid [remoteOperations]="true" [hoverStateEnabled]="true"
+                [columnAutoWidth]="true" [showColumnLines]="true" [showRowLines]="true" [showBorders]="true"
+                [rowAlternationEnabled]="true" id="gridContainer" [dataSource]="soledProductsStore"
+                [masterDetail]="{ enabled: true, template: 'detail' }">
                 <dxo-filter-row [visible]="true"></dxo-filter-row>
                 <dxo-header-filter [visible]="true"></dxo-header-filter>
                 <dxo-search-panel [visible]="true" [placeholder]="_translate.instant('COMMON.SEARCH')">
@@ -132,7 +132,7 @@
                 <dxo-group-panel [visible]="true"></dxo-group-panel>
                 <dxo-selection mode="single"></dxo-selection>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.DATE')" dataType="date"
-                    dataField="Date" format="dd.MM.yyyy, HH:mm" caption="Title"></dxi-column>
+                    dataField="Date" format="dd.MM.yyyy, HH:mm" caption="Title" [filterValue]="today"></dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.TOTAL')" alignment="left"
                     dataField="Total" dataType="Currency"></dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.USER_CODE')" alignment="left"

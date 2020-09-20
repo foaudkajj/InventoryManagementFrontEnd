@@ -3,6 +3,7 @@ export interface DxStoreOptions {
     loadUrl: string;
     insertUrl?: string;
     deleteUrl?: string;
+    loadParams?: Object;
     updateUrl?: string;
     onInserted?: (values: any, key: any) => void;
     onRemoved?: (key: any) => void;

@@ -9,7 +9,7 @@ export interface ProductView{
     ColorName: string;
     Color: Color;
     Gender: string;
-    Price: string;
+    Price: number;
     ProductYear: string;
     Size: number;
     Count: number;

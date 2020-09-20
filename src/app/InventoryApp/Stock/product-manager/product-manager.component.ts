@@ -88,7 +88,7 @@ export class ProductManagerComponent implements OnInit {
             console.log(html)
           });
           console.log(html);
-          this.swal.showErrorMessageWithData(html);
+          this.swal.showErrorMessage(html);
         }
       },
       onRemoved: () => this.productsGrid.instance.refresh()

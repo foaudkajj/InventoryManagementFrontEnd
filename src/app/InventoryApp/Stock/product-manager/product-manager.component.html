@@ -96,7 +96,7 @@
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="ml-8 custom-css">
-                        <input type="number" minlength="2" maxlength="2"
+                        <input type="number"
                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                             formControlName="Size" matInput
                             placeholder="{{_translate.instant('STOCK_MODULE.MASTER_DATA.SIZE')}}">

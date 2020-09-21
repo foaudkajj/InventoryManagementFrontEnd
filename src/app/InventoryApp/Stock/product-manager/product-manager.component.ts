@@ -125,7 +125,8 @@ export class ProductManagerComponent implements OnInit {
       ])],
       Size: ['', Validators.compose([
         Validators.required,
-        Validators.maxLength(2)
+        Validators.max(99),
+        Validators.min(0)
       ])],
       Price: ['', Validators.compose([
         Validators.required
@@ -176,7 +177,9 @@ export class ProductManagerComponent implements OnInit {
 
   }
   GetProductFullCode(product: ProductDto) {
-    return ((product.Gender ? 1 : 2).toString() + product.ProductYear.slice(product.ProductYear.length - 2) + product.Size + product.ColorId.toString().slice(product.ColorId.toString().length - 2, product.ColorId.toString().length).padStart(2, '0') + product.ProductCode);
+    let IsSizeWithFraction = (product.Size - Math.floor(product.Size)) !== 0;
+    let Size = IsSizeWithFraction ? (product.Size + 20) : product.Size;
+    return ((product.Gender ? 1 : 2).toString() + product.ProductYear.slice(product.ProductYear.length - 2) + Size.toString().slice(0, 2) + product.ColorId.toString().slice(product.ColorId.toString().length - 2, product.ColorId.toString().length).padStart(2, '0') + product.ProductCode);
   }
 
   Fill() {

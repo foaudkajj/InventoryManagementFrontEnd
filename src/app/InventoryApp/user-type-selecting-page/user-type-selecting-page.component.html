@@ -3,23 +3,23 @@
     <mat-grid-tile></mat-grid-tile>
     <mat-grid-tile></mat-grid-tile>
     <mat-grid-tile>
-        <div style="background-color: #000051;" class="example-ripple-container mat-elevation-z4" matRipple [matRippleCentered]="centered"
-            [matRippleDisabled]="disabled" [matRippleUnbounded]="unbounded" [matRippleRadius]="radius"
-            [matRippleColor]="color" (click)="StockScreen()">
+        <div style="background-color: #000051;" class="example-ripple-container mat-elevation-z4" *ngIf="StockVisible"
+            matRipple [matRippleCentered]="centered" [matRippleDisabled]="disabled" [matRippleUnbounded]="unbounded"
+            [matRippleRadius]="radius" [matRippleColor]="color" (click)="StockScreen()">
             Stok Ekranları
         </div>
     </mat-grid-tile>
     <mat-grid-tile>
-        <div style="background-color: #003300" class="example-ripple-container mat-elevation-z4" matRipple [matRippleCentered]="centered"
-            [matRippleDisabled]="disabled" [matRippleUnbounded]="unbounded" [matRippleRadius]="radius"
-            [matRippleColor]="color" (click)="SellingScreen()">
+        <div style="background-color: #003300" *ngIf="SellingVisible" class="example-ripple-container mat-elevation-z4"
+            matRipple [matRippleCentered]="centered" [matRippleDisabled]="disabled" [matRippleUnbounded]="unbounded"
+            [matRippleRadius]="radius" [matRippleColor]="color" (click)="SellingScreen()">
             Satış Ekranları
         </div>
     </mat-grid-tile>
     <mat-grid-tile>
-        <div style="background-color: #bc5100;" class="example-ripple-container mat-elevation-z4" matRipple [matRippleCentered]="centered"
-            [matRippleDisabled]="disabled" [matRippleUnbounded]="unbounded" [matRippleRadius]="radius"
-            [matRippleColor]="color" (click)="AdminScreen()">
+        <div style="background-color: #bc5100;" *ngIf="AdminVisible" class="example-ripple-container mat-elevation-z4"
+            matRipple [matRippleCentered]="centered" [matRippleDisabled]="disabled" [matRippleUnbounded]="unbounded"
+            [matRippleRadius]="radius" [matRippleColor]="color" (click)="AdminScreen()">
             Admin
         </div>
     </mat-grid-tile>

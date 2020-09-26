@@ -120,12 +120,12 @@ export class FuseNavigationService
     register(key, navigation): void
     {
         // Check if the key already being used
-        if ( this._registry[key] )
-        {
-            console.error(`The navigation with the key '${key}' already exists. Either unregister it first or use a unique key.`);
+        // if ( this._registry[key] )
+        // {
+        //     console.error(`The navigation with the key '${key}' already exists. Either unregister it first or use a unique key.`);
 
-            return;
-        }
+        //     return;
+        // }
 
         // Add to the registry
         this._registry[key] = navigation;

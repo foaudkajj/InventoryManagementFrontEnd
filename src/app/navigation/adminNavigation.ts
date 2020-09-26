@@ -3,14 +3,15 @@ import { FuseNavigation } from '@fuse/types';
 export const adminNavigation: FuseNavigation[] = [
     {
         key: "mainpage",
-        title: 'Ana Sayfa' ,
+        title: 'Ana Sayfa',
         // icon: 'flaticon2-architecture-and-city',
         type: 'item',
         url: 'usertypeselect'
     },
     {
         key: "usermgmt",
-        title: 'Kullanıcı Yönetimi' ,
+        title: 'Kullanıcı Yönetimi',
+        translate: "NAV.USER_MANAGEMENT",
         // icon: 'flaticon2-architecture-and-city',
         type: 'item',
         url: '/admin/usermanagement'
@@ -27,7 +28,7 @@ export const adminNavigation: FuseNavigation[] = [
     //             // translate: 'NAV.SAMPLE.TITLE',
     //             type: 'item',
     //             // icon: 'email',
-    //             url: '/stock/productmanager'
+    //             url: '/stock/productmanagement'
     //         }
     //     ]
     // },

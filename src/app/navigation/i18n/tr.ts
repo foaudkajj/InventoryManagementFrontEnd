@@ -99,6 +99,12 @@ export const locale = {
 				NAME: "İsim",
 				LASTNAME: "Soy İsim",
 				BRANCH: "Şube",
+				ROLE: "Rol"
+			},
+			ROLE_MANAGEMENT: {
+				TITLE: "Yetkiler",
+				ROLE_NAME: "Yetki Tanımı",
+				SAVE: "Kaydet"
 			},
 			LOGIN: {
 				LOGIN_TITLE: "Lütfen Giriş Yapınız",
@@ -120,6 +126,19 @@ export const locale = {
 		},
 		MESSAGES: {
 			REMAINING_PRODUCTS_COUNT: "Bu üründen stokta sadece {{count}} tane kalmıştır."
+		},
+		NAV: {
+			MAIN_MENU: "Ana Sayfa",
+			SELLING_MODULE: "Satış Modulü",
+			NORMAL_SALE: "Satış Ekranı",
+			MASTERDATA: "Ana Veri",
+			PRODUCT_MANAGEMENT: "Ürün Ekleme/Silme",
+			USER_MANAGEMENT: "Kullanıcı Yönetimi",
+			STOCK_MODULE: "Stok Modulü",
+			ROLE_MANAGEMENT: "Rol Yönetimi",
+			STOCK_MODULE_PAGES: "Stok Modulü Sayfaları",
+			ADMIN_MODULE_PAGES: "Admin Modulü Sayfaları",
+			SELLING_MODULE_PAGES: "Satış Modulü Sayfaları"
 		},
 		AUTH: {
 			GENERAL: {

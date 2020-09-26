@@ -22,6 +22,7 @@ import trMessages from "devextreme/localization/messages/tr.json";
 import { locale, loadMessages } from "devextreme/localization";
 import { Router, NavigationStart } from '@angular/router';
 import config from 'devextreme/core/config';
+import { FuseNavigation } from '@fuse/types';
 
 
 @Component({
@@ -31,9 +32,10 @@ import config from 'devextreme/core/config';
 })
 export class AppComponent implements OnInit, OnDestroy {
     fuseConfig: any;
-    navigation: any;
-    stockNavigation: any;
-    adminNavigation: any;
+    navigationItems: FuseNavigation[] = JSON.parse(localStorage.getItem('menus'));
+    // navigation: any;
+    // stockNavigation: any;
+    // adminNavigation: any;
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -66,31 +68,38 @@ export class AppComponent implements OnInit, OnDestroy {
         config({ defaultCurrency: 'TRY' });
 
         // Get default navigation
-        this.navigation = navigation;
-        this.stockNavigation = stockNavigation;
-        this.adminNavigation = adminNavigation;
+        // this.navigation = navigation;
+        // this.stockNavigation = stockNavigation;
+        // this.adminNavigation = adminNavigation;
         // Register the navigation to the service
-        this._fuseNavigationService.register('sellingNavigation', this.navigation);
-        this._fuseNavigationService.register('stockNavigation', this.stockNavigation);
-        this._fuseNavigationService.register('adminNavigation', this.adminNavigation);
+        // this._fuseNavigationService.register('sellingNavigation', this.navigation);
+        // this._fuseNavigationService.register('stockNavigation', this.stockNavigation);
+        // this._fuseNavigationService.register('adminNavigation', this.adminNavigation);
+
+        if (this.navigationItems) {
+            this._fuseNavigationService.register('sellingNavigation', this.navigationItems.filter(fi => fi.key == 'sellingModuleType').sort((a, b) => a.priority - b.priority)[0]?.children);
+            this._fuseNavigationService.register('stockNavigation', this.navigationItems.filter(fi => fi.key == 'stockModuleType').sort((a, b) => a.priority - b.priority)[0]?.children);
+            this._fuseNavigationService.register('adminNavigation', this.navigationItems.filter(fi => fi.key == 'adminModuleType').sort((a, b) => a.priority - b.priority)[0]?.children);
 
 
-        this.router.events.subscribe((event: any) => {
-            if (event instanceof NavigationStart) {
-                if (event.url.toLowerCase().includes('/stock'))
-                    this._fuseNavigationService.setCurrentNavigation('stockNavigation');
-                else if (event.url.toLowerCase().includes('/selling'))
-                    this._fuseNavigationService.setCurrentNavigation('sellingNavigation');
-                else
-                    this._fuseNavigationService.setCurrentNavigation('adminNavigation');
+            this.router.events.subscribe((event: any) => {
+                if (event instanceof NavigationStart) {
+                    if (event.url.toLowerCase().includes('/stock'))
+                        this._fuseNavigationService.setCurrentNavigation('stockNavigation');
+                    else if (event.url.toLowerCase().includes('/selling'))
+                        this._fuseNavigationService.setCurrentNavigation('sellingNavigation');
+                    else
+                        this._fuseNavigationService.setCurrentNavigation('adminNavigation');
 
-            }
-        });
-        // // Set the main navigation as our current navigation
-        // if (this.router.url.toLowerCase().includes('/stock')) {
-        //     this._fuseNavigationService.setCurrentNavigation('stockNavigation');
-        // } else
-        //     this._fuseNavigationService.setCurrentNavigation('sellingNavigation');
+                }
+            });
+
+        } else {
+            this.router.navigate(["login"]);
+        }
+
+
+        // Set the main navigation as our current navigation
 
         // Add languages
         this._translateService.addLangs(['en', 'tr', 'ar']);

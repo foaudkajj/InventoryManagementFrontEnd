@@ -68,9 +68,8 @@ export class LoginComponent implements OnInit {
     async LoginButton() {
         let loginRequest: LoginRequest = { userName: this.loginForm.controls.email.value, password: this.loginForm.controls.password.value }
         let loginResponse = await this.userSerivce.Login(loginRequest).toPromise() as LoginResponse;
-        if (loginResponse.IsAuthenticated) {
-            console.log("Authenticated")
-            sessionStorage.setItem("Authorization", loginResponse.Token)
+        if (loginResponse.isAuthenticated) {
+            sessionStorage.setItem("Authorization", loginResponse.token)
             this.router.navigate(['usertypeselect'])
         }
     }

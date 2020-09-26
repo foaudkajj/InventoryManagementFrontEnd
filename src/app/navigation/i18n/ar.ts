@@ -99,7 +99,13 @@ export const locale = {
 				CELLPHONE: "رقم الهاتف",
 				NAME: "الاسم",
 				LASTNAME: "الكنية",
-				BRANCH: "الفرع"
+				BRANCH: "الفرع",
+				ROLE: "درجة الوصول"
+			},
+			ROLE_MANAGEMENT: {
+				TITLE: "الأدوار",
+				ROLE_NAME: "درجة الوصول",
+				SAVE: "حفظ"
 			},
 			LOGIN: {
 				LOGIN_TITLE: "لطفاً قم بتسجيل الدخول",
@@ -118,8 +124,21 @@ export const locale = {
 			MAX_LENGTH: "الحد الأقصى {{maxLength}}",
 			MIN_LENGTH: "الحد الأدنى {{minLength}}"
 		},
-		MESSAGES:{
+		MESSAGES: {
 			REMAINING_PRODUCTS_COUNT: "بقي {{count}} قطع من هذا المنتج في المخزن."
+		},
+		NAV: {
+			MAIN_MENU: "الصفحة الرئيسية",
+			SELLING_MODULE: "قسم البيع",
+			NORMAL_SALE: "صفحة البيع",
+			MASTERDATA: "المعلومات الأساسية",
+			PRODUCT_MANAGEMENT: "إدارة المنتجات",
+			USER_MANAGEMENT: "إدارة المستخدمين",
+			STOCK_MODULE: "قسم المخزن",
+			ROLE_MANAGEMENT: "إدارة وصول المستخدمين",
+			STOCK_MODULE_PAGES: "Stok Modulü Sayfaları",
+			ADMIN_MODULE_PAGES: "Admin Modulü Sayfaları",
+			SELLING_MODULE_PAGES: "Satış Modulü Sayfaları"
 		},
 		AUTH: {
 			GENERAL: {

@@ -3,7 +3,7 @@ import { FuseNavigation } from '@fuse/types';
 export const stockNavigation: FuseNavigation[] = [
     {
         key: "mainpage",
-        title: 'Ana Sayfa' ,
+        title: 'Ana Sayfa',
         // icon: 'flaticon2-architecture-and-city',
         type: 'item',
         url: 'usertypeselect'
@@ -11,23 +11,23 @@ export const stockNavigation: FuseNavigation[] = [
     {
         key: 'stockModule',
         title: 'Stok Modulü',
-        // translate: 'NAV.APPLICATIONS',
+        translate: 'NAV.STOCK_MODULE',
         type: 'collapsable',
         children: [
             {
-                key: 'product_manager',
+                key: 'product_management',
                 title: 'Ürün Ekleme/Silme',
-                // translate: 'NAV.SAMPLE.TITLE',
+                translate: 'NAV.PRODUCT_MANAGEMENT',
                 type: 'item',
                 // icon: 'email',
-                url: '/stock/productmanager'
+                url: '/stock/productmanagement'
             }
         ]
     },
     {
         key: 'masterdata',
         title: 'Ana Veri',
-        // translate: 'NAV.APPLICATIONS',
+        translate: 'NAV.MASTERDATA',
         type: 'item',
         url: '/stock/masterdata'
     }

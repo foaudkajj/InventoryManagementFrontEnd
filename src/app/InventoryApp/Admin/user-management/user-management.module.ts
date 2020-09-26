@@ -6,6 +6,7 @@ import { UserManagementComponent } from './user-management.component';
 import { DxDataGridModule } from 'devextreme-angular';
 import { BranchesService } from 'app/InventoryApp/services/branches.service';
 import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
+import { RoleService } from 'app/InventoryApp/services/Role.Service';
 
 
 @NgModule({
@@ -15,6 +16,6 @@ import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
     UserManagementRoutingModule,
     DxDataGridModule
   ],
-  providers: [DxStoreService, BranchesService]
+  providers: [DxStoreService, BranchesService, RoleService]
 })
 export class UserManagementModule { }

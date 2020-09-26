@@ -5,6 +5,7 @@ export interface DxStoreOptions {
     deleteUrl?: string;
     loadParams?: Object;
     updateUrl?: string;
+    updateMethod?: string;
     onInserted?: (values: any, key: any) => void;
     onRemoved?: (key: any) => void;
     OnBeforeSend?: (operation: string, ajaxSettings: {

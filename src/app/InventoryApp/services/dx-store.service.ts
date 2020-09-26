@@ -25,6 +25,7 @@ export class DxStoreService {
             updateUrl: environment.apiUrl + storeOptions.updateUrl,
             deleteUrl: environment.apiUrl + storeOptions.deleteUrl,
             loadParams: storeOptions.loadParams,
+            updateMethod: storeOptions.updateMethod,
             onInserted: storeOptions.onInserted,
             onRemoved: storeOptions.onRemoved,
             onBeforeSend: (method, ajaxOptions) => {

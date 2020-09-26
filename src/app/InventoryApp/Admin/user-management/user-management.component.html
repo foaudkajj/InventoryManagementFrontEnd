@@ -39,15 +39,16 @@
                         <dxi-validation-rule type="required"></dxi-validation-rule>
                     </dxi-column>
                     <dxi-column [caption]="translate.instant('ADMIN_MODULE.USER_MANAGEMENT.CELLPHONE')"
-                        dataField="Cellphone" dataType="number"></dxi-column>
+                        dataField="Cellphone" dataType="string" [editorOptions]="{mask : '(999)999-9999'}">
+                    </dxi-column>
                     <dxi-column [caption]="translate.instant('ADMIN_MODULE.USER_MANAGEMENT.USER_NAME')"
                         dataField="UserName">
                         <dxi-validation-rule type="required"></dxi-validation-rule>
                     </dxi-column>
-                    <dxi-column [caption]="translate.instant('ADMIN_MODULE.USER_MANAGEMENT.USER_CODE')"
+                    <!-- <dxi-column [caption]="translate.instant('ADMIN_MODULE.USER_MANAGEMENT.USER_CODE')"
                         dataField="UserCode">
                         <dxi-validation-rule type="required"></dxi-validation-rule>
-                    </dxi-column>
+                    </dxi-column> -->
                     <dxi-column [caption]="translate.instant('ADMIN_MODULE.USER_MANAGEMENT.USER_STATUS')"
                         dataField="UserStatus">
                         <dxo-lookup [dataSource]="UserStatus" displayExpr="Name" valueExpr="Id">
@@ -55,12 +56,19 @@
                         <dxi-validation-rule type="required"></dxi-validation-rule>
                     </dxi-column>
                     <dxi-column [caption]="translate.instant('ADMIN_MODULE.USER_MANAGEMENT.PASSWORD')"
-                        dataField="Password" [visible]="false"></dxi-column>
-                    <dxi-column [caption]="translate.instant('ADMIN_MODULE.USER_MANAGEMENT.IMAGE_PATH')"
-                        dataField="ImagePath"></dxi-column>
-                    <dxi-column [caption]="translate.instant('ADMIN_MODULE.USER_MANAGEMENT.EMAIL')" dataField="Email">
+                        dataField="Password" [visible]="false">
                         <dxi-validation-rule type="required"></dxi-validation-rule>
+                    </dxi-column>
+                    <!-- <dxi-column [caption]="translate.instant('ADMIN_MODULE.USER_MANAGEMENT.IMAGE_PATH')"
+                        dataField="ImagePath"></dxi-column> -->
+                    <dxi-column [caption]="translate.instant('ADMIN_MODULE.USER_MANAGEMENT.EMAIL')" dataField="Email">
+                        <!-- <dxi-validation-rule type="required"></dxi-validation-rule> -->
                         <dxi-validation-rule type="email"></dxi-validation-rule>
+                    </dxi-column>
+                    <dxi-column [caption]="translate.instant('ADMIN_MODULE.USER_MANAGEMENT.ROLE')" dataField="RoleId">
+                        <dxi-validation-rule type="required"></dxi-validation-rule>
+                        <dxo-lookup [dataSource]="rolList" displayExpr="RoleName" valueExpr="Id">
+                        </dxo-lookup>
                     </dxi-column>
 
                     <dxi-column [caption]="translate.instant('ADMIN_MODULE.USER_MANAGEMENT.BRANCH')"

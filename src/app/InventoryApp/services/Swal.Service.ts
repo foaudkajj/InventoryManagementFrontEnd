@@ -12,4 +12,12 @@ export class SwalService {
             "error"
         );
     }
+    showSuccessMessage(message?: string) {
+        swal.fire({
+            icon: 'success',
+            title: message ? message : 'İşleminiz Başarıyla Yapılmıştır',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
 }

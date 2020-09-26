@@ -124,7 +124,7 @@ export const locale = {
 		},
 		EXCEPTIONS: {
 			NO_ENOUGHT_COUNT: "Stokta bu üründen kalmamıştır.",
-			NO_SUCH_PRODUCT: "Stokta girdiğınız nolu bir ürün bulunmamaktadır.",
+			NO_SUCH_PRODUCT: "Girdiğiniz barkod stokta bulunmamaktadır.",
 			ERROR: "HATA !",
 			SQL_RELATIONSHIP: "Silmeye çalıştığınız kayıt başka yerde kullanılmıştır. Lütfen bu kayıtla ilişkili diğer kayıtları silip tekrar deneyiniz.",
 			EXISTING_PRODUCTS: "Bazı ürünler, daha önce eklendiğinden, eklenememiştir."

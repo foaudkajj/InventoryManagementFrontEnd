@@ -20,4 +20,35 @@ export class SwalService {
             "error"
         );
     }
+
+    showSuccessMessage(message: string) {
+        swal.fire({
+            icon: 'success',
+            title: message,
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
+
+    showDeletingMessage() {
+        // let theResult =false
+        return swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        })
+    }
+
+
+    showDeletConforme() {
+        swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+        )
+    }
 }

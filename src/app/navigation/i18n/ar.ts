@@ -118,7 +118,7 @@ export const locale = {
 			MAX_LENGTH: "الحد الأقصى {{maxLength}}",
 			MIN_LENGTH: "الحد الأدنى {{minLength}}"
 		},
-		MESSAGES:{
+		MESSAGES: {
 			REMAINING_PRODUCTS_COUNT: "بقي {{count}} قطع من هذا المنتج في المخزن."
 		},
 		AUTH: {
@@ -207,6 +207,10 @@ export const locale = {
 					ADD_MESSAGE: 'Customer has been created'
 				}
 			}
+		},
+		Messages: {
+			SuccessMessage: "تم إضافة {{Item}} بنجاح",
+
 		}
 	}
 };

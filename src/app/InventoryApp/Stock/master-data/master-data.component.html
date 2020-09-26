@@ -26,8 +26,8 @@
             <div class="p-24">
 
                 <mat-form-field class="ml-3 width-10">
-                <mat-select placeholder="{{translate.instant('COMMON.PLEASE_SELECT')}}" (selectionChange)="MDChanged($event.value)"
-                        autocomplete="off">
+                    <mat-select placeholder="{{translate.instant('COMMON.PLEASE_SELECT')}}"
+                        (selectionChange)="MDChanged($event.value)" autocomplete="off">
                         <mat-option *ngFor="let MD of MasterData" [value]="MD.Value">
                             {{ MD.ViewValue }}
                         </mat-option>

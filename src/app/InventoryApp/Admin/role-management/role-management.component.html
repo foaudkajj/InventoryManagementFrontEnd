@@ -1,0 +1,72 @@
+<div id="maidDefenetion" class="page-layout carded fullwidth">
+
+    <!-- TOP BACKGROUND -->
+    <!-- <div class="top-bg accent"></div> -->
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- CONTENT HEADER -->
+        <!-- <div class="header accent p-24" fxLayout="row" fxLayoutAlign="start center">
+            <h2 class="m-0">Full width with content scroll</h2>
+        </div> -->
+        <!-- / CONTENT HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT TOOLBAR -->
+            <div class="toolbar px-24 py-8" style="font-size: x-large;    background-color: #293955;color: white;">
+                <span>{{translate.instant('ADMIN_MODULE.ROLE_MANAGEMENT.TITLE')}}</span>
+            </div>
+            <!-- / CONTENT TOOLBAR -->
+
+            <!-- CONTENT -->
+
+            <div class="example-container mat-elevation-z8">
+
+                <dx-data-grid #RolesGrid id="gridContainer" [allowColumnResizing]="true" [columnAutoWidth]="true"
+                    [remoteOperations]="true" [dataSource]="usersGridStore" [showBorders]="true"
+                    [masterDetail]="{ enabled: true, template: 'detail' }">
+                    <dxi-column [caption]="'Id'" dataField="Id" [visible]="false" [formItem]="{visible: false}"
+                        dataType="number">
+                    </dxi-column>
+                    <dxi-column [caption]="translate.instant('ADMIN_MODULE.ROLE_MANAGEMENT.ROLE_NAME')"
+                        dataField="RoleName">
+                        <dxi-validation-rule type="required"></dxi-validation-rule>
+                    </dxi-column>
+                    <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
+                    </dxo-editing>
+                    <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+
+                    <div *dxTemplate="let role of 'detail'">
+                        <dx-tree-list #PermessionsTree id="tree-list" [dataSource]="permessionsListStore" keyExpr="Id"
+                            parentIdExpr="ParentId" hasItemsExpr="IsParent" [showRowLines]="true" [showBorders]="true"
+                            [columnAutoWidth]="true" [wordWrapEnabled]="true"
+                            [(selectedRowKeys)]="role.data.RolePermessionsIds">
+
+                            <dxo-selection mode="multiple" [recursive]="false">
+                            </dxo-selection>
+
+                            <!-- <dxo-remote-operations [filtering]="true" [sorting]="true" [grouping]="true">
+                            </dxo-remote-operations> -->
+                            <dxo-search-panel [visible]="true"></dxo-search-panel>
+                            <dxo-header-filter [visible]="true"></dxo-header-filter>
+                            <dxi-column dataField="Id" [visible]="false" [formItem]="{visible: false}"></dxi-column>
+                            <!-- <dxi-column dataField="IsParent"></dxi-column> -->
+                            <!-- <dxi-column dataField="RoleKey"></dxi-column> -->
+                            <dxi-column dataField="Title" [calculateDisplayValue]="treeListTitleDisplayValue">
+                            </dxi-column>
+                        </dx-tree-list>
+                        <button (click)="Save(PermessionsTree.instance.getSelectedRowKeys('all'),role.data.Id)"
+                            mat-raised-button color="accent" style="float: right;">
+                            {{translate.instant("ADMIN_MODULE.ROLE_MANAGEMENT.SAVE")}}
+                        </button>
+                    </div>
+                </dx-data-grid>
+
+            </div>
+        </div>
+    </div>
+</div>

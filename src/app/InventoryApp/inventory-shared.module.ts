@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { DxDataGridModule } from 'devextreme-angular';
 
 
 
@@ -11,13 +12,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    DxDataGridModule
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    DxDataGridModule
   ]
 })
 export class InventorySharedModule { }

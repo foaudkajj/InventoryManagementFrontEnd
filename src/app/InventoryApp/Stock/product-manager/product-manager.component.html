@@ -173,6 +173,9 @@
                     <dxo-lookup [dataSource]="branchesList" displayExpr="Name" valueExpr="Id">
                     </dxo-lookup>
                 </dxi-column>
+                <dxi-column [allowFiltering]="false" [formItem]="{visible: false}" [allowEditing]="false"
+                    [allowSorting]="false" cellTemplate="increaseCount">
+                </dxi-column>
                 <dxo-editing mode="form">
                 </dxo-editing>
                 <dxo-selection [selectAllMode]="'page'" [showCheckBoxesMode]="'always'" mode="multiple">
@@ -203,6 +206,17 @@
                     <!-- <button (click)="editRow(data)" mat-icon-button color="primary" type="button" matTooltip="Sil">
                         <mat-icon>edit</mat-icon>
                     </button> -->
+                </div>
+
+                <div *dxTemplate="let data of 'increaseCount'">
+                    <button (click)="increaseCountPopup(data.data, 'ADD')" mat-icon-button color="primary"
+                        matTooltip="Göster">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                    <button (click)="increaseCountPopup(data.data, 'REMOVE')" mat-icon-button color="primary"
+                        matTooltip="Göster">
+                        <mat-icon>remove</mat-icon>
+                    </button>
                 </div>
 
                 <div *dxTemplate="let data of 'printButton'">

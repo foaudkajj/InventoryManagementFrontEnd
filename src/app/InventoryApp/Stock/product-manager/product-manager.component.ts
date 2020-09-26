@@ -24,6 +24,7 @@ import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
 import { UIResponse } from 'app/InventoryApp/Models/UIResponse';
 import { AddProductsDto } from 'app/InventoryApp/Models/DTOs/AddProductsDto';
 import { SwalService } from 'app/InventoryApp/services/Swal.Service';
+import swal from "sweetalert2";
 
 @Component({
   selector: 'app-product-manager',
@@ -303,6 +304,37 @@ export class ProductManagerComponent implements OnInit {
   getGendere(gender: number) {
     // 0 means Erkek, 1 means Kadin
     return gender ? "Kadın" : "Erkek"
+  }
+
+  increaseCountPopup(product: ProductView, operation: 'ADD' | 'REMOVE') {
+
+    swal.fire({
+      title: operation == 'ADD' ? this._translate.instant('STOCK_MODULE.PRODUCT_MANAGEMENT.PRODUCT_COUNT_ADD') : this._translate.instant('STOCK_MODULE.PRODUCT_MANAGEMENT.PRODUCT_COUNT_REMOVE'),
+      input: 'number',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: operation == 'ADD' ? this._translate.instant('STOCK_MODULE.PRODUCT_MANAGEMENT.ADD') : this._translate.instant('STOCK_MODULE.PRODUCT_MANAGEMENT.REMOVE'),
+      showLoaderOnConfirm: true,
+      preConfirm: (Count) => {
+        return this.productService.IncreaseProductCount(product.Id, operation == 'ADD' ? Count : (Count * -1)).toPromise()
+          .then((response: UIResponse<ProductView>) => {
+            if (response.IsError) {
+              throw new Error(response.Message);
+            }
+            this.productsGrid.instance.refresh();
+            return response;
+          })
+          .catch(error => {
+            this.swal.showErrorMessage(error.Message)
+          })
+      },
+      allowOutsideClick: () => !swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed)
+        this.swal.showSuccessMessage();
+    })
   }
 
 }

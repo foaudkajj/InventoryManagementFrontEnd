@@ -36,4 +36,10 @@ export class ProductService extends BaseService {
     let result$ = this.delete(`Products/${id}`);
     return result$;
   }
+
+  IncreaseProductCount(ProductId: number, Count: number): Observable<any> {
+    let result$ = this.get(`Products/IncreaseProductCount?ProductId=${ProductId}&Count=${Count}`);
+    return result$;
+  }
+
 }

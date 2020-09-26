@@ -85,6 +85,12 @@ export const locale = {
 				COUNT: "العدد",
 				SEARCH: "ابحث ...",
 				SELLING_PRICE: "سعر المبيع",
+			},
+			PRODUCT_MANAGEMENT: {
+				ADD: "زيادة",
+				REMOVE: "إنقاص",
+				PRODUCT_COUNT_ADD: "زيادة عدة المنتجات",
+				PRODUCT_COUNT_REMOVE: "إنقاص عدد المنتجات",
 			}
 		},
 		ADMIN_MODULE: {

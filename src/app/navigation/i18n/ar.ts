@@ -115,7 +115,8 @@ export const locale = {
 			},
 			LOGIN: {
 				LOGIN_TITLE: "لطفاً قم بتسجيل الدخول",
-				LOGIN_BUTTON: "تسجيل الدخول"
+				LOGIN_BUTTON: "تسجيل الدخول",
+				WRNOG_LOGIN_CREDENTIALS: "اسم المستخدم أو كلمة التي أدخلتها غير صحيحة"
 			}
 		},
 		THEME: {

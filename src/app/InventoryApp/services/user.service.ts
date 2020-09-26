@@ -6,6 +6,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { LoginRequest } from '../Models/LoginRequest';
 import { LoginResponse } from '../Models/LoginResponse';
 import { map, tap } from 'rxjs/operators';
+import { UIResponse } from '../Models/UIResponse';
 
 @Injectable({
     providedIn: 'root'
@@ -26,10 +27,10 @@ export class UserService extends BaseService {
     Login(loginRequest: LoginRequest): Observable<any> {
         let result$ = this.post(`User/Login`, loginRequest)
             .pipe(
-                tap((data: LoginResponse) => {
-                    if (data.isAuthenticated) {
-                        sessionStorage.setItem("Authorization", data.token);
-                        localStorage.setItem("user", JSON.stringify(data))
+                tap((data: any) => {
+                    if (data.entity.isAuthenticated) {
+                        sessionStorage.setItem("Authorization", data.entity.token);
+                        localStorage.setItem("user", JSON.stringify(data.entity))
                     }
 
                 })

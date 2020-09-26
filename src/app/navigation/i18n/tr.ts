@@ -114,7 +114,8 @@ export const locale = {
 			},
 			LOGIN: {
 				LOGIN_TITLE: "Lütfen Giriş Yapınız",
-				LOGIN_BUTTON: "Giriş Yap"
+				LOGIN_BUTTON: "Giriş Yap",
+				WRNOG_LOGIN_CREDENTIALS: "Girdiğiniz K. Adı veya Şifre Yanlıştır."
 
 			}
 		},

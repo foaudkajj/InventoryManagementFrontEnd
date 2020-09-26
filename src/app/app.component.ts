@@ -23,6 +23,7 @@ import { locale, loadMessages } from "devextreme/localization";
 import { Router, NavigationStart } from '@angular/router';
 import config from 'devextreme/core/config';
 import { FuseNavigation } from '@fuse/types';
+import { LoginResponse } from './InventoryApp/Models/LoginResponse';
 
 
 @Component({
@@ -32,7 +33,7 @@ import { FuseNavigation } from '@fuse/types';
 })
 export class AppComponent implements OnInit, OnDestroy {
     fuseConfig: any;
-    navigationItems: FuseNavigation[] = JSON.parse(localStorage.getItem('menus'));
+    navigationItems: FuseNavigation[] = (JSON.parse(localStorage.getItem('user')) as LoginResponse)?.navigationItems;
     // navigation: any;
     // stockNavigation: any;
     // adminNavigation: any;

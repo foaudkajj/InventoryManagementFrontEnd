@@ -19,7 +19,7 @@ export class RoleManagementComponent implements OnInit {
   @ViewChild('RolesGrid') RolesGrid: DxDataGridComponent;
   @ViewChild('PermessionsTree') PermessionsTree: DxTreeListComponent;
 
-  usersGridStore: CustomStore;
+  rolesGridStore: CustomStore;
   permessionsListStore: CustomStore;
   constructor(public translate: TranslateService,
     private dxStore: DxStoreService,
@@ -34,16 +34,18 @@ export class RoleManagementComponent implements OnInit {
 
   filGrid() {
     let usersGridStoreOption: DxStoreOptions = {
-      loadUrl: "Roles/GetRoles", Key: "Id",
-      onInserted: () => this.RolesGrid.instance.refresh(),
-      onRemoved: () => this.RolesGrid.instance.refresh()
+      loadUrl: "Roles/GetRoles", insertUrl: "Roles/AddRoles", deleteUrl: "Roles/DeleteRole", deleteMethod: "POST", Key: "Id",
+      onInserted: () => { this.swal.showSuccessMessage() },
+      onRemoved: () => { this.swal.showSuccessMessage() },
+      onUpdated: () => { this.swal.showSuccessMessage() }
     };
-    this.usersGridStore = this.dxStore.GetStore(usersGridStoreOption);
+    this.rolesGridStore = this.dxStore.GetStore(usersGridStoreOption);
 
     let permessionsListStoreOption: DxStoreOptions = {
       loadUrl: "Roles/GetRolePermessions", Key: "Id",
-      onInserted: () => this.RolesGrid.instance.refresh(),
-      onRemoved: () => this.RolesGrid.instance.refresh()
+      onInserted: () => { this.swal.showSuccessMessage() },
+      onRemoved: () => { this.swal.showSuccessMessage() },
+      onUpdated: () => { this.swal.showSuccessMessage() }
     };
     this.permessionsListStore = this.dxStore.GetStore(permessionsListStoreOption);
 

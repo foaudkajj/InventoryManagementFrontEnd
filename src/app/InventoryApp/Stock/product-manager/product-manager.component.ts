@@ -77,9 +77,6 @@ export class ProductManagerComponent implements OnInit {
       loadUrl: "Products", insertUrl: "Products", updateUrl: "Products", deleteUrl: "Products", Key: "Id",
       onInserted: (values: UIResponse<AddProductsDto>, key) => {
         // this.ProductForm.reset();
-        this.productsGrid.instance.refresh();
-        console.log(values)
-        console.log(values.IsError)
         if (values.IsError) {
           let html = this._translate.instant(values.Message) as string;
           values.Entity.ExistedProducts.forEach(fe => {
@@ -89,9 +86,12 @@ export class ProductManagerComponent implements OnInit {
           });
           console.log(html);
           this.swal.showErrorMessage(html);
+        } else {
+          this.swal.showSuccessMessage()
         }
       },
-      onRemoved: () => this.productsGrid.instance.refresh()
+      onRemoved: () => this.swal.showSuccessMessage(),
+      onUpdated: () => this.swal.showSuccessMessage()
     };
     this.store = this.dxStore.GetStore(storeOption);
 

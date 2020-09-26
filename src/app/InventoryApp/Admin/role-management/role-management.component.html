@@ -27,7 +27,7 @@
             <div class="example-container mat-elevation-z8">
 
                 <dx-data-grid #RolesGrid id="gridContainer" [allowColumnResizing]="true" [columnAutoWidth]="true"
-                    [remoteOperations]="true" [dataSource]="usersGridStore" [showBorders]="true"
+                    [remoteOperations]="true" [dataSource]="rolesGridStore" [showBorders]="true"
                     [masterDetail]="{ enabled: true, template: 'detail' }">
                     <dxi-column [caption]="'Id'" dataField="Id" [visible]="false" [formItem]="{visible: false}"
                         dataType="number">
@@ -36,7 +36,7 @@
                         dataField="RoleName">
                         <dxi-validation-rule type="required"></dxi-validation-rule>
                     </dxi-column>
-                    <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
+                    <dxo-editing mode="popup" [allowUpdating]="false" [allowDeleting]="true" [allowAdding]="true">
                     </dxo-editing>
                     <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
 

@@ -26,7 +26,13 @@ export class UserService extends BaseService {
     Login(loginRequest: LoginRequest): Observable<any> {
         let result$ = this.post(`User/Login`, loginRequest)
             .pipe(
-                tap((data: LoginResponse) => localStorage.setItem('menus', JSON.stringify(data.navigationItems)))
+                tap((data: LoginResponse) => {
+                    if (data.isAuthenticated) {
+                        sessionStorage.setItem("Authorization", data.token);
+                        localStorage.setItem("user", JSON.stringify(data))
+                    }
+
+                })
             )
         return result$;
     }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FuseNavigation } from '@fuse/types/fuse-navigation';
+import { LoginResponse } from '../Models/LoginResponse';
 
 @Component({
   selector: 'kt-user-type-selecting-page',
@@ -16,7 +17,7 @@ export class UserTypeSelectingPageComponent implements OnInit {
 
   radius: number;
   color: string;
-  navigationItems: FuseNavigation[] = JSON.parse(localStorage.getItem('menus'));
+  navigationItems: FuseNavigation[] = (JSON.parse(localStorage.getItem('user')) as LoginResponse)?.navigationItems;
   SellingVisible: boolean = false;
   AdminVisible: boolean = false;
   StockVisible: boolean = false;

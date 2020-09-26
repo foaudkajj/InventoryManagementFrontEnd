@@ -109,7 +109,11 @@ export const locale = {
 			LOGIN: {
 				LOGIN_TITLE: "Lütfen Giriş Yapınız",
 				LOGIN_BUTTON: "Giriş Yap"
+
 			}
+		},
+		THEME: {
+			LOGOUT_BUTTON: "Çıkış Yap"
 		},
 		EXCEPTIONS: {
 			NO_ENOUGHT_COUNT: "Stokta bu üründen kalmamıştır.",

@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { NormalSaleRoutingModule } from './normal-sale-routing.module';
 import { NormalSaleComponent } from './normal-sale.component';
 import { DxDataGridModule, DxDateBoxModule, DxLookupModule, DxSelectBoxModule } from 'devextreme-angular';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PaymentScreenComponent } from '../PaymentScreen/payment-screen.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
@@ -18,11 +16,13 @@ import { PaymentMethodsService } from 'app/InventoryApp/services/payment-methods
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ConsumerInfosService } from 'app/InventoryApp/services/ConsumerInfo.service';
 import { InventorySharedModule } from 'app/InventoryApp/inventory-shared.module';
+import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
 
 
 @NgModule({
   declarations: [NormalSaleComponent, PaymentScreenComponent],
   imports: [
+    InventorySharedModule,
     NormalSaleRoutingModule,
     DxDataGridModule,
     DxDateBoxModule,
@@ -40,6 +40,6 @@ import { InventorySharedModule } from 'app/InventoryApp/inventory-shared.module'
     InventorySharedModule
   ],
   entryComponents: [PaymentScreenComponent],
-  providers: [PaymentMethodsService, ConsumerInfosService]
+  providers: [PaymentMethodsService, ConsumerInfosService, DxStoreService]
 })
 export class NormalSaleModule { }

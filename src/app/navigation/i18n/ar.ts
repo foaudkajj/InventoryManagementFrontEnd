@@ -85,6 +85,12 @@ export const locale = {
 				COUNT: "العدد",
 				SEARCH: "ابحث ...",
 				SELLING_PRICE: "سعر المبيع",
+			},
+			PRODUCT_MANAGEMENT: {
+				ADD: "زيادة",
+				REMOVE: "إنقاص",
+				PRODUCT_COUNT_ADD: "زيادة عدة المنتجات",
+				PRODUCT_COUNT_REMOVE: "إنقاص عدد المنتجات",
 			}
 		},
 		ADMIN_MODULE: {
@@ -99,12 +105,22 @@ export const locale = {
 				CELLPHONE: "رقم الهاتف",
 				NAME: "الاسم",
 				LASTNAME: "الكنية",
-				BRANCH: "الفرع"
+				BRANCH: "الفرع",
+				ROLE: "درجة الوصول"
+			},
+			ROLE_MANAGEMENT: {
+				TITLE: "الأدوار",
+				ROLE_NAME: "درجة الوصول",
+				SAVE: "حفظ"
 			},
 			LOGIN: {
 				LOGIN_TITLE: "لطفاً قم بتسجيل الدخول",
-				LOGIN_BUTTON: "تسجيل الدخول"
+				LOGIN_BUTTON: "تسجيل الدخول",
+				WRNOG_LOGIN_CREDENTIALS: "اسم المستخدم أو كلمة التي أدخلتها غير صحيحة"
 			}
+		},
+		THEME: {
+			LOGOUT_BUTTON: "تسجيل الخروج"
 		},
 		EXCEPTIONS: {
 			NO_ENOUGHT_COUNT: "لم يتبق من هذا المنتج",
@@ -120,6 +136,19 @@ export const locale = {
 		},
 		MESSAGES: {
 			REMAINING_PRODUCTS_COUNT: "بقي {{count}} قطع من هذا المنتج في المخزن."
+		},
+		NAV: {
+			MAIN_MENU: "الصفحة الرئيسية",
+			SELLING_MODULE: "قسم البيع",
+			NORMAL_SALE: "صفحة البيع",
+			MASTERDATA: "المعلومات الأساسية",
+			PRODUCT_MANAGEMENT: "إدارة المنتجات",
+			USER_MANAGEMENT: "إدارة المستخدمين",
+			STOCK_MODULE: "قسم المخزن",
+			ROLE_MANAGEMENT: "إدارة وصول المستخدمين",
+			STOCK_MODULE_PAGES: "Stok Modulü Sayfaları",
+			ADMIN_MODULE_PAGES: "Admin Modulü Sayfaları",
+			SELLING_MODULE_PAGES: "Satış Modulü Sayfaları"
 		},
 		AUTH: {
 			GENERAL: {

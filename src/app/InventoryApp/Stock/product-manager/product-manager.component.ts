@@ -24,6 +24,7 @@ import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
 import { UIResponse } from 'app/InventoryApp/Models/UIResponse';
 import { AddProductsDto } from 'app/InventoryApp/Models/DTOs/AddProductsDto';
 import { SwalService } from 'app/InventoryApp/services/Swal.Service';
+import swal from "sweetalert2";
 
 @Component({
   selector: 'app-product-manager',
@@ -77,9 +78,6 @@ export class ProductManagerComponent implements OnInit {
       loadUrl: "Products", insertUrl: "Products", updateUrl: "Products", deleteUrl: "Products", Key: "Id",
       onInserted: (values: UIResponse<AddProductsDto>, key) => {
         // this.ProductForm.reset();
-        this.productsGrid.instance.refresh();
-        console.log(values)
-        console.log(values.IsError)
         if (values.IsError) {
           let html = this._translate.instant(values.Message) as string;
           values.Entity.ExistedProducts.forEach(fe => {
@@ -88,10 +86,13 @@ export class ProductManagerComponent implements OnInit {
             console.log(html)
           });
           console.log(html);
-          this.swal.showErrorMessageWithData(html);
+          this.swal.showErrorMessage(html);
+        } else {
+          this.swal.showSuccessMessage()
         }
       },
-      onRemoved: () => this.productsGrid.instance.refresh()
+      onRemoved: () => this.swal.showSuccessMessage(),
+      onUpdated: () => this.swal.showSuccessMessage()
     };
     this.store = this.dxStore.GetStore(storeOption);
 
@@ -125,7 +126,8 @@ export class ProductManagerComponent implements OnInit {
       ])],
       Size: ['', Validators.compose([
         Validators.required,
-        Validators.maxLength(2)
+        Validators.max(99),
+        Validators.min(0)
       ])],
       Price: ['', Validators.compose([
         Validators.required
@@ -176,7 +178,9 @@ export class ProductManagerComponent implements OnInit {
 
   }
   GetProductFullCode(product: ProductDto) {
-    return ((product.Gender ? 1 : 2).toString() + product.ProductYear.slice(product.ProductYear.length - 2) + product.Size + product.ColorId.toString().slice(product.ColorId.toString().length - 2, product.ColorId.toString().length).padStart(2, '0') + product.ProductCode);
+    let IsSizeWithFraction = (product.Size - Math.floor(product.Size)) !== 0;
+    let Size = IsSizeWithFraction ? (product.Size + 20) : product.Size;
+    return ((product.Gender ? 1 : 2).toString() + product.ProductYear.slice(product.ProductYear.length - 2) + Size.toString().slice(0, 2) + product.ColorId.toString().slice(product.ColorId.toString().length - 2, product.ColorId.toString().length).padStart(2, '0') + product.ProductCode);
   }
 
   Fill() {
@@ -300,6 +304,37 @@ export class ProductManagerComponent implements OnInit {
   getGendere(gender: number) {
     // 0 means Erkek, 1 means Kadin
     return gender ? "Kadın" : "Erkek"
+  }
+
+  increaseCountPopup(product: ProductView, operation: 'ADD' | 'REMOVE') {
+
+    swal.fire({
+      title: operation == 'ADD' ? this._translate.instant('STOCK_MODULE.PRODUCT_MANAGEMENT.PRODUCT_COUNT_ADD') : this._translate.instant('STOCK_MODULE.PRODUCT_MANAGEMENT.PRODUCT_COUNT_REMOVE'),
+      input: 'number',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: operation == 'ADD' ? this._translate.instant('STOCK_MODULE.PRODUCT_MANAGEMENT.ADD') : this._translate.instant('STOCK_MODULE.PRODUCT_MANAGEMENT.REMOVE'),
+      showLoaderOnConfirm: true,
+      preConfirm: (Count) => {
+        return this.productService.IncreaseProductCount(product.Id, operation == 'ADD' ? Count : (Count * -1)).toPromise()
+          .then((response: UIResponse<ProductView>) => {
+            if (response.IsError) {
+              throw new Error(response.Message);
+            }
+            this.productsGrid.instance.refresh();
+            return response;
+          })
+          .catch(error => {
+            this.swal.showErrorMessage(error.Message)
+          })
+      },
+      allowOutsideClick: () => !swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed)
+        this.swal.showSuccessMessage();
+    })
   }
 
 }

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from '../services/user.service';
 import { LoginRequest } from '../Models/LoginRequest';
-import { LoginResponse } from '../Models/LoginResponse';
+import { SwalService } from '../services/Swal.Service';
 
 @Component({
     selector: 'login',
@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit {
         private _formBuilder: FormBuilder,
         private router: Router,
         public translate: TranslateService,
-        private userSerivce: UserService
+        private userSerivce: UserService,
+        private swal: SwalService
     ) {
         // Configure the layout
         this._fuseConfigService.config = {
@@ -67,11 +68,11 @@ export class LoginComponent implements OnInit {
 
     async LoginButton() {
         let loginRequest: LoginRequest = { userName: this.loginForm.controls.email.value, password: this.loginForm.controls.password.value }
-        let loginResponse = await this.userSerivce.Login(loginRequest).toPromise() as LoginResponse;
-        if (loginResponse.IsAuthenticated) {
-            console.log("Authenticated")
-            sessionStorage.setItem("Authorization", loginResponse.Token)
+        let loginResponse = await this.userSerivce.Login(loginRequest).toPromise() as any;
+        if (loginResponse.entity.isAuthenticated) {
             this.router.navigate(['usertypeselect'])
+        } else {
+            this.swal.showErrorMessage(loginResponse.message)
         }
     }
 }

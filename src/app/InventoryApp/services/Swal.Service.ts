@@ -12,13 +12,13 @@ export class SwalService {
             "error"
         );
     }
-
-    showErrorMessageWithData(message?: string) {
-        swal.fire(
-            this.translate.instant("EXCEPTIONS.ERROR"),
-            this.translate.instant(message),
-            "error"
-        );
+    showSuccessMessage(message?: string) {
+        swal.fire({
+            icon: 'success',
+            title: message ? message : 'İşleminiz Başarıyla Yapılmıştır',
+            showConfirmButton: false,
+            timer: 1500
+        })
     }
 
     showSuccessMessage(message: string) {

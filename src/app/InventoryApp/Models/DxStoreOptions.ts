@@ -1,11 +1,15 @@
-export interface DxStoreOptions {
+export class DxStoreOptions {
     Key: string;
     loadUrl: string;
     insertUrl?: string;
     deleteUrl?: string;
+    deleteMethod?: string;
+    loadParams?: Object;
     updateUrl?: string;
+    updateMethod?: string;
     onInserted?: (values: any, key: any) => void;
     onRemoved?: (key: any) => void;
+    onUpdated?: (key: any, values: any) => void;
     OnBeforeSend?: (operation: string, ajaxSettings: {
         cache?: boolean;
         contentType?: any;

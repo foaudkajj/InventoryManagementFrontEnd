@@ -8,6 +8,8 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
+import { LoginResponse } from 'app/InventoryApp/Models/LoginResponse';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'toolbar',
@@ -24,6 +26,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     navigation: any;
     selectedLanguage: any;
     userStatusOptions: any[];
+    navigationItems: LoginResponse = JSON.parse(localStorage.getItem('user')) as LoginResponse;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -38,7 +41,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
-        private _translateService: TranslateService
+        private _translateService: TranslateService,
+        private router: Router
     ) {
         // Set the defaults
         this.userStatusOptions = [
@@ -157,5 +161,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         // Use the selected language for translations
         this._translateService.use(lang.id);
+    }
+
+    logOut() {
+        sessionStorage.removeItem("Authorization");
+        localStorage.removeItem("user");
+        this.router.navigate(['/']);
     }
 }

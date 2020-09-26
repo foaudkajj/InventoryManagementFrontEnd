@@ -84,6 +84,12 @@ export const locale = {
 				COUNT: "Adet",
 				SEARCH: "Ara",
 				SELLING_PRICE: "Satış Fiyatı",
+			},
+			PRODUCT_MANAGEMENT: {
+				ADD: "Arttır",
+				REMOVE: "Eksilt",
+				PRODUCT_COUNT_ADD: "Stoğun Adeti Arttırma",
+				PRODUCT_COUNT_REMOVE: "Stoğun Adeti Eksilt",
 			}
 		},
 		ADMIN_MODULE: {
@@ -99,15 +105,26 @@ export const locale = {
 				NAME: "İsim",
 				LASTNAME: "Soy İsim",
 				BRANCH: "Şube",
+				ROLE: "Rol"
+			},
+			ROLE_MANAGEMENT: {
+				TITLE: "Yetkiler",
+				ROLE_NAME: "Yetki Tanımı",
+				SAVE: "Kaydet"
 			},
 			LOGIN: {
 				LOGIN_TITLE: "Lütfen Giriş Yapınız",
-				LOGIN_BUTTON: "Giriş Yap"
+				LOGIN_BUTTON: "Giriş Yap",
+				WRNOG_LOGIN_CREDENTIALS: "Girdiğiniz K. Adı veya Şifre Yanlıştır."
+
 			}
+		},
+		THEME: {
+			LOGOUT_BUTTON: "Çıkış Yap"
 		},
 		EXCEPTIONS: {
 			NO_ENOUGHT_COUNT: "Stokta bu üründen kalmamıştır.",
-			NO_SUCH_PRODUCT: "Stokta nolu bir ürün bulunmamaktadır.",
+			NO_SUCH_PRODUCT: "Girdiğiniz barkod stokta bulunmamaktadır.",
 			ERROR: "HATA !",
 			SQL_RELATIONSHIP: "Silmeye çalıştığınız kayıt başka yerde kullanılmıştır. Lütfen bu kayıtla ilişkili diğer kayıtları silip tekrar deneyiniz.",
 			EXISTING_PRODUCTS: "Bazı ürünler, daha önce eklendiğinden, eklenememiştir."
@@ -120,6 +137,19 @@ export const locale = {
 		},
 		MESSAGES: {
 			REMAINING_PRODUCTS_COUNT: "Bu üründen stokta sadece {{count}} tane kalmıştır."
+		},
+		NAV: {
+			MAIN_MENU: "Ana Sayfa",
+			SELLING_MODULE: "Satış Modulü",
+			NORMAL_SALE: "Satış Ekranı",
+			MASTERDATA: "Ana Veri",
+			PRODUCT_MANAGEMENT: "Ürün Ekleme/Silme",
+			USER_MANAGEMENT: "Kullanıcı Yönetimi",
+			STOCK_MODULE: "Stok Modulü",
+			ROLE_MANAGEMENT: "Rol Yönetimi",
+			STOCK_MODULE_PAGES: "Stok Modulü Sayfaları",
+			ADMIN_MODULE_PAGES: "Admin Modulü Sayfaları",
+			SELLING_MODULE_PAGES: "Satış Modulü Sayfaları"
 		},
 		AUTH: {
 			GENERAL: {

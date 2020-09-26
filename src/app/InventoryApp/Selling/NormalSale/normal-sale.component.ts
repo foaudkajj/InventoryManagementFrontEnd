@@ -15,6 +15,10 @@ import TextBox from "devextreme/ui/text_box";
 import { SaleUserBranchProductsDTO } from 'app/InventoryApp/Models/DTOs/SaleUserBranchProductsDTO';
 import { UIResponse } from 'app/InventoryApp/Models/UIResponse';
 import { SwalService } from 'app/InventoryApp/services/Swal.Service';
+import { DxStoreOptions } from 'app/InventoryApp/Models/DxStoreOptions';
+import CustomStore from 'devextreme/data/custom_store';
+import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
+import { LoginResponse } from 'app/InventoryApp/Models/LoginResponse';
 
 @Component({
   selector: 'app-normal-sale',
@@ -39,7 +43,7 @@ export class NormalSaleComponent implements OnInit, AfterViewInit {
   // Here I am using DevExtreme
   displayedColumnsSelledProducts = ['ProductName', 'ProductFullCode', 'ProductCode', 'ColorName', 'Gender', 'ProductYear', 'SellingPrice', 'Size', 'BranchName'];
   SoledProductsDatasource: SaleUserBranchProductsDTO[];
-
+  soledProductsStore: CustomStore;
   // I am using this to unsubscribe after leaving component
   private unsubscribe: Subscription[] = [];
 
@@ -51,16 +55,23 @@ export class NormalSaleComponent implements OnInit, AfterViewInit {
   ProductSellingDto: ProductSellingDto;
   @ViewChild('PriceInput') PriceInput: ElementRef;
   @ViewChild('productCode') productCode: ElementRef;
+  filterByToday: Array<any>;
+  today: Date = new Date();
+  userDetails = JSON.parse(localStorage.getItem('user')) as LoginResponse
 
   constructor(public _translate: TranslateService,
     private normalSatisSerice: NormalSatisService,
     private swal: SwalService,
     public dialog: MatDialog,
-    private fb: FormBuilder,) { }
+    private fb: FormBuilder,
+    private dxStore: DxStoreService) {
 
-  ngOnInit() {
     this.InitlizeSelledProductsDatasource();
     this.InitilizeProductAndPriceForm();
+  }
+
+  ngOnInit() {
+
 
   }
 
@@ -86,10 +97,15 @@ export class NormalSaleComponent implements OnInit, AfterViewInit {
   }
 
   InitlizeSelledProductsDatasource() {
-    this.normalSatisSerice.GetSoledProductsByUserID(1).toPromise().then((res: UIResponse<SaleUserBranchProductsDTO[]>) => {
-      this.SoledProductsDatasource = res.Entity;
-      this.ProductsToSellTableRows = [];
-    });
+
+    let storeOptions: DxStoreOptions = {
+      loadUrl: "NormalSatis/GetSelledProductsByUserId", loadParams: { Id: this.userDetails.userId }, Key: "Id"
+    };
+    this.soledProductsStore = this.dxStore.GetStore(storeOptions);
+    // this.normalSatisSerice.GetSoledProductsByUserID(1).toPromise().then((res: UIResponse<SaleUserBranchProductsDTO[]>) => {
+    //   this.SoledProductsDatasource = res.Entity;
+    //   this.ProductsToSellTableRows = [];
+    // });
   }
 
   productView: ProductView;
@@ -128,7 +144,7 @@ export class NormalSaleComponent implements OnInit, AfterViewInit {
         let PaymentMethodIds: number[] = result.map(value => value.PaymentMethodId);
         let ProductIds: number[] = this.ProductsToSellTableRows.map(value => value.Id);
         let salePaymentMethods: SalePaymentMethod[] = result.map(value => <SalePaymentMethod>{ Amount: value.Amount, DefferedPaymentCount: value.DefferedPaymentCount, PaymentMethodId: value.PaymentMethodId });
-        let ProductSellingDto: ProductSellingDto = { CustomerInfoId: result[0].CustomerInfo.Id, CustomerName: result[0].CustomerInfo.CustomerName, CustomerPhone: result[0].CustomerInfo.CustomerPhone, Receipt: result[0].Receipt, PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, ProductIds: ProductIds, UserId: 1, SalePaymentMethods: salePaymentMethods };
+        let ProductSellingDto: ProductSellingDto = { CustomerInfoId: result[0].CustomerInfo.Id, CustomerName: result[0].CustomerInfo.CustomerName, CustomerPhone: result[0].CustomerInfo.CustomerPhone, Receipt: result[0].Receipt, PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, ProductIds: ProductIds, UserId: this.userDetails.userId, SalePaymentMethods: salePaymentMethods };
         this.normalSatisSerice.SellProducts(ProductSellingDto).toPromise().then(_ => this.InitlizeSelledProductsDatasource(), () => this.ProductsToSellTableRows = []);
       }
 
@@ -172,43 +188,29 @@ export class NormalSaleComponent implements OnInit, AfterViewInit {
 
   }
 
-  onToolbarPreparing(e) {
-    e.toolbarOptions.items.unshift(
-      {
-        location: "before",
-        template: "calendar"
-      },
-      {
-        location: "before",
-        template: "calendar2"
-      },
-      // {
-      //   location: "after",
-      //   widget: "dxTextBox",
-      //   options: {
-      //     icon: "find",
-      //     placeholder: this._translate.instant('SELLING_MODULE.NORMAL_SALE.SEARCH_IN_SALES'),
-      //     onOptionChanged: (event) => {
-      //       this.paymentDetailText = event.value;
-      //       this.soledProductsDetailsText = event.value;
-      //       // this.SoledProductsDatasource.filter(fi => fi.)
-      //     }
-      //   }
-
-      // },
-      {
-        location: "before",
-        widget: "dxButton",
-        options: {
-          icon: "find",
-          onClick: () => {
-            this.soledProductsGrid.searchPanel.text = "Hello"
-            this.normalSatisSerice.GetSoledProductsByUserID(1, this.RangeStartDate.toISOString(), this.RangeEndDate.toISOString()).toPromise().then((res: UIResponse<any>) => this.SoledProductsDatasource = res.Entity)
-          }
-        }
-      },
-    );
-  }
+  // onToolbarPreparing(e) {
+  //   e.toolbarOptions.items.unshift(
+  //     {
+  //       location: "before",
+  //       template: "calendar"
+  //     },
+  //     {
+  //       location: "before",
+  //       template: "calendar2"
+  //     },
+  //     {
+  //       location: "before",
+  //       widget: "dxButton",
+  //       options: {
+  //         icon: "find",
+  //         onClick: () => {
+  //           this.soledProductsGrid.searchPanel.text = "Hello"
+  //           this.normalSatisSerice.GetSoledProductsByUserID(1, this.RangeStartDate.toISOString(), this.RangeEndDate.toISOString()).toPromise().then((res: UIResponse<any>) => this.SoledProductsDatasource = res.Entity)
+  //         }
+  //       }
+  //     },
+  //   );
+  // }
 
   soledProductsDetailsFilterExpression(filterValue, selectedFilterOperation, target) {
     let column = this as any;

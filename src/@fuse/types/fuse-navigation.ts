@@ -1,5 +1,5 @@
-export interface FuseNavigationItem
-{
+export interface FuseNavigationItem {
+    id?: number;
     key: string;
     title: string;
     type: 'item' | 'group' | 'collapsable';
@@ -12,6 +12,7 @@ export interface FuseNavigationItem
     externalUrl?: boolean;
     openInNewTab?: boolean;
     function?: any;
+    priority?: number;
     badge?: {
         title?: string;
         translate?: string;
@@ -21,7 +22,6 @@ export interface FuseNavigationItem
     children?: FuseNavigationItem[];
 }
 
-export interface FuseNavigation extends FuseNavigationItem
-{
+export interface FuseNavigation extends FuseNavigationItem {
     children?: FuseNavigationItem[];
 }

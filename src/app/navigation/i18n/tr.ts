@@ -84,6 +84,11 @@ export const locale = {
 				COUNT: "Adet",
 				SEARCH: "Ara",
 				SELLING_PRICE: "Satış Fiyatı",
+				PRODUCT_PROPERTY: "Ürün Özellikleri",
+				PRODUCT_TYPE: "Ürün Çeşitleri",
+				PRODUCT_PROPERTY_NAME: "Özelli İsmi",
+				PRODUCT_PROPERTY_TYPE: "Özellik Tipi",
+				PRODUCT_TYPE_NAME: "Üürn Çeişiti İsmi"
 			},
 			PRODUCT_MANAGEMENT: {
 				ADD: "Arttır",

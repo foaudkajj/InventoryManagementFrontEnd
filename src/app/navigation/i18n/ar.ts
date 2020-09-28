@@ -85,6 +85,11 @@ export const locale = {
 				COUNT: "العدد",
 				SEARCH: "ابحث ...",
 				SELLING_PRICE: "سعر المبيع",
+				PRODUCT_PROPERTY: "حقول المنتج",
+				PRODUCT_TYPE: "نوع المنتح",
+				PRODUCT_PROPERTY_NAME: "اسم الحقل",
+				PRODUCT_PROPERTY_TYPE: "نوع الحقل",
+				PRODUCT_TYPE_NAME: "اسم نوع المنتج"
 			},
 			PRODUCT_MANAGEMENT: {
 				ADD: "زيادة",

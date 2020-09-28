@@ -127,24 +127,21 @@
                 [masterDetail]="{ enabled: true, template: 'detail' }">
                 <dxo-filter-row [visible]="true"></dxo-filter-row>
                 <dxo-header-filter [visible]="true"></dxo-header-filter>
-                <dxo-search-panel [visible]="true" [placeholder]="_translate.instant('COMMON.SEARCH')">
-                </dxo-search-panel>
-                <dxo-group-panel [visible]="true"></dxo-group-panel>
+                <!-- <dxo-search-panel [visible]="true" [placeholder]="_translate.instant('COMMON.SEARCH')">
+                </dxo-search-panel> -->
+                <!-- <dxo-group-panel [visible]="true"></dxo-group-panel> -->
                 <dxo-selection mode="single"></dxo-selection>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.DATE')" dataType="date"
-                    dataField="Date" format="dd.MM.yyyy, HH:mm" caption="Title" [filterValue]="today"></dxi-column>
+                    dataField="Date" format="dd.MM.yyyy, HH:mm" caption="Title"></dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.TOTAL')" alignment="left"
-                    dataField="Total" format="currency">
+                    dataField="Total" format="currency" dataType="number">
                     <dxo-format type="currency" precision="2"></dxo-format>
                 </dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.USER_CODE')" alignment="left"
-                    dataField="UserCode"></dxi-column>
+                    dataField="UserCode" dataType="string"></dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.BRANCH_NAME')"
-                    dataField="BranchName"></dxi-column>
-                <dxi-column [visible]="false" [calculateFilterExpression]="soledProductsDetailsFilterExpression"
-                    dataField="soledProductDetails">
-                </dxi-column>
-                <div class="option" *dxTemplate="let data of 'calendar'">
+                    dataField="BranchName" dataType="string"></dxi-column>
+                <!-- <div class="option" *dxTemplate="let data of 'calendar'">
                     <dx-date-box width="100%" [(value)]="RangeStartDate"
                         placeholder="{{_translate.instant('COMMON.START_DATE')}}">
                     </dx-date-box>
@@ -153,7 +150,7 @@
                     <dx-date-box width="100%" [(value)]="RangeEndDate"
                         placeholder="{{_translate.instant('COMMON.END_DATE')}}">
                     </dx-date-box>
-                </div>
+                </div> -->
                 <dxo-summary>
                     <dxi-total-item column="Total" summaryType="sum" [valueFormat]="{type: 'currency', precision:'2'}">
                     </dxi-total-item>

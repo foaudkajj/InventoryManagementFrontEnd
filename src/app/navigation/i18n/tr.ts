@@ -47,6 +47,7 @@ export const locale = {
 				PRICE: "Fiyat",
 				SEARCH_IN_SALES: "Satılanlar Ürünlerde Ara",
 				SOLED_PRODUCTS: "Satılan Ürünler",
+				REMAINING_PRODUCTS_COUNT: "Bu üründen stokta sadece {{count}} tane kalmıştır.",
 				SALES_SCREEN: {
 					SELECT_PAYMENT: "Ödeme Seçiniz",
 					CASH: "Nakit",
@@ -141,7 +142,7 @@ export const locale = {
 			MIN_LENGTH: "en az {{minLength}}"
 		},
 		MESSAGES: {
-			REMAINING_PRODUCTS_COUNT: "Bu üründen stokta sadece {{count}} tane kalmıştır."
+			SUCCESFULL: "İşleminiz Başarıyla Yapılmıştır"
 		},
 		NAV: {
 			MAIN_MENU: "Ana Sayfa",

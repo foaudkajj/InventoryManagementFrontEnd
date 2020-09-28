@@ -48,6 +48,7 @@ export const locale = {
 				PRICE: "السعر",
 				SEARCH_IN_SALES: "ابحث في المبيعات",
 				SOLED_PRODUCTS: "المنتجات المباعة",
+				REMAINING_PRODUCTS_COUNT: "بقي {{count}} قطع من هذا المنتج في المخزن.",
 				SALES_SCREEN: {
 					SELECT_PAYMENT: "اختر طريقة الدفع",
 					CASH: "دفع نقدي",
@@ -140,7 +141,7 @@ export const locale = {
 			MIN_LENGTH: "الحد الأدنى {{minLength}}"
 		},
 		MESSAGES: {
-			REMAINING_PRODUCTS_COUNT: "بقي {{count}} قطع من هذا المنتج في المخزن."
+			SUCCESFULL: "تمت العملية بنجاح"
 		},
 		NAV: {
 			MAIN_MENU: "الصفحة الرئيسية",

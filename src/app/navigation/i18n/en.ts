@@ -100,6 +100,9 @@ export const locale = {
 					ADD_MESSAGE: 'Customer has been created'
 				}
 			}
+		},
+		Messages: {
+			SuccessMessage: "{{Item}} added successfully",
 		}
 	}
 };

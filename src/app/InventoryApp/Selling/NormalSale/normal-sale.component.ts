@@ -212,17 +212,6 @@ export class NormalSaleComponent implements OnInit, AfterViewInit {
   //   );
   // }
 
-  soledProductsDetailsFilterExpression(filterValue, selectedFilterOperation, target) {
-    let column = this as any;
-    // Implementation for the "between" comparison operator
-    // console.log(column)
-    // console.log(selectedFilterOperation)
-    // console.log(filterValue)
-    // console.log(target)
-    // Invokes the default filtering behavior
-    return column.defaultCalculateFilterExpression(arguments);
-  }
-
   focusOutWhenProductCodeEntered(value: string) {
     if (value.length == 12) {
       this.PriceInput.nativeElement.focus();

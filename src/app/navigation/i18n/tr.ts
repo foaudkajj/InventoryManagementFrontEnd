@@ -47,6 +47,7 @@ export const locale = {
 				PRICE: "Fiyat",
 				SEARCH_IN_SALES: "Satılanlar Ürünlerde Ara",
 				SOLED_PRODUCTS: "Satılan Ürünler",
+				REMAINING_PRODUCTS_COUNT: "Bu üründen stokta sadece {{count}} tane kalmıştır.",
 				SALES_SCREEN: {
 					SELECT_PAYMENT: "Ödeme Seçiniz",
 					CASH: "Nakit",
@@ -84,7 +85,15 @@ export const locale = {
 				COUNT: "Adet",
 				SEARCH: "Ara",
 				SELLING_PRICE: "Satış Fiyatı",
+<<<<<<< HEAD
 				NOT_FOUND: "Silmeye çalıştığınız kayıt bulunamamıştır."
+=======
+				PRODUCT_PROPERTY: "Ürün Özellikleri",
+				PRODUCT_TYPE: "Ürün Çeşitleri",
+				PRODUCT_PROPERTY_NAME: "Özelli İsmi",
+				PRODUCT_PROPERTY_TYPE: "Özellik Tipi",
+				PRODUCT_TYPE_NAME: "Üürn Çeişiti İsmi"
+>>>>>>> 34a5d551ad21d7cb10677f07e3d103bf5537eaa2
 			},
 			PRODUCT_MANAGEMENT: {
 				ADD: "Arttır",
@@ -139,7 +148,7 @@ export const locale = {
 			MIN_LENGTH: "en az {{minLength}}"
 		},
 		MESSAGES: {
-			REMAINING_PRODUCTS_COUNT: "Bu üründen stokta sadece {{count}} tane kalmıştır."
+			SUCCESFULL: "İşleminiz Başarıyla Yapılmıştır"
 		},
 		NAV: {
 			MAIN_MENU: "Ana Sayfa",

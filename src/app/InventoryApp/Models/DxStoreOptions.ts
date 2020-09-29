@@ -1,6 +1,7 @@
 export class DxStoreOptions {
     Key: string;
     loadUrl: string;
+    onLoaded?: (result: Array<any>) => void;
     insertUrl?: string;
     deleteUrl?: string;
     deleteMethod?: string;

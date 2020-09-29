@@ -12,22 +12,22 @@ export class BranchesService extends BaseService {
   }
 
   GetBranches(): Observable<any> {
-    let result$ = this.get(`Branches`);
+    let result$ = this.get(`Branches/Get`);
     return result$;
   }
 
-  ModifyBranch(id: number, color: Branch): Observable<any> {
-    let result$ = this.put(`Branches/${id}`, color);
-    return result$;
-  }
+  // ModifyBranch(id: number, color: Branch): Observable<any> {
+  //   let result$ = this.put(`Branches/${id}`, color);
+  //   return result$;
+  // }
 
-  AddBranches(colors: Branch[]): Observable<any> {
-    let result$ = this.post(`Branches`, colors);
-    return result$;
-  }
+  // AddBranches(colors: Branch[]): Observable<any> {
+  //   let result$ = this.post(`Branches/Insert`, colors);
+  //   return result$;
+  // }
 
   DeleteBranch(id: number): Observable<any> {
-    let result$ = this.delete(`Branches/${id}`);
+    let result$ = this.delete(`Branches/Delete?Key=${id}`);
     return result$;
   }
 }

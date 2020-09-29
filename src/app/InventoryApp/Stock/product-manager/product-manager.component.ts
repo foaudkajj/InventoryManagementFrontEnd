@@ -91,8 +91,8 @@ export class ProductManagerComponent implements OnInit {
           this.swal.showSuccessMessage()
         }
       },
-      onRemoved: () => this.swal.showSuccessMessage(),
-      onUpdated: () => this.swal.showSuccessMessage()
+      onRemoved: () => { this.swal.showSuccessMessage(); this.productsGrid.instance.refresh() },
+      onUpdated: () => { this.swal.showSuccessMessage(); this.productsGrid.instance.refresh() },
     };
     this.store = this.dxStore.GetStore(storeOption);
 

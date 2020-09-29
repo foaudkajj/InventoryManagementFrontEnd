@@ -15,23 +15,23 @@ import { BranchesService } from 'app/InventoryApp/services/branches.service';
 import { PaymentMethodsService } from 'app/InventoryApp/services/payment-methods.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { InventorySharedModule } from 'app/InventoryApp/inventory-shared.module';
+import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
 
 @NgModule({
   declarations: [MasterDataComponent],
   imports: [
-    CommonModule,
+    InventorySharedModule,
     MasterDataRoutingModule,
     MatFormFieldModule,
     MatSelectModule,
     MatCheckboxModule,
-    FormsModule,
-    ReactiveFormsModule,
     MatTableModule,
     MatIconModule,
     MatPaginatorModule,
     MatInputModule,
     MatButtonModule
   ],
-  providers: [ColorsService, BranchesService, PaymentMethodsService]
+  providers: [ColorsService, BranchesService, PaymentMethodsService, DxStoreService]
 })
 export class MasterDataModule { }

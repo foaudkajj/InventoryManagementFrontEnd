@@ -35,17 +35,17 @@ export class RoleManagementComponent implements OnInit {
   filGrid() {
     let usersGridStoreOption: DxStoreOptions = {
       loadUrl: "Roles/GetRoles", insertUrl: "Roles/AddRoles", deleteUrl: "Roles/DeleteRole", deleteMethod: "POST", Key: "Id",
-      onInserted: () => { this.swal.showSuccessMessage() },
-      onRemoved: () => { this.swal.showSuccessMessage() },
-      onUpdated: () => { this.swal.showSuccessMessage() }
+      onInserted: () => { this.swal.showSuccessMessage(); this.RolesGrid.instance.refresh() },
+      onRemoved: () => { this.swal.showSuccessMessage(); this.RolesGrid.instance.refresh() },
+      onUpdated: () => { this.swal.showSuccessMessage(); this.RolesGrid.instance.refresh() }
     };
     this.rolesGridStore = this.dxStore.GetStore(usersGridStoreOption);
 
     let permessionsListStoreOption: DxStoreOptions = {
       loadUrl: "Roles/GetRolePermessions", Key: "Id",
-      onInserted: () => { this.swal.showSuccessMessage() },
-      onRemoved: () => { this.swal.showSuccessMessage() },
-      onUpdated: () => { this.swal.showSuccessMessage() }
+      onInserted: () => { this.swal.showSuccessMessage(); this.PermessionsTree.instance.refresh() },
+      onRemoved: () => { this.swal.showSuccessMessage(); this.PermessionsTree.instance.refresh() },
+      onUpdated: () => { this.swal.showSuccessMessage(); this.PermessionsTree.instance.refresh() }
     };
     this.permessionsListStore = this.dxStore.GetStore(permessionsListStoreOption);
 

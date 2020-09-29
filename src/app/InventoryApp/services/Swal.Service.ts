@@ -15,16 +15,7 @@ export class SwalService {
     showSuccessMessage(message?: string) {
         swal.fire({
             icon: 'success',
-            title: message ? message : 'İşleminiz Başarıyla Yapılmıştır',
-            showConfirmButton: false,
-            timer: 1500
-        })
-    }
-
-    showSuccessMessage(message: string) {
-        swal.fire({
-            icon: 'success',
-            title: message,
+            title: message ? message : this.translate.instant("MESSAGES.SUCCESFULL"),
             showConfirmButton: false,
             timer: 1500
         })

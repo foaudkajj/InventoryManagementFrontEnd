@@ -132,15 +132,17 @@
                 <!-- <dxo-group-panel [visible]="true"></dxo-group-panel> -->
                 <dxo-selection mode="single"></dxo-selection>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.DATE')" dataType="date"
-                    dataField="Date" format="dd.MM.yyyy, HH:mm" caption="Title"></dxi-column>
+                    dataField="Date" format="dd.MM.yyyy, HH:mm" caption="Title" [filterValue]="today"></dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.TOTAL')" alignment="left"
                     dataField="Total" format="currency" dataType="number">
                     <dxo-format type="currency" precision="2"></dxo-format>
                 </dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.USER_CODE')" alignment="left"
-                    dataField="UserCode" dataType="string"></dxi-column>
+                    dataField="User.UserCode" dataType="string"></dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.BRANCH_NAME')"
-                    dataField="BranchName" dataType="string"></dxi-column>
+                    dataField="Branch.Location" dataType="string"></dxi-column>
+                <dxo-group-panel [visible]="true"></dxo-group-panel>
+                <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
                 <!-- <div class="option" *dxTemplate="let data of 'calendar'">
                     <dx-date-box width="100%" [(value)]="RangeStartDate"
                         placeholder="{{_translate.instant('COMMON.START_DATE')}}">

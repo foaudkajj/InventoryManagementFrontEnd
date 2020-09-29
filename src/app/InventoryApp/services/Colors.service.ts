@@ -10,28 +10,28 @@ export class ColorsService extends BaseService {
 	constructor(httpClient: HttpClient, router: Router) {
 		super(httpClient, router);
 	}
-	
-    GetColors(): Observable<any> {
-		let result$ = this.get(`Colors`);
+
+	GetColors(): Observable<any> {
+		let result$ = this.get(`Colors/Get`);
 		return result$;
 	}
-	GetColor(id: number): Observable<any> {
-		let result$ = this.get(`Colors/${id}`);
-		return result$;
-	}
-	
-    ModifyColor(id:number, color:Color): Observable<any> {
-		let result$ = this.put(`Colors/${id}`,color);
+	// GetColor(id: number): Observable<any> {
+	// 	let result$ = this.get(`Colors/${id}`);
+	// 	return result$;
+	// }
+
+	// ModifyColor(id:number, color:Color): Observable<any> {
+	// 	let result$ = this.put(`Colors/${id}`,color);
+	// 	return result$;
+	// }
+
+	AddColors(colors: Color[]): Observable<any> {
+		let result$ = this.post(`Colors/Insert`, colors);
 		return result$;
 	}
 
-	AddColors(colors:Color[]): Observable<any> {
-		let result$ = this.post(`Colors`,colors);
+	DeleteColor(id: number): Observable<any> {
+		let result$ = this.delete(`Colors/Delete?Key=${id}`);
 		return result$;
 	}
-	
-	DeleteColor(id:number): Observable<any> {
-		let result$ = this.delete(`Colors/${id}`);
-		return result$;
-    }
 }

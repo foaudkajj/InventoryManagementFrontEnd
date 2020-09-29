@@ -11,6 +11,7 @@ import { Branch } from 'app/InventoryApp/Models/Branch';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { SwalService } from 'app/InventoryApp/services/Swal.Service';
+import { UIResponse } from 'app/InventoryApp/Models/UIResponse';
 
 @Component({
   selector: 'app-master-data',
@@ -168,14 +169,15 @@ export class MasterDataComponent implements OnInit {
   }
 
   async DeleteFromMDTable(row: any) {
-    let deleteObs: Observable<any> = null;
+    let deleteObs: UIResponse<any> = null;
     let objToCast: any;
     // Bransh
     if (this.SelectedMDNumber == 0) {
       objToCast = row;
       let conforming = await this.Swal.showDeletingMessage()
       if (conforming.isConfirmed) {
-        deleteObs = this.branchesService.DeleteBranch((<Branch>objToCast).Id);
+        deleteObs = await this.branchesService.DeleteBranch(45).toPromise() as UIResponse<Branch>;
+
         this.Swal.showDeletConforme()
       }
     }
@@ -184,7 +186,7 @@ export class MasterDataComponent implements OnInit {
       objToCast = row;
       let conforming = await this.Swal.showDeletingMessage()
       if (conforming.isConfirmed) {
-        deleteObs = this.colorsService.DeleteColor((objToCast as Color).Id);
+        deleteObs = await this.colorsService.DeleteColor((objToCast as Color).Id).toPromise() as UIResponse<Color>;
         this.Swal.showDeletConforme()
       }
     }
@@ -193,14 +195,14 @@ export class MasterDataComponent implements OnInit {
       objToCast = row;
       let conforming = await this.Swal.showDeletingMessage()
       if (conforming.isConfirmed) {
-        deleteObs = this.paymentService.DeletePaymentMethod((objToCast as PaymentMethod).Id);
+        deleteObs = await this.paymentService.DeletePaymentMethod((objToCast as PaymentMethod).Id).toPromise() as UIResponse<PaymentMethod>;
         this.Swal.showDeletConforme()
       }
     }
 
 
-    if (deleteObs) {
-      deleteObs.toPromise().finally(() => this.GetMDTableData());
+    if (!deleteObs.IsError) {
+      this.GetMDTableData();
     }
   }
 

@@ -84,6 +84,7 @@ export const locale = {
 				COUNT: "Adet",
 				SEARCH: "Ara",
 				SELLING_PRICE: "Satış Fiyatı",
+				NOT_FOUND: "Silmeye çalıştığınız kayıt bulunamamıştır."
 			},
 			PRODUCT_MANAGEMENT: {
 				ADD: "Arttır",
@@ -115,7 +116,9 @@ export const locale = {
 			LOGIN: {
 				LOGIN_TITLE: "Lütfen Giriş Yapınız",
 				LOGIN_BUTTON: "Giriş Yap",
-				WRNOG_LOGIN_CREDENTIALS: "Girdiğiniz K. Adı veya Şifre Yanlıştır."
+				WRNOG_LOGIN_CREDENTIALS: "Girdiğiniz K. Adı veya Şifre Yanlıştır.",
+				USER_NAME: 'Kullanıcı adı',
+				PASSWORD: 'şifre'
 
 			}
 		},

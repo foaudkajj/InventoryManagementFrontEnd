@@ -6,13 +6,152 @@ export const locale = {
 			SELECT: 'Select your language',
 		},
 		MENU: {
-			NEW: 'new',
-			ACTIONS: 'Actions',
-			CREATE_POST: 'Create New Post',
-			PAGES: 'Pages',
-			FEATURES: 'Features',
-			APPS: 'Apps',
-			DASHBOARD: 'Dashboard',
+			SELLING: 'Satış İşlemleri'
+		},
+		COMMON: {
+			ADD: "Add",
+			MALE: "Male",
+			FEMALE: "Female",
+			SEARCH: "Search ...",
+			START_DATE: "Start date",
+			END_DATE: "End date",
+			PLEASE_SELECT: "Pleas select ..."
+		},
+		SELLING_MODULE: {
+			NORMAL_SALE: {
+				TITLE: "Normal Sale",
+				SELLING_PRICE: "Selling price",
+				DATE: "Date",
+				TOTAL: "Total",
+				USER_CODE: "User code",
+				BRANCH_NAME: "Branch",
+				PRODUCT_NAME: "Product",
+				PRODUCT_FULL_CODE: "Product full code",
+				PRODUCT_CODE: "Product code",
+				COLOR_NAME: "Color",
+				GENDER: "Gender",
+				PRODUCT_YEAR: "Product year",
+				SIZE: "Size",
+				PRODUCT_COUNT: "Count",
+				PAYMENT_NAME: "Payment name",
+				PAYMENT_TYPE: "Vade",
+				DEFFEREDED_PAYMENT_COUNT: "Vade Sayısı",
+				RECEIPT: "Receipt",
+				AMOUNT: "Amount",
+				PAYMENT_METHODS: "Payment method",
+				COLORS: "Color",
+				BRANCHES: "Branch",
+				COLORS_SHORTCODES: "Color shortcode",
+				BRANCH_ADRES: "Address",
+				ADD: "Add",
+				PRICE: "Price",
+				SEARCH_IN_SALES: "Search in sales",
+				SOLED_PRODUCTS: "Soled products",
+				SALES_SCREEN: {
+					SELECT_PAYMENT: "Select payment",
+					CASH: "Cash",
+					BANK_PAYMENT: "Bank payment",
+					PAYMENT_TYPE: "Payment type",
+					DEFFERED_PAYMENT_COUNT: "Vade",
+					AMOUNT: "Amount",
+					TOTAL: "Total",
+					COMPLETE_PAYMENT: "Coplete payment"
+				}
+			}
+
+		},
+		STOCK_MODULE: {
+			MASTER_DATA: {
+				TITLE: "Masert data",
+				PAYMENT_METHODS: "Payment methods",
+				COLORS: "Colors",
+				BRANCHES: 'Branches',
+				COLORS_SHORTCODES: "Colors shortcodes",
+				BRANCH_NAME: "Branch name",
+				BRANCH_ADRES: "Branch address",
+				PAYMENT_NAME: "Payment name",
+				PAYMENT_TYPE: "Payment type",
+				ADD: "Add",
+				FILL: "Fill",
+				PRODUCT_NAME: "Product name",
+				PRODUCT_FULL_CODE: "Product fullcode",
+				COLOR_NAME: "Color name",
+				GENDER: "Gender",
+				PRICE: "Price",
+				PRODUCT_YEAR: "Product year",
+				PRODUCT_CODE: "Product code",
+				SIZE: "Size",
+				COUNT: "Count",
+				SEARCH: "Search",
+				SELLING_PRICE: "Selling price",
+			},
+			PRODUCT_MANAGEMENT: {
+				ADD: "Add",
+				REMOVE: "Remove",
+				PRODUCT_COUNT_ADD: "Product count add",
+				PRODUCT_COUNT_REMOVE: "Product count remove",
+			}
+		},
+		ADMIN_MODULE: {
+			USER_MANAGEMENT: {
+				TITLE: "Title",
+				USER_NAME: "User name",
+				USER_CODE: "User code",
+				USER_STATUS: "User status",
+				PASSWORD: "Password",
+				IMAGE_PATH: "Image path",
+				EMAIL: "Email",
+				CELLPHONE: "Cell phone",
+				NAME: "Name",
+				LASTNAME: "Last name",
+				BRANCH: "Branch",
+				ROLE: "Role"
+			},
+			ROLE_MANAGEMENT: {
+				TITLE: "Title",
+				ROLE_NAME: "Role name",
+				SAVE: "Save"
+			},
+			LOGIN: {
+				LOGIN_TITLE: "Please login",
+				LOGIN_BUTTON: "Login",
+				WRNOG_LOGIN_CREDENTIALS: "The user name/password is wrong",
+				USER_NAME: 'User name',
+				PASSWORD: 'Password'
+
+			}
+		},
+		THEME: {
+			LOGOUT_BUTTON: "Logout"
+		},
+		EXCEPTIONS: {
+			NO_ENOUGHT_COUNT: "No enough product in the stock",
+			NO_SUCH_PRODUCT: "The barcode doesn't exsit in the datebase",
+			ERROR: "Error",
+			SQL_RELATIONSHIP: "The product you try to delete is used in another place. please delete it from the used place and try again",
+			EXISTING_PRODUCTS: "Some product are already exist"
+
+		},
+		VALIDATIONS: {
+			CONTROL_REQURIRED: "{{formName}} cann't be empty.",
+			MAX_LENGTH: "Max {{maxLength}} ",
+			MIN_LENGTH: "Min {{minLength}}"
+		},
+		MESSAGES: {
+			REMAINING_PRODUCTS_COUNT: "ther's only {{count}} of this product in stok."
+		},
+		NAV: {
+			MAIN_MENU: "Main menu",
+			SELLING_MODULE: "Seliing moudle",
+			NORMAL_SALE: "Selling screen",
+			MASTERDATA: "Master data",
+			PRODUCT_MANAGEMENT: "Product add/delete",
+			USER_MANAGEMENT: "User management",
+			STOCK_MODULE: "Stok Module",
+			ROLE_MANAGEMENT: "Role management",
+			STOCK_MODULE_PAGES: "Stok Module Pages",
+			ADMIN_MODULE_PAGES: "Admin Module pages",
+			SELLING_MODULE_PAGES: "Selling Module Pages"
 		},
 		AUTH: {
 			GENERAL: {

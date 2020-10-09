@@ -17,6 +17,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { InventorySharedModule } from 'app/InventoryApp/inventory-shared.module';
 import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
+import { ProductTypeService } from 'app/InventoryApp/services/product-type.service';
+import { DxTagBoxModule } from 'devextreme-angular';
 
 @NgModule({
   declarations: [MasterDataComponent],
@@ -30,8 +32,9 @@ import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
     MatIconModule,
     MatPaginatorModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    DxTagBoxModule
   ],
-  providers: [ColorsService, BranchesService, PaymentMethodsService, DxStoreService]
+  providers: [ColorsService, BranchesService, PaymentMethodsService, DxStoreService, ProductTypeService]
 })
 export class MasterDataModule { }

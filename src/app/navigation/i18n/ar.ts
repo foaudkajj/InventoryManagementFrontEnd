@@ -26,7 +26,7 @@ export const locale = {
 				USER_CODE: "كود البائع",
 				BRANCH_NAME: "اسم الفرع",
 				PRODUCT_NAME: "اسم المنتج",
-				PRODUCT_FULL_CODE: "باركود المنتج",
+				PRODUCT_BARCODE: "باركود المنتج",
 				PRODUCT_CODE: "كود المنتج",
 				COLOR_NAME: "اللون",
 				GENDER: "الجنس",
@@ -76,7 +76,7 @@ export const locale = {
 				ADD: "أضف",
 				FILL: "املأ",
 				PRODUCT_NAME: "اسم المنتج",
-				PRODUCT_FULL_CODE: "باركود المنتج",
+				PRODUCT_BARCODE: "باركود المنتج",
 				COLOR_NAME: "اللون",
 				GENDER: "الجنس",
 				PRICE: "السعر",
@@ -90,13 +90,17 @@ export const locale = {
 				PRODUCT_TYPE: "نوع المنتح",
 				PRODUCT_PROPERTY_NAME: "اسم الحقل",
 				PRODUCT_PROPERTY_TYPE: "نوع الحقل",
-				PRODUCT_TYPE_NAME: "اسم نوع المنتج"
+				PRODUCT_TYPE_NAME: "اسم نوع المنتج",
+				EXPIRATION_DATE: "تاريخ انتهاء الصلاحية",
+				DESCRIPTION: "ملاحظة",
+				SAVE: "احفظ"
 			},
 			PRODUCT_MANAGEMENT: {
 				ADD: "زيادة",
 				REMOVE: "إنقاص",
 				PRODUCT_COUNT_ADD: "زيادة عدة المنتجات",
 				PRODUCT_COUNT_REMOVE: "إنقاص عدد المنتجات",
+				ALL: "جميع المتجات"
 			}
 		},
 		ADMIN_MODULE: {

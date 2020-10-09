@@ -1,6 +1,6 @@
 export declare interface SoledProductDetailsDto {
     productName: string;
-    productFullCode: string;
+    ProductBarcode: string;
     productCode: string;
     colorName: string;
     gender: boolean;
@@ -8,4 +8,6 @@ export declare interface SoledProductDetailsDto {
     size: number;
     productCount: number;
     branchName: string;
+    Description: string;
+    ExpirationDate: Date;
 }

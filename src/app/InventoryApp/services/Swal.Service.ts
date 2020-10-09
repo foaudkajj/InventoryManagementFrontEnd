@@ -8,7 +8,7 @@ export class SwalService {
     showErrorMessage(message?: string) {
         swal.fire(
             this.translate.instant("EXCEPTIONS.ERROR"),
-            this.translate.instant(message),
+            message ? this.translate.instant(message) : '',
             "error"
         );
     }

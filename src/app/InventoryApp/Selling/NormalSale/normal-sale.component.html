@@ -31,15 +31,15 @@
                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                             (focusout)="productCodeFocusOut()"
                             (change)="focusOutWhenProductCodeEntered($event.target.value)" style="font-size: 20px;"
-                            formControlName="ProductFullCode" id="ProductFullCode" matInput
+                            formControlName="ProductBarcode" id="ProductBarcode" matInput
                             [placeholder]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')">
-                        <mat-error *ngIf="hasError('ProductFullCode', 'required')">
+                        <mat-error *ngIf="hasError('ProductBarcode', 'required')">
                             {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName: _translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')} }}
                         </mat-error>
-                        <mat-error *ngIf="hasError('ProductFullCode', 'maxlength')">
+                        <mat-error *ngIf="hasError('ProductBarcode', 'maxlength')">
                             {{'VALIDATIONS.MAX_LENGTH' | translate:{'maxLength': 12} }}
                         </mat-error>
-                        <mat-error *ngIf="hasError('ProductFullCode', 'minlength')">
+                        <mat-error *ngIf="hasError('ProductBarcode', 'minlength')">
                             {{'VALIDATIONS.MIN_LENGTH' | translate:{'minLength': 12} }}
                         </mat-error>
                     </mat-form-field>
@@ -77,8 +77,8 @@
             <dx-data-grid id="gridContainer" [dataSource]="ProductsToSellDataSource" [showBorders]="true">
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_NAME')"
                     dataField="ProductName"></dxi-column>
-                <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_FULL_CODE')"
-                    dataField="ProductFullCode"></dxi-column>
+                <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_BARCODE')"
+                    dataField="ProductBarcode"></dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.COLOR_NAME')"
                     dataField="Color.ColorName"></dxi-column>
                 <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.GENDER')" dataField="Gender">
@@ -167,8 +167,8 @@
                             [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_NAME')"
                             dataField="ProductName"></dxi-column>
                         <dxi-column width="auto"
-                            [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_FULL_CODE')"
-                            dataField="ProductFullCode"></dxi-column>
+                            [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_BARCODE')"
+                            dataField="ProductBarcode"></dxi-column>
                         <dxi-column width="auto"
                             [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')"
                             dataField="ProductCode"></dxi-column>

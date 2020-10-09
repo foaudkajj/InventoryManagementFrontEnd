@@ -46,9 +46,9 @@ export class UserManagementComponent implements OnInit {
   filTable() {
     let storeOption: DxStoreOptions = {
       loadUrl: "User/GetUsers", insertUrl: "User/InsertUser", updateUrl: "User/UpdateUser", updateMethod: "POST", deleteUrl: "User/DeleteUser", Key: "Id",
-      onInserted: () => { this.swal.showSuccessMessage(); this.UsersGrid.instance.refresh() },
-      onRemoved: () => { this.swal.showSuccessMessage(); this.UsersGrid.instance.refresh() },
-      onUpdated: () => { this.swal.showSuccessMessage(); this.UsersGrid.instance.refresh() }
+      onInserted: () => this.UsersGrid.instance.refresh(),
+      onRemoved: () => this.UsersGrid.instance.refresh(),
+      onUpdated: () => this.UsersGrid.instance.refresh()
     };
     this.store = this.dxStore.GetStore(storeOption);
 

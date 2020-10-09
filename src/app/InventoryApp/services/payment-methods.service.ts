@@ -12,26 +12,26 @@ export class PaymentMethodsService extends BaseService {
     }
 
     GetPaymentMethods(): Observable<any> {
-        let result$ = this.get(`PaymentMethods`);
+        let result$ = this.get(`PaymentMethods/Get`);
         return result$;
     }
-    GetPaymentMethod(id: number): Observable<any> {
-        let result$ = this.get(`PaymentMethods/${id}`);
-        return result$;
-    }
+    // GetPaymentMethod(id: number): Observable<any> {
+    //     let result$ = this.get(`PaymentMethods/${id}`);
+    //     return result$;
+    // }
 
-    ModifyPaymentMethod(id: number, PaymentMethod: PaymentMethod): Observable<any> {
-        let result$ = this.put(`PaymentMethods/${id}`, PaymentMethod);
-        return result$;
-    }
+    // ModifyPaymentMethod(id: number, PaymentMethod: PaymentMethod): Observable<any> {
+    //     let result$ = this.put(`PaymentMethods/Update/${id}`, PaymentMethod);
+    //     return result$;
+    // }
 
     AddPaymentMethods(PaymentMethods: PaymentMethod[]): Observable<any> {
-        let result$ = this.post(`PaymentMethods`, PaymentMethods);
+        let result$ = this.post(`PaymentMethods/Insert`, PaymentMethods);
         return result$;
     }
 
     DeletePaymentMethod(id: number): Observable<any> {
-        let result$ = this.delete(`PaymentMethods/${id}`);
+        let result$ = this.post(`PaymentMethods/Delete/${id}`, {});
         return result$;
     }
 }

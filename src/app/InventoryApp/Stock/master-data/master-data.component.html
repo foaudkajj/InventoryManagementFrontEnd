@@ -38,7 +38,8 @@
 
             <div class="example-container mat-elevation-z8">
 
-                <dx-data-grid #MasterDataGrid id="gridContainer" [dataSource]="MasterDataStore" [showBorders]="true">
+                <dx-data-grid #MasterDataGrid id="gridContainer" [dataSource]="MasterDataStore" [showBorders]="true"
+                    [masterDetail]="{ enabled: SelectedMDNumber == 3, template: 'detail' }">
                     <ng-container *ngFor="let column of Columns">
                         <dxi-column [caption]="column.caption" [dataField]="column.dataField"></dxi-column>
                     </ng-container>
@@ -48,6 +49,30 @@
                     <dxo-filter-row [visible]="true"></dxo-filter-row>
                     <dxo-header-filter [visible]="true"></dxo-header-filter>
                     <dxo-group-panel [visible]="true"></dxo-group-panel>
+
+                    <div *dxTemplate="let masterData of 'detail'">
+
+                        <!-- <dx-data-grid #masterDetailGrid [showColumnLines]="false" [showRowLines]="true"
+                            [showBorders]="true" [rowAlternationEnabled]="true" [dataSource]="MasterDetailStore"
+                            [showBorders]="true" [columnAutoWidth]="false"
+                            [selectedRowKeys]="masterData.data.ProductPropertyIds">
+                            <ng-container *ngFor="let column of MasterDetailColumns">
+                                <dxi-column [caption]="column.caption" [dataField]="column.dataField"></dxi-column>
+                            </ng-container>
+
+                            <dxo-selection [selectAllMode]="'allPages'" [showCheckBoxesMode]="'always'" mode="multiple">
+                            </dxo-selection>
+                        </dx-data-grid> -->
+                        <dx-tag-box #masterDetailsTagBox [dataSource]="MasterDetailStore" [showSelectionControls]="true"
+                            applyValueMode="useButtons" [value]="masterData.data.ProductPropertyIds" [displayExpr]="tagBoxShowValue"
+                            valueExpr="Id">
+                        </dx-tag-box>
+                        <button *ngIf="SelectedMDNumber == 3"
+                            (click)="ButtonClick(masterDetailsTagBox.selectedItems,masterData.data.Id)"
+                            mat-raised-button color="accent" style="float: right;">
+                            {{_translate.instant("STOCK_MODULE.MASTER_DATA.SAVE")}}
+                        </button>
+                    </div>
                 </dx-data-grid>
 
             </div>

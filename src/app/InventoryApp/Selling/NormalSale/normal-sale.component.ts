@@ -8,10 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { NormalSatisService } from 'app/InventoryApp/services/normal-satis.service';
 import { PaymentPopup } from 'app/InventoryApp/Models/DTOs/PaymentPopup';
 import { SalePaymentMethod } from 'app/InventoryApp/Models/DTOs/SalePaymentMethod';
-import { ProductDto } from 'app/InventoryApp/Models/ProductDto';
 import { DxDataGridComponent, DxTextBoxComponent, DxLookupComponent } from 'devextreme-angular';
 import { PaymentScreenComponent } from '../PaymentScreen/payment-screen.component';
-import TextBox from "devextreme/ui/text_box";
 import { SaleUserBranchProductsDTO } from 'app/InventoryApp/Models/DTOs/SaleUserBranchProductsDTO';
 import { UIResponse } from 'app/InventoryApp/Models/UIResponse';
 import { SwalService } from 'app/InventoryApp/services/Swal.Service';
@@ -30,7 +28,7 @@ export class NormalSaleComponent implements OnInit, AfterViewInit {
   RangeEndDate: Date;
   Genders: any = [{ Value: false, ViewValue: 'Erkek' }, { Value: true, ViewValue: 'Kadın' }]
   // Here I used Material Table
-  ProductsToSellDisplayedColumns = ['ProductName', 'ProductFullCode', 'ProductCode', 'ColorName', 'Gender', 'ProductYear', 'SellingPrice', 'Size', 'BranchName', 'actions'];
+  ProductsToSellDisplayedColumns = ['ProductName', 'ProductBarcode', 'ProductCode', 'ColorName', 'Gender', 'ProductYear', 'SellingPrice', 'Size', 'BranchName', 'actions'];
   ProductsToSellDataSource: ProductView[] = [];
   ProductsToSellTableRows: ProductView[] = [];
   @ViewChild("soledProductsGrid") soledProductsGrid: DxDataGridComponent;
@@ -41,7 +39,7 @@ export class NormalSaleComponent implements OnInit, AfterViewInit {
   ProductsToSellTotalPrice: number;
 
   // Here I am using DevExtreme
-  displayedColumnsSelledProducts = ['ProductName', 'ProductFullCode', 'ProductCode', 'ColorName', 'Gender', 'ProductYear', 'SellingPrice', 'Size', 'BranchName'];
+  displayedColumnsSelledProducts = ['ProductName', 'ProductBarcode', 'ProductCode', 'ColorName', 'Gender', 'ProductYear', 'SellingPrice', 'Size', 'BranchName'];
   SoledProductsDatasource: SaleUserBranchProductsDTO[];
   soledProductsStore: CustomStore;
   // I am using this to unsubscribe after leaving component
@@ -82,7 +80,7 @@ export class NormalSaleComponent implements OnInit, AfterViewInit {
 
   InitilizeProductAndPriceForm() {
     this.ProductAndPriceFormGroup = this.fb.group({
-      ProductFullCode: ['', Validators.compose([
+      ProductBarcode: ['', Validators.compose([
         Validators.required
       ])
       ],
@@ -138,14 +136,16 @@ export class NormalSaleComponent implements OnInit, AfterViewInit {
       data: this.ProductsToSellTotalPrice = this.ProductsToSellDataSource.map(t => t.SellingPrice).reduce((acc, value) => +acc + +value, 0)
     });
 
-    this.unsubscribe.push(dialogRef.afterClosed().subscribe((result: PaymentPopup[]) => {
+    this.unsubscribe.push(dialogRef.afterClosed().subscribe(async (result: PaymentPopup[]) => {
       if (result?.length > 0) {
         this.ProductsToSellDataSource = [];
         let PaymentMethodIds: number[] = result.map(value => value.PaymentMethodId);
         let ProductIds: number[] = this.ProductsToSellTableRows.map(value => value.Id);
         let salePaymentMethods: SalePaymentMethod[] = result.map(value => <SalePaymentMethod>{ Amount: value.Amount, DefferedPaymentCount: value.DefferedPaymentCount, PaymentMethodId: value.PaymentMethodId });
         let ProductSellingDto: ProductSellingDto = { CustomerInfoId: result[0].CustomerInfo.Id, CustomerName: result[0].CustomerInfo.CustomerName, CustomerPhone: result[0].CustomerInfo.CustomerPhone, Receipt: result[0].Receipt, PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, ProductIds: ProductIds, UserId: this.userDetails.userId, SalePaymentMethods: salePaymentMethods };
-        this.normalSatisSerice.SellProducts(ProductSellingDto).toPromise().then(_ => this.InitlizeSelledProductsDatasource(), () => this.ProductsToSellTableRows = []);
+        await this.normalSatisSerice.SellProducts(ProductSellingDto).toPromise();
+        this.ProductsToSellTableRows = [];
+        this.soledProductsGrid.instance.refresh();
       }
 
     }));
@@ -157,7 +157,7 @@ export class NormalSaleComponent implements OnInit, AfterViewInit {
   isProductCountEnough = false;
   async productCodeFocusOut() {
     this.PriceInput.nativeElement.focus();
-    const productCode = this.ProductAndPriceFormGroup.controls.ProductFullCode.value;
+    const productCode = this.ProductAndPriceFormGroup.controls.ProductBarcode.value;
     if (productCode && productCode.length == 12) {
       let res: UIResponse<ProductView> = await this.normalSatisSerice.GetProductDetails(productCode).toPromise();
       if (!res.IsError) {

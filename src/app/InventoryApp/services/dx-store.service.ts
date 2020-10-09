@@ -10,11 +10,12 @@ import { createStore } from 'devextreme-aspnet-data-nojquery';
 import { environment } from 'environments/environment';
 import { DxStoreOptions } from '../Models/DxStoreOptions';
 import { SwalService } from './Swal.Service';
+import { UIResponse } from '../Models/UIResponse';
 
 
 @Injectable()
 export class DxStoreService {
-    constructor(private swal: SwalService) {
+    constructor(private swal: SwalService, private router: Router) {
     }
 
     GetStore(storeOptions: DxStoreOptions): CustomStore {
@@ -27,11 +28,35 @@ export class DxStoreService {
             loadParams: storeOptions.loadParams,
             updateMethod: storeOptions.updateMethod,
             deleteMethod: storeOptions.deleteMethod,
-            onInserted: storeOptions.onInserted,
-            onRemoved: storeOptions.onRemoved,
+            onInserted: (values: UIResponse<any>, key) => {
+                storeOptions.onInserted(values, key);
+                if (!values.IsError)
+                    this.swal.showSuccessMessage();
+            },
+            onLoaded: (result: Array<any>) => {
+                if (storeOptions.onLoaded)
+                    storeOptions?.onLoaded(result);
+            },
+            onRemoved: (key) => {
+                if (storeOptions.onRemoved) {
+                    storeOptions.onRemoved(key);
+                }
+
+                this.swal.showSuccessMessage();
+            },
+            onUpdated: (key, values) => {
+                if (storeOptions.onUpdated)
+                    storeOptions.onUpdated(key, values);
+                this.swal.showSuccessMessage();
+            },
             onBeforeSend: (method, ajaxOptions) => {
-                ajaxOptions.headers = {
-                    "Authorization": "Bearer " + sessionStorage.getItem("Authorization")
+                if (sessionStorage.getItem("Authorization")) {
+                    ajaxOptions.headers = {
+                        "Authorization": "Bearer " + sessionStorage.getItem("Authorization")
+                    }
+                }
+                else {
+                    this.router.navigate(["login"]);
                 }
                 return storeOptions.OnBeforeSend;
             },

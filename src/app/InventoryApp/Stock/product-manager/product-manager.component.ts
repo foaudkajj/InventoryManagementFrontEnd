@@ -13,7 +13,7 @@ import { Barcode } from 'app/InventoryApp/Models/DTOs/Barcode';
 import jsPDF from 'jspdf';
 import { BranchesService } from 'app/InventoryApp/services/branches.service';
 import { TranslateService } from '@ngx-translate/core';
-import { DxDataGridComponent } from 'devextreme-angular';
+import { DxDataGridComponent, DxFormComponent } from 'devextreme-angular';
 import DataSource from 'devextreme/data/data_source';
 import CustomStore from 'devextreme/data/custom_store';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
@@ -25,6 +25,14 @@ import { UIResponse } from 'app/InventoryApp/Models/UIResponse';
 import { AddProductsDto } from 'app/InventoryApp/Models/DTOs/AddProductsDto';
 import { SwalService } from 'app/InventoryApp/services/Swal.Service';
 import swal from "sweetalert2";
+import { ProductTypeService } from 'app/InventoryApp/services/product-type.service';
+import { ProductTypeDto } from 'app/InventoryApp/Models/ProductType';
+import { LoadResult } from 'app/InventoryApp/Models/DTOs/LoadResult';
+import { ProductPropertyDto } from 'app/InventoryApp/Models/ProductPropertyDto';
+import { FormConf } from 'app/InventoryApp/Models/DTOs/FormConf';
+import { Column } from 'devextreme/ui/data_grid';
+import { dxFormButtonItem, dxFormEmptyItem, dxFormGroupItem, dxFormSimpleItem, dxFormTabbedItem } from 'devextreme/ui/form';
+import { LoadOptions } from 'devextreme/data/load_options';
 
 @Component({
   selector: 'app-product-manager',
@@ -37,11 +45,16 @@ export class ProductManagerComponent implements OnInit {
   ProductForm: FormGroup;
   colorsList: Color[];
   branchesList: Branch[];
-  Genders: any = [{ Value: false, ViewValue: 'Erkek' }, { Value: true, ViewValue: 'Kadın' }]
-  displayedColumns = ['ProductName', 'ProductCode', 'ColorName', 'Gender', 'Price', 'SellingPrice', 'ProductYear', 'Size', 'BranchName', 'Count', 'ProductFullCode', 'actions'];
+  Genders: any = [{ Value: 0, ViewValue: 'Erkek' }, { Value: 1, ViewValue: 'Kadın' }]
+  displayedColumns = ['ProductName', 'ProductCode', 'ColorName', 'Gender', 'Price', 'SellingPrice', 'ProductYear', 'Size', 'BranchName', 'Count', 'ProductBarcode', 'actions'];
   dataSource: DataSource; //MatTableDataSource<ProductView> = new MatTableDataSource();
   store: CustomStore;
   selectedProducts: [] = [];
+  ProductTypes: ProductTypeDto[] = [{ Id: 0, Name: this._translate.instant("STOCK_MODULE.PRODUCT_MANAGEMENT.ALL"), ProductPropertyIds: [], ProductProperties: [], Products: [], ProductTypeAndProperties: [] }];
+  FormItems: Array<dxFormSimpleItem | dxFormGroupItem | dxFormTabbedItem | dxFormEmptyItem | dxFormButtonItem> = [];
+  ProductGridColumns: Column[] = [];
+  @ViewChild('formInstance') formInstance: DxFormComponent;
+  SelectedProductType: ProductTypeDto;
   constructor(private fb: FormBuilder,
     private colorService: ColorsService,
     private productService: ProductService,
@@ -49,59 +62,51 @@ export class ProductManagerComponent implements OnInit {
     public _translate: TranslateService,
     private router: Router,
     private dxStore: DxStoreService,
-    private swal: SwalService
+    private swal: SwalService,
+    private productTypeService: ProductTypeService
   ) { }
 
-  ngOnInit() {
-    //   var dataSource = new DevExpress.data.DataSource({
-    //     //DataSource configuration
-    //     sort: "name",
-    //     pageSize: 10,
-    //     //data access logic
-    //     load: function(loadOptions) {
-    //         return array;
-    //     },
-    //     byKey: function(key) {
-    //         return array[key];
-    //     },
-    //     ...
-    // });
-
+  async ngOnInit() {
+    await this.initProductTypes();
     this.initLoginForm();
-    this.getColors();
-    this.getBranches();
-    this.filTable()
+    await this.getColors();
+    await this.getBranches();
+    this.filTable();
+  }
+  async initProductTypes() {
+    return this.ProductTypes = this.ProductTypes.concat(((await this.productTypeService.GetList().toPromise()) as LoadResult<ProductTypeDto>)?.data)
   }
 
   filTable() {
+    this.AddDefaultProductGridColumns();
     let storeOption: DxStoreOptions = {
       loadUrl: "Products", insertUrl: "Products", updateUrl: "Products", deleteUrl: "Products", Key: "Id",
+      onLoaded: (result) => console.log("LOadedProduct"),
       onInserted: (values: UIResponse<AddProductsDto>, key) => {
         // this.ProductForm.reset();
         if (values.IsError) {
           let html = this._translate.instant(values.Message) as string;
           values.Entity.ExistedProducts.forEach(fe => {
             console.log(fe)
-            html = html.concat(`<br/> ${fe.ProductName} | ${fe.ProductCode} | ${fe.ProductFullCode} | ${fe.Size}`)
-            console.log(html)
+            html = html.concat(`<br/> ${fe.ProductName} | ${fe.ProductCode} | ${fe.ProductBarcode} | ${fe.Size}`)
           });
-          console.log(html);
           this.swal.showErrorMessage(html);
         } else {
+          this.productsGrid.instance.refresh();
           this.swal.showSuccessMessage()
         }
       },
-      onRemoved: () => { this.swal.showSuccessMessage(); this.productsGrid.instance.refresh() },
-      onUpdated: () => { this.swal.showSuccessMessage(); this.productsGrid.instance.refresh() },
+      onRemoved: () => this.productsGrid.instance.refresh(),
+      onUpdated: () => this.productsGrid.instance.refresh(),
     };
     this.store = this.dxStore.GetStore(storeOption);
 
   }
   getBranches() {
-    this.branchesService.GetBranches().toPromise().then(res => this.branchesList = (res.data as Branch[]))
+    return this.branchesService.GetBranches().toPromise().then(res => this.branchesList = (res.data as Branch[]))
   }
   getColors() {
-    this.colorService.GetColors().toPromise().then(res => this.colorsList = (res.data as Color[]));
+    return this.colorService.GetColors().toPromise().then(res => this.colorsList = (res.data as Color[]));
   }
 
   initLoginForm() {
@@ -152,32 +157,34 @@ export class ProductManagerComponent implements OnInit {
 
   rows: ProductDto[] = [];
   AddRow() {
-    // this.productsGrid.instance.addRow()
-    if (!this.ProductForm.invalid) {
-
-      // The next object is created to send to DB
-      const product: ProductDto[] = [{
-        ColorId: this.ProductForm.controls.Color.value,
-        Gender: this.ProductForm.controls.Gender.value,
-        Price: this.ProductForm.controls.Price.value,
-        SellingPrice: this.ProductForm.controls.SellingPrice.value,
-        ProductCode: this.ProductForm.controls.ProductCode.value,
-        ProductFullCode: null,
-        ProductName: this.ProductForm.controls.ProductName.value,
-        ProductYear: this.ProductForm.controls.ProductYear.value,
-        Size: this.ProductForm.controls.Size.value,
-        BranchId: this.ProductForm.controls.Branch.value,
-        Count: this.ProductForm.controls.Count.value
-      }];
-      product[0].ProductFullCode = this.GetProductFullCode(product[0]);
-
+    if (this.formInstance.instance.validate().isValid) {
+      const product: ProductDto[] = [{ ...this.formInstance.instance.option("formData"), ProductTypeId: this.SelectedProductType.Id }]
       this.store.insert(product);
-      // this.productService.AddProducts(product).toPromise().finally(() => { this.filTable(); this.ProductForm.reset(); });
     }
+
+    // if (!this.ProductForm.invalid) {
+
+    //   const product: ProductDto[] = [{
+    //     ColorId: this.ProductForm.controls.Color.value,
+    //     Gender: this.ProductForm.controls.Gender.value,
+    //     Price: this.ProductForm.controls.Price.value,
+    //     SellingPrice: this.ProductForm.controls.SellingPrice.value,
+    //     ProductCode: this.ProductForm.controls.ProductCode.value,
+    //     ProductBarcode: null,
+    //     ProductName: this.ProductForm.controls.ProductName.value,
+    //     ProductYear: this.ProductForm.controls.ProductYear.value,
+    //     Size: this.ProductForm.controls.Size.value,
+    //     BranchId: this.ProductForm.controls.Branch.value,
+    //     Count: this.ProductForm.controls.Count.value
+    //   }];
+    //   product[0].ProductBarcode = this.GetProductBarcode(product[0]);
+
+    //   this.store.insert(product);
+    // }
 
 
   }
-  GetProductFullCode(product: ProductDto) {
+  GetProductBarcode(product: ProductDto) {
     let IsSizeWithFraction = (product.Size - Math.floor(product.Size)) !== 0;
     let Size = IsSizeWithFraction ? (product.Size + 20) : product.Size;
     return ((product.Gender ? 1 : 2).toString() + product.ProductYear.slice(product.ProductYear.length - 2) + Size.toString().slice(0, 2) + product.ColorId.toString().slice(product.ColorId.toString().length - 2, product.ColorId.toString().length).padStart(2, '0') + product.ProductCode);
@@ -191,12 +198,13 @@ export class ProductManagerComponent implements OnInit {
         Price: this.ProductForm.controls.Price.value,
         SellingPrice: this.ProductForm.controls.SellingPrice.value,
         ProductCode: this.ProductForm.controls.ProductCode.value,
-        ProductFullCode: null,
+        ProductBarcode: null,
         ProductName: this.ProductForm.controls.ProductName.value,
         ProductYear: this.ProductForm.controls.ProductYear.value,
         Size: this.ProductForm.controls.Size.value,
         BranchId: this.ProductForm.controls.Branch.value,
-        Count: this.ProductForm.controls.Count.value
+        Count: this.ProductForm.controls.Count.value,
+        ProductTypeId: this.SelectedProductType.Id
       };
 
 
@@ -206,20 +214,20 @@ export class ProductManagerComponent implements OnInit {
         from([35, 36, 37, 38, 39, 40, 41]).subscribe(size => {
           product.Gender = true;
           product.Size = size;
-          let fullCode = this.GetProductFullCode(product);
+          let fullCode = this.GetProductBarcode(product);
           products.push({
-            ColorId: product.ColorId, Gender: product.Gender, Price: product.Price, ProductCode: product.ProductCode, ProductFullCode: fullCode, ProductName: product.ProductName, ProductYear: product.ProductYear, Size: size, BranchId: product.BranchId,
-            Count: product.Count, SellingPrice: product.SellingPrice
+            ColorId: product.ColorId, Gender: product.Gender, Price: product.Price, ProductCode: product.ProductCode, ProductBarcode: fullCode, ProductName: product.ProductName, ProductYear: product.ProductYear, Size: size, BranchId: product.BranchId,
+            Count: product.Count, SellingPrice: product.SellingPrice, ProductTypeId: this.SelectedProductType.Id
           });
         });
       } else {
         from([39, 40, 41, 42, 43, 44, 45, 46]).pipe(map(size => {
           product.Gender = false;
           product.Size = size;
-          let fullCode = this.GetProductFullCode(product);
+          let fullCode = this.GetProductBarcode(product);
           products.push({
-            ColorId: product.ColorId, Gender: product.Gender, Price: product.Price, ProductCode: product.ProductCode, ProductFullCode: fullCode, ProductName: product.ProductName, ProductYear: product.ProductYear, Size: size, BranchId: product.BranchId,
-            Count: product.Count, SellingPrice: product.SellingPrice
+            ColorId: product.ColorId, Gender: product.Gender, Price: product.Price, ProductCode: product.ProductCode, ProductBarcode: fullCode, ProductName: product.ProductName, ProductYear: product.ProductYear, Size: size, BranchId: product.BranchId,
+            Count: product.Count, SellingPrice: product.SellingPrice, ProductTypeId: this.SelectedProductType.Id
           });
         })).subscribe();
       }
@@ -243,7 +251,7 @@ export class ProductManagerComponent implements OnInit {
     let QueryParams = '';
 
     for (const selectedProduct of (this.productsGrid.instance.getSelectedRowsData() as ProductView[])) {
-      QueryParams = QueryParams.concat(selectedProduct.ProductFullCode, ',')
+      QueryParams = QueryParams.concat(selectedProduct.ProductBarcode, ',')
       // if (selectedProduct.Count != 0)
       //   Array.from({ length: selectedProduct.Count }).map(m => QueryParams = QueryParams.concat(selectedProduct.ProductFullCode, ','));
       // else
@@ -251,7 +259,7 @@ export class ProductManagerComponent implements OnInit {
 
     }
 
-    let url = this.router.createUrlTree(['ReportViewer'], { queryParams: { ProductFullCode: QueryParams.substring(0, QueryParams.length - 1) } })
+    let url = this.router.createUrlTree(['ReportViewer'], { queryParams: { ProductBarcode: QueryParams.substring(0, QueryParams.length - 1) } })
     console.log(url.toString())
     window.open('#' + url.toString(), '_blank')
 
@@ -263,7 +271,7 @@ export class ProductManagerComponent implements OnInit {
     // this.router.navigate(['ReportViewer'], {
     //   queryParams: { ProductFullCode: row.ProductFullCode }
     // });
-    let url = this.router.createUrlTree(['ReportViewer'], { queryParams: { ProductFullCode: row.ProductFullCode } })
+    let url = this.router.createUrlTree(['ReportViewer'], { queryParams: { ProductBarcode: row.ProductBarcode } })
     console.log(url.toString())
     window.open('#' + url.toString(), '_blank')
     // this.BarcodeObject.BarcodeValue = row.ProductFullCode;
@@ -335,6 +343,141 @@ export class ProductManagerComponent implements OnInit {
       if (result.isConfirmed)
         this.swal.showSuccessMessage();
     })
+  }
+
+
+
+
+  async ProductTypeChanged(value: ProductTypeDto) {
+    this.SelectedProductType = value;
+    this.FormItems = [];
+    this.ProductGridColumns = [];
+    if (value.Id != 0) {
+      value.ProductProperties.forEach(property => {
+
+        this.ConfigureFormItems(property);
+        this.ConfigureProductGridColumns(property);
+
+      });
+      this.AddDefaultFormItems();
+      this.AddDefaultProductGridColumns();
+
+      await this.productsGrid.instance.filter(["ProductTypeId", "=", value.Id]);
+    }
+    else {
+      this.AddDefaultProductGridColumns();
+      this.productsGrid?.instance.clearFilter();
+    }
+
+
+  }
+
+  ConfigureFormItems(property: ProductPropertyDto) {
+    let editorOptions = property.FormItemEditorOptions ? JSON.parse(property.FormItemEditorOptions) : {};
+    let ValidationRules = property.Validation ? JSON.parse(property.Validation) : undefined;
+    if (property.EditorType == "dxSelectBox") {
+      switch (property.DataField) {
+        case "Gender":
+          editorOptions.items = this.Genders;
+          editorOptions.displayExpr = "ViewValue";
+          editorOptions.valueExpr = "Value";
+          editorOptions.searchEnabled = true;
+          break;
+
+        case "ColorId":
+          editorOptions.items = this.colorsList;
+          editorOptions.displayExpr = "ColorName";
+          editorOptions.valueExpr = "Id";
+          editorOptions.searchEnabled = true;
+          break;
+
+        default:
+          break;
+      }
+    }
+    this.FormItems.push({ dataField: property.DataField, editorType: property.EditorType, editorOptions: editorOptions, validationRules: ValidationRules, label: { text: this._translate.instant(property.Translate) } });
+  }
+
+  AddDefaultFormItems() {
+    this.FormItems.push({
+      itemType: "button", buttonOptions: {
+        text: this._translate.instant('STOCK_MODULE.MASTER_DATA.ADD'),
+        type: "default",
+        useSubmitBehavior: true,
+        onClick: () => this.AddRow()
+      },
+      horizontalAlignment: "left"
+    });
+
+    this.FormItems = [{ dataField: "ProductName", editorType: "dxTextBox", label: { text: this._translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_NAME') }, validationRules: [{ type: "required" }] },
+    { dataField: "Count", editorType: "dxNumberBox", label: { text: this._translate.instant("STOCK_MODULE.MASTER_DATA.COUNT") }, validationRules: [{ type: "required" }] },
+    { dataField: "Price", editorType: "dxNumberBox", label: { text: this._translate.instant("STOCK_MODULE.MASTER_DATA.PRICE") }, editorOptions: { format: { type: 'currency', precision: 2 } }, validationRules: [{ type: "numeric", min: 0 }, { type: "required" }] },
+    { dataField: "SellingPrice", editorType: "dxNumberBox", label: { text: this._translate.instant("STOCK_MODULE.MASTER_DATA.SELLING_PRICE") }, editorOptions: { format: { type: 'currency', precision: 2 } }, validationRules: [{ type: "numeric", min: 0 }, { type: "required" }] },
+    { dataField: "ProductCode", editorType: "dxTextBox", label: { text: this._translate.instant("STOCK_MODULE.MASTER_DATA.PRODUCT_CODE") }, validationRules: [{ type: "required" }] },
+    { dataField: "BranchId", editorType: "dxLookup", label: { text: this._translate.instant("STOCK_MODULE.MASTER_DATA.BRANCH_NAME") }, validationRules: [{ type: "required" }], editorOptions: { items: this.branchesList, displayExpr: "Name", valueExpr: "Id" } },
+    ... this.FormItems
+    ]
+  }
+
+  ConfigureProductGridColumns(property: ProductPropertyDto) {
+    let editorOptions = property.GridColumnEditorOptions ? JSON.parse(property.GridColumnEditorOptions) : {};
+    let columnConf = property.GridColumnConf ? JSON.parse(property.GridColumnConf) : {};
+    let ValidationRules = property.Validation ? JSON.parse(property.Validation) : undefined;
+
+    if (property.EditorType == "dxSelectBox") {
+      switch (property.DataField) {
+        case "Gender":
+          this.ProductGridColumns.push({
+            dataField: property.DataField,
+            editorOptions: editorOptions,
+            validationRules: ValidationRules,
+            caption: this._translate.instant(property.Translate),
+            lookup: {
+              dataSource: this.Genders,
+              displayExpr: "ViewValue",
+              valueExpr: "Value"
+            }
+          });
+          return;
+
+        case "ColorId":
+          this.ProductGridColumns.push({
+            dataField: property.DataField,
+            editorOptions: editorOptions,
+            validationRules: ValidationRules,
+            caption: this._translate.instant(property.Translate),
+            lookup: {
+              dataSource: this.colorsList,
+              displayExpr: "ColorName",
+              valueExpr: "Id"
+            }
+          });
+          return;
+
+      }
+    }
+    this.ProductGridColumns.push({ dataField: property.DataField, editorOptions: editorOptions, validationRules: ValidationRules, caption: this._translate.instant(property.Translate), ...columnConf });
+  }
+
+
+  AddDefaultProductGridColumns() {
+    this.ProductGridColumns = [
+      { cellTemplate: 'cellTemplate', formItem: { visible: false }, allowEditing: false, allowSorting: false, allowFiltering: false },
+      { dataField: "ProductName", caption: this._translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_NAME'), validationRules: [{ type: "required" }], allowHeaderFiltering: false },
+      { dataField: "ProductBarcode", caption: this._translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_BARCODE'), allowHeaderFiltering: false },
+      { dataField: "Count", caption: this._translate.instant("STOCK_MODULE.MASTER_DATA.COUNT"), validationRules: [{ type: "required" }], allowHeaderFiltering: false },
+      { dataField: "Price", caption: this._translate.instant("STOCK_MODULE.MASTER_DATA.PRICE"), format: { type: 'currency', precision: 2 }, validationRules: [{ type: "numeric", min: 0 }, { type: "required" }], allowHeaderFiltering: false },
+      { dataField: "SellingPrice", caption: this._translate.instant("STOCK_MODULE.MASTER_DATA.SELLING_PRICE"), format: { type: 'currency', precision: 2 }, validationRules: [{ type: "numeric", min: 0 }, { type: "required" }], allowHeaderFiltering: false },
+      { dataField: "ProductCode", caption: this._translate.instant("STOCK_MODULE.MASTER_DATA.PRODUCT_CODE"), validationRules: [{ type: "required" }], allowHeaderFiltering: false },
+      { dataField: "BranchId", caption: this._translate.instant("STOCK_MODULE.MASTER_DATA.BRANCH_NAME"), validationRules: [{ type: "required" }], lookup: { dataSource: this.branchesList, displayExpr: "Name", valueExpr: "Id" } },
+      ... this.ProductGridColumns
+    ]
+    this.ProductGridColumns.push({ cellTemplate: 'increaseCount', formItem: { visible: false }, allowEditing: false, allowSorting: false, allowFiltering: false });
+  }
+
+
+  propertyDisplayValue(rowData) {
+    return this._translate.instant(rowData.Translate);
   }
 
 }

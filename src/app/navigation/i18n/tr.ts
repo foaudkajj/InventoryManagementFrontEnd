@@ -26,7 +26,7 @@ export const locale = {
 				USER_CODE: "Satıcı Kodu",
 				BRANCH_NAME: "Şube",
 				PRODUCT_NAME: "Ürün",
-				PRODUCT_FULL_CODE: "Ürün Tam Kodu",
+				PRODUCT_BARCODE: "Ürün Barkodu",
 				PRODUCT_CODE: "Ürün Kodu",
 				COLOR_NAME: "Renk",
 				GENDER: "Cinsiyet",
@@ -75,7 +75,7 @@ export const locale = {
 				ADD: "Ekle",
 				FILL: "Doldur",
 				PRODUCT_NAME: "Ürün İsmi",
-				PRODUCT_FULL_CODE: "Ürün barkodu",
+				PRODUCT_BARCODE: "Ürün Barkodu",
 				COLOR_NAME: "Renk",
 				GENDER: "Cinsiyet",
 				PRICE: "Fiyat",
@@ -89,13 +89,17 @@ export const locale = {
 				PRODUCT_TYPE: "Ürün Çeşitleri",
 				PRODUCT_PROPERTY_NAME: "Özelli İsmi",
 				PRODUCT_PROPERTY_TYPE: "Özellik Tipi",
-				PRODUCT_TYPE_NAME: "Üürn Çeişiti İsmi"
+				PRODUCT_TYPE_NAME: "Üürn Çeişiti İsmi",
+				EXPIRATION_DATE: "Son Kullanma Tarihi",
+				DESCRIPTION: "Açıklama",
+				SAVE: "Kaydet"
 			},
 			PRODUCT_MANAGEMENT: {
 				ADD: "Arttır",
 				REMOVE: "Eksilt",
-				PRODUCT_COUNT_ADD: "Stoğun Adeti Arttırma",
-				PRODUCT_COUNT_REMOVE: "Stoğun Adeti Eksilt",
+				PRODUCT_COUNT_ADD: "Stok Adeti Arttırma",
+				PRODUCT_COUNT_REMOVE: "Stok Adeti Eksilt",
+				ALL: "Tüm Ürünler"
 			}
 		},
 		ADMIN_MODULE: {

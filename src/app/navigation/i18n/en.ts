@@ -26,7 +26,7 @@ export const locale = {
 				USER_CODE: "User code",
 				BRANCH_NAME: "Branch",
 				PRODUCT_NAME: "Product",
-				PRODUCT_FULL_CODE: "Product full code",
+				PRODUCT_BARCODE: "Product Barcode",
 				PRODUCT_CODE: "Product code",
 				COLOR_NAME: "Color",
 				GENDER: "Gender",
@@ -74,7 +74,7 @@ export const locale = {
 				ADD: "Add",
 				FILL: "Fill",
 				PRODUCT_NAME: "Product name",
-				PRODUCT_FULL_CODE: "Product fullcode",
+				PRODUCT_BARCODE: "Product Barcode",
 				COLOR_NAME: "Color name",
 				GENDER: "Gender",
 				PRICE: "Price",
@@ -84,12 +84,16 @@ export const locale = {
 				COUNT: "Count",
 				SEARCH: "Search",
 				SELLING_PRICE: "Selling price",
+				EXPIRATION_DATE: "Expiration Date",
+				DESCRIPTION: "Description",
+				SAVE: "Save"
 			},
 			PRODUCT_MANAGEMENT: {
 				ADD: "Add",
 				REMOVE: "Remove",
 				PRODUCT_COUNT_ADD: "Product count add",
 				PRODUCT_COUNT_REMOVE: "Product count remove",
+				ALL: "All Products"
 			}
 		},
 		ADMIN_MODULE: {

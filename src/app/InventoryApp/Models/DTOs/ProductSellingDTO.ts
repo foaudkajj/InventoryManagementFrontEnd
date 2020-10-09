@@ -1,6 +1,3 @@
-import { Branch } from '../Branch';
-import { ProductDto } from '../ProductDto';
-import { PaymentMethod } from '../PaymentMethod';
 import { SalePaymentMethod } from './SalePaymentMethod';
 
 export interface ProductSellingDto {

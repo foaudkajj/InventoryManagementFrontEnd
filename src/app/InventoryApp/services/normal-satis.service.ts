@@ -13,8 +13,8 @@ export class NormalSatisService extends BaseService {
     super(httpClient, router);
   }
 
-  GetProductDetails(ProductFullCode: string): Observable<any> {
-    let result$ = this.get(`NormalSatis/GetProductDetails/${ProductFullCode}`);
+  GetProductDetails(ProductBarcode: string): Observable<any> {
+    let result$ = this.get(`NormalSatis/GetProductDetails/${ProductBarcode}`);
     return result$;
   }
 

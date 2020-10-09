@@ -1,7 +1,7 @@
 export interface ProductDto {
   Id?: number;
   ProductName: string;
-  ProductFullCode: string;
+  ProductBarcode: string;
   ProductCode: string;
   ColorId: number;
   Gender: boolean;
@@ -11,4 +11,8 @@ export interface ProductDto {
   Size: number;
   BranchId: number;
   Count: number;
+  Description?: string;
+  ExpirationDate?: Date;
+  ProductTypeId: number;
+
 }

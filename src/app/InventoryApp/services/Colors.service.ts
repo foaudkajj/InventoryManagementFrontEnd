@@ -31,7 +31,7 @@ export class ColorsService extends BaseService {
 	}
 
 	DeleteColor(id: number): Observable<any> {
-		let result$ = this.delete(`Colors/Delete?Key=${id}`);
+		let result$ = this.post(`Colors/Delete?Key=${id}`, {});
 		return result$;
 	}
 }

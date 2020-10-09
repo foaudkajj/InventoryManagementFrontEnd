@@ -44,8 +44,8 @@ export class ReportViewerComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.route.snapshot.queryParamMap)
-    const productFullCode: string = this.route.snapshot.queryParamMap.get('ProductFullCode');
-    this.reportUrl += '?ProductFullCode=' + productFullCode
+    const ProductBarcode: string = this.route.snapshot.queryParamMap.get('ProductBarcode');
+    this.reportUrl += '?ProductBarcode=' + ProductBarcode
 
 
   }

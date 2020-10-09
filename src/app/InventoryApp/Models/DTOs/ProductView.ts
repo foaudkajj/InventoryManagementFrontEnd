@@ -4,7 +4,7 @@ import { Branch } from '../Branch';
 export interface ProductView{
     Id: number;
     ProductName: string;
-    ProductFullCode: string;
+    ProductBarcode: string;
     ProductCode: string;
     ColorName: string;
     Color: Color;
@@ -19,5 +19,7 @@ export interface ProductView{
     BranchId:number;
     Branch: Branch;
     Date: string;
+    Description: string;
+    ExpirationDate: Date;
 
   }

@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ProductSellingDto } from '../Models/DTOs/ProductSellingDTO';
+import { RefundProductsDto } from '../Models/DTOs/RefundProductsDto';
+import { SaleDetailsAndProductDto } from '../Models/DTOs/SaleDetailsAndProductDto';
+import { ChangeProductDto } from '../Models/DTOs/ChangeProductDto';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +32,16 @@ export class NormalSatisService extends BaseService {
       result$ = this.get(`NormalSatis/GetSelledProductsByUserId/${UserId}`);
     else
       result$ = this.get(`NormalSatis/GetSelledProductsByUserId/${UserId}/${StartDate}/${EndDate}`);
+    return result$;
+  }
+
+  RefundProducts(saleDetailsAndProductDtos: SaleDetailsAndProductDto[]): Observable<any> {
+    let result$ = this.post(`NormalSatis/RefundProducts`, saleDetailsAndProductDtos);
+    return result$;
+  }
+
+  ChangeProducts(changeProductDto: ChangeProductDto): Observable<any> {
+    let result$ = this.post(`NormalSatis/ChangeProducts`, changeProductDto);
     return result$;
   }
 

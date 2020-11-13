@@ -20,7 +20,7 @@ export const locale = {
 		SELLING_MODULE: {
 			NORMAL_SALE: {
 				TITLE: "Normal Sale",
-				SELLING_PRICE: "Selling price",
+				SELLING_PRICE: "Price",
 				DATE: "Date",
 				TOTAL: "Total",
 				USER_CODE: "User code",
@@ -47,6 +47,9 @@ export const locale = {
 				PRICE: "Price",
 				SEARCH_IN_SALES: "Search in sales",
 				SOLED_PRODUCTS: "Soled products",
+				SALE: "Sale",
+				RETURN: "RETURN",
+				CHANGE_RETURN: "Change",
 				SALES_SCREEN: {
 					SELECT_PAYMENT: "Select payment",
 					CASH: "Cash",
@@ -57,6 +60,31 @@ export const locale = {
 					TOTAL: "Total",
 					COMPLETE_PAYMENT: "Coplete payment"
 				}
+			},
+			RETURN: {
+				TITLE: "Return"
+			},
+			CHANGE: {
+				TITLE: "Değişim Ekranı",
+				CUSTOMER_NAME: "Müşteri İsmi",
+				CUSTOMER_PHONE: "Müşteri Tel. No",
+				PAYMENT_NAME: "Ödeme Yöntemi",
+				PAYMENT_TYPE: "Vadeli Ödeme İmkanı",
+				AMOUNT: "Tutar",
+				DEFFEREDED_PAYMENT_COUNT: "Vade Sayısı",
+				DATE: "Tarih",
+				NEW_PRODUCTS: "Yeni Alınan Ürünler",
+				CHOOSE_CUSTOMER: "Müşteri Seçiniz ..",
+				RETURN: "İade",
+				TOPLAM_OF_NEW_PRODUCTS: "Yeni Alınacak Ürün Toplam Fiyatı",
+				TOPLAM_OF_PRODUCTS_TO_RETURN: "İade Edilecek Ürün Toplam Fiyatı",
+				TOTAL: "Toplam",
+				COMPLETE: "Tamamlama",
+				REDO: "Vazgeç",
+				OPERATION: "Son İşlem",
+				RETURN_OR_REFUND: "İade veya Değişim",
+				REFUND_INFO: "İade için aşağıdaki tablodan bir müşteri seçip iadaeyi tamamla butuna tıklamakla tamamlayabilirsiniz.",
+				CHANGE_INFO: "değişim için ise, aşağıdaki tablodan bir müşteri seçildikten sonra sağdaki tablodan iade edilen ürün yerine alınacak ürünlerin barkodları okutulur."
 			}
 
 		},

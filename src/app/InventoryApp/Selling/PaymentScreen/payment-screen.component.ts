@@ -9,6 +9,9 @@ import { PaymentPopup } from 'app/InventoryApp/Models/DTOs/PaymentPopup';
 import { CustomerInfoDto } from 'app/InventoryApp/Models/DTOs/CustomerInfoDto';
 import { ConsumerInfosService } from 'app/InventoryApp/services/ConsumerInfo.service';
 import { DxLookupComponent } from 'devextreme-angular';
+import { DxStoreOptions } from 'app/InventoryApp/Models/DxStoreOptions';
+import DataSource from 'devextreme/data/data_source';
+import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
 
 @Component({
   selector: 'app-payment-screen',
@@ -29,23 +32,41 @@ export class PaymentScreenComponent implements OnInit {
   TotalPaied: number = 0;
   PaymentMethodsTableFormGroup: FormGroup;
   ReceiptCode: string;
-  customerInfo: CustomerInfoDto = { CustomerName: '', CustomerPhone: '' };
+  customerInfo: CustomerInfoDto = { Id: 0, CustomerName: '', CustomerPhone: '' };
+  customerInfoId: number = 0;
   customerInfoList: CustomerInfoDto[];
   @ViewChild("customerInfoSelectBox") customerInfoSelectbox: DxLookupComponent;
-
+  customersSelectBoxDatasource: DataSource;
+  Total: number = 0;
   constructor(public translate: TranslateService,
     private paymentMethods: PaymentMethodsService,
-    private consumerInfo: ConsumerInfosService,
     public dialogRef: MatDialogRef<PaymentScreenComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cdr: ChangeDetectorRef,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private dxStore: DxStoreService) { }
 
   ngOnInit() {
+    this.Total = this.data.Total;
+    this.customerInfoId = this.data.CustomerInfoId;
+    this.customerInfo.Id = this.data.CustomerInfoId;
     this.paymentMethods.GetPaymentMethods().toPromise().then((res: { data: PaymentMethod[] }) => this.paymentsMD = res.data);
-    this.consumerInfo.GetConsumerInfos().toPromise().then((res: { data: CustomerInfoDto[] }) => this.customerInfoList = res.data)
+    this.initlizeCustomersSelectBox();
     this.InitlizeFormTable();
 
+  }
+
+  initlizeCustomersSelectBox() {
+
+    let storeOptions: DxStoreOptions = {
+      loadUrl: "CustomerInfo/Get", Key: "Id"
+    };
+
+    this.customersSelectBoxDatasource = new DataSource({
+      store: this.dxStore.GetStore(storeOptions),
+      paginate: true,
+      pageSize: 10
+    });
   }
 
   InitlizeFormTable() {
@@ -81,8 +102,8 @@ export class PaymentScreenComponent implements OnInit {
       value.Receipt = this.ReceiptCode;
       value.CustomerInfo.CustomerName = this.customerInfo.CustomerName;
       value.CustomerInfo.CustomerPhone = this.customerInfo.CustomerPhone;
-      value.CustomerInfo.Id = this.customerInfoSelectbox.instance.option('value')?.Id ?? 0;
-      console.log(this.customerInfoSelectbox.instance.option('value'))
+      value.CustomerInfo.Id = this.customerInfoSelectbox.instance.option('value')?.Id ?? this.customerInfoId;
+      // console.log(this.customerInfoSelectbox.selectedItem)
       return value;
     });
     this.dialogRef.close(this.dataSource.data)
@@ -108,15 +129,11 @@ export class PaymentScreenComponent implements OnInit {
   }
 
   customerInfoValueChanged(e) {
-
+    console.log(e)
     if (e.value) {
-      this.customerInfo.CustomerName = e.value.CustomerName;
-      this.customerInfo.CustomerPhone = e.value.CustomerPhone;
-      this.customerInfo.Id = e.value.Id;
+      this.customerInfo = { Id: e.value.Id, CustomerName: e.value.CustomerName, CustomerPhone: e.value.CustomerPhone };
     } else {
-      this.customerInfo.CustomerName = null;
-      this.customerInfo.CustomerPhone = null;
-      this.customerInfo.Id = 0;
+      this.customerInfo = { Id: 0, CustomerName: null, CustomerPhone: null };
     }
   }
 

@@ -9,8 +9,13 @@ export interface ProductSellingDto {
     CustomerPhone: string;
     CustomerInfoId: number;
     PaymentMethodIds: number[];
-    ProductIds: number[];
+    ProductIdsAndPrices: ProductIdsAndPrices;
     SalePaymentMethods: SalePaymentMethod[];
 
 
+}
+
+export interface ProductIdsAndPrices {
+    ProductIds: number[];
+    SellingPrices: number[];
 }

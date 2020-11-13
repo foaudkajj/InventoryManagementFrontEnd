@@ -1,0 +1,217 @@
+<div class="content-card" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
+
+    <!-- CONTENT TOOLBAR -->
+    <div class="toolbar primary px-24 py-8">
+        <span>{{_translate.instant('SELLING_MODULE.NORMAL_SALE.TITLE')}}</span>
+    </div>
+    <!-- / CONTENT TOOLBAR -->
+
+    <!-- CONTENT -->
+    <div class="mb-24 p-4" style="background-color: white;" fxLayout="column" fxLayoutAlign="start"
+        fxLayout.gt-md="row">
+
+
+        <form class=" p-24 mr-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto"
+            [formGroup]="ProductAndPriceFormGroup" autocomplete="off">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <input #productCode type="text" minlength="12" maxlength="12"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                        (focusout)="productCodeFocusOut()"
+                        (change)="focusOutWhenProductCodeEntered($event.target.value)" formControlName="ProductBarcode"
+                        id="ProductBarcode" matInput
+                        [placeholder]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')">
+                    <mat-error *ngIf="hasError('ProductBarcode', 'required')">
+                        {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName: _translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')} }}
+                    </mat-error>
+                    <mat-error *ngIf="hasError('ProductBarcode', 'maxlength')">
+                        {{'VALIDATIONS.MAX_LENGTH' | translate:{'maxLength': 12} }}
+                    </mat-error>
+                    <mat-error *ngIf="hasError('ProductBarcode', 'minlength')">
+                        {{'VALIDATIONS.MIN_LENGTH' | translate:{'minLength': 12} }}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <input type="number" #PriceInput formControlName="SellingPrice" id="SellingPrice" matInput
+                        placeholder="{{_translate.instant('SELLING_MODULE.NORMAL_SALE.SELLING_PRICE')}}" min="1">
+                    <mat-error *ngIf="hasError('SellingPrice', 'required')">
+                        {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName: _translate.instant('SELLING_MODULE.NORMAL_SALE.SELLING_PRICE')} }}
+                    </mat-error>
+                </mat-form-field>
+                <span class="status h6 p-4" [ngClass]="'red-500'" *ngIf="lowProductCount">
+                    {{'SELLING_MODULE.NORMAL_SALE.REMAINING_PRODUCTS_COUNT' | translate:{'count': productView.Count} }}
+                </span>
+            </div>
+            <button class="ml-8"
+                [disabled]="!ProductAndPriceFormGroup.valid || !isProductExist || !isProductCountEnough"
+                mat-raised-button (click)="AddProduct()" color="primary">{{_translate.instant('COMMON.ADD')}}</button>
+            <!-- <mat-form-field class="w-50 ml-8">
+
+        </mat-form-field>
+        <p class="status text-truncate h6 p-4" *ngIf="lowProductCount">
+            This is a warning alert—check it out!
+        </p>
+        <mat-form-field class="ml-8">
+
+        </mat-form-field> -->
+
+        </form>
+        <!-- <mat-form-field class="ml-8 w-50 ">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtre">
+    </mat-form-field> -->
+
+        <dx-data-grid [allowColumnResizing]="true" [allowColumnReordering]="true" [columnAutoWidth]="true"
+            id="gridContainer" [dataSource]="ProductsToSellDataSource" [showBorders]="true">
+            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_NAME')"
+                dataField="ProductName"></dxi-column>
+            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_BARCODE')"
+                dataField="ProductBarcode"></dxi-column>
+            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.COLOR_NAME')"
+                dataField="Color.ColorName"></dxi-column>
+            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.GENDER')" dataField="Gender">
+                <dxo-lookup [dataSource]="Genders" displayExpr="ViewValue" valueExpr="Value">
+                </dxo-lookup>
+            </dxi-column>
+            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.SELLING_PRICE')"
+                dataField="SellingPrice">
+            </dxi-column>
+            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_YEAR')"
+                dataField="ProductYear"></dxi-column>
+            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')"
+                dataField="ProductCode"></dxi-column>
+            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.SIZE')" dataField="Size">
+            </dxi-column>
+            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.BRANCH_NAME')" dataField="BranchName">
+            </dxi-column>
+            <dxi-column [width]="100" [allowFiltering]="false" [allowSorting]="false" cellTemplate="cellTemplate">
+            </dxi-column>
+
+            <div *dxTemplate="let row of 'cellTemplate'">
+                <button (click)="DeleteFromProductsToSellTable(row.data)" mat-icon-button color="primary">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+            <dxo-header-filter [visible]="true"></dxo-header-filter>
+            <dxo-search-panel [visible]="true" [placeholder]="_translate.instant('COMMON.SEARCH')">
+            </dxo-search-panel>
+            <dxo-group-panel [visible]="false"></dxo-group-panel>
+        </dx-data-grid>
+        <button mat-raised-button class="mt-5" [disabled]="ProductsToSellTableRows.length == 0"
+            (click)="openSatisDialog()" color="accent">Satışı Tamamla</button>
+    </div>
+
+
+    <!-- CONTENT TOOLBAR -->
+    <div class="toolbar primary px-24 py-8">
+        <span>{{_translate.instant('SELLING_MODULE.NORMAL_SALE.SOLED_PRODUCTS')}}</span>
+    </div>
+    <!-- / CONTENT TOOLBAR -->
+
+
+    <div class="mb-24 p-24" style="background-color: white;" fxLayout="column" fxLayoutAlign="start"
+        fxLayout.gt-md="row">
+
+        <dx-data-grid #soledProductsGrid [remoteOperations]="true" [hoverStateEnabled]="true"
+            [allowColumnResizing]="true" [allowColumnReordering]="true" [columnAutoWidth]="true"
+            [showColumnLines]="true" [showRowLines]="true" [showBorders]="true" [rowAlternationEnabled]="true"
+            id="gridContainer" [dataSource]="soledProductsStore" [masterDetail]="{ enabled: true, template: 'detail' }">
+            <dxo-scrolling columnRenderingMode="virtual" showScrollbar="always"></dxo-scrolling>
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+            <dxo-header-filter [visible]="true"></dxo-header-filter>
+            <!-- <dxo-search-panel [visible]="true" [placeholder]="_translate.instant('COMMON.SEARCH')">
+        </dxo-search-panel> -->
+            <!-- <dxo-group-panel [visible]="true"></dxo-group-panel> -->
+            <dxo-selection mode="single"></dxo-selection>
+            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.DATE')" dataType="date"
+                dataField="Date" format="dd.MM.yyyy, HH:mm" caption="Title" [filterValue]="today"></dxi-column>
+            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.TOTAL')" alignment="left"
+                dataField="Total" format="currency" dataType="number">
+                <dxo-format type="currency" precision="2"></dxo-format>
+            </dxi-column>
+            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.USER_CODE')" alignment="left"
+                dataField="User.UserCode" dataType="string"></dxi-column>
+            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.BRANCH_NAME')"
+                dataField="Branch.Location" dataType="string"></dxi-column>
+            <dxo-group-panel [visible]="false"></dxo-group-panel>
+            <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
+            <!-- <div class="option" *dxTemplate="let data of 'calendar'">
+            <dx-date-box width="100%" [(value)]="RangeStartDate"
+                placeholder="{{_translate.instant('COMMON.START_DATE')}}">
+            </dx-date-box>
+        </div>
+        <div class="option" *dxTemplate="let data of 'calendar2'">
+            <dx-date-box width="100%" [(value)]="RangeEndDate"
+                placeholder="{{_translate.instant('COMMON.END_DATE')}}">
+            </dx-date-box>
+        </div> -->
+            <dxo-summary>
+                <dxi-total-item column="Total" summaryType="sum" [valueFormat]="{type: 'currency', precision:'2'}">
+                </dxi-total-item>
+            </dxo-summary>
+
+            <div *dxTemplate="let sale of 'detail'">
+                <!--	<div class="master-detail-caption">{{employee.data.FirstName + " " + employee.data.LastName + "'s Tasks:"}}</div>-->
+                <dx-data-grid #soledProductsDetailsGrid [showColumnLines]="false" [showRowLines]="true"
+                    [showBorders]="true" [rowAlternationEnabled]="true" [dataSource]="sale.data.SoledProductDetails"
+                    [showBorders]="true" [allowColumnResizing]="true" [allowColumnReordering]="true"
+                    [columnAutoWidth]="true">
+                    <dxo-scrolling columnRenderingMode="virtual" showScrollbar="always"></dxo-scrolling>
+                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_NAME')"
+                        dataField="ProductName"></dxi-column>
+                    <dxi-column width="auto"
+                        [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_BARCODE')"
+                        dataField="ProductBarcode"></dxi-column>
+                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')"
+                        dataField="ProductCode"></dxi-column>
+                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.COLOR_NAME')"
+                        dataField="ColorName"></dxi-column>
+                    <dxi-column width="auto" cellTemplate="cellTemplate"
+                        [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.GENDER')" dataField="Gender">
+                    </dxi-column>
+                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_YEAR')"
+                        dataField="ProductYear"></dxi-column>
+                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.SIZE')"
+                        dataField="Size"></dxi-column>
+                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_COUNT')"
+                        dataField="ProductCount"></dxi-column>
+                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.BRANCH_NAME')"
+                        dataField="BranchName"></dxi-column>
+                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.SELLING_PRICE')"
+                        dataField="Price" format="currency" dataType="number">
+                        <dxo-format type="currency" precision="2"></dxo-format>
+                    </dxi-column>
+
+                    <div *dxTemplate="let data of 'cellTemplate'">
+                        {{data.value ? _translate.instant('COMMON.FEMALE') : _translate.instant('COMMON.MALE')}}
+                    </div>
+                    <!-- <dxo-search-panel [text]="soledProductsDetailsText" [visible]="false"
+                    [placeholder]="_translate.instant('COMMON.SEARCH')">
+                </dxo-search-panel> -->
+                </dx-data-grid>
+
+                <dx-data-grid #paymentDetailGrid [showColumnLines]="false" [showRowLines]="true" [showBorders]="true"
+                    [rowAlternationEnabled]="true" [dataSource]="sale.data.PaymentDetails" [showBorders]="true"
+                    [allowColumnResizing]="true" [allowColumnReordering]="true" [columnAutoWidth]="true" class="mt-5">
+                    <dxo-scrolling columnRenderingMode="virtual" showScrollbar="always"></dxo-scrolling>
+                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PAYMENT_NAME')"
+                        dataField="PaymentName"></dxi-column>
+                    <!--    <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PAYMENT_TYPE')" dataField="PaymentType"></dxi-column> -->
+                    <dxi-column width="auto"
+                        [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.DEFFEREDED_PAYMENT_COUNT')"
+                        dataField="DefferedPaymentCount"></dxi-column>
+                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.RECEIPT')"
+                        dataField="Receipt"></dxi-column>
+                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.AMOUNT')"
+                        dataField="Amount" format="currency">
+                        <dxo-format type="currency" precision="2"></dxo-format>
+                    </dxi-column>
+                    <!-- <dxo-search-panel [visible]="true" [placeholder]="_translate.instant('COMMON.SEARCH')">
+                </dxo-search-panel> -->
+                </dx-data-grid>
+            </div>
+        </dx-data-grid>
+    </div>
+</div>

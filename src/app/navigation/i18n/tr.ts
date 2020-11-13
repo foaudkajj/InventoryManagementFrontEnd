@@ -20,7 +20,7 @@ export const locale = {
 		SELLING_MODULE: {
 			NORMAL_SALE: {
 				TITLE: "Normal Satış",
-				SELLING_PRICE: "Satış Fiyatı",
+				SELLING_PRICE: "Fiyat",
 				DATE: "Tarih",
 				TOTAL: "Toplam",
 				USER_CODE: "Satıcı Kodu",
@@ -47,7 +47,10 @@ export const locale = {
 				PRICE: "Fiyat",
 				SEARCH_IN_SALES: "Satılanlar Ürünlerde Ara",
 				SOLED_PRODUCTS: "Satılan Ürünler",
-				REMAINING_PRODUCTS_COUNT: "Bu üründen stokta sadece {{count}} tane kalmıştır.",
+				REMAINING_PRODUCTS_COUNT: "Bu üründen stokta sadece {{count}} adet kalmıştır.",
+				SALE: "Satış",
+				RETURN: "İade",
+				CHANGE_RETURN: "Değişim \ İade",
 				SALES_SCREEN: {
 					SELECT_PAYMENT: "Ödeme Seçiniz",
 					CASH: "Nakit",
@@ -58,6 +61,31 @@ export const locale = {
 					TOTAL: "Toplam",
 					COMPLETE_PAYMENT: "Ödemeyi Tamamla"
 				}
+			},
+			RETURN: {
+				TITLE: "İade Ekranı"
+			},
+			CHANGE: {
+				TITLE: "Değişim Ekranı",
+				CUSTOMER_NAME: "Müşteri İsmi",
+				CUSTOMER_PHONE: "Müşteri Tel. No",
+				PAYMENT_NAME: "Ödeme Yöntemi",
+				PAYMENT_TYPE: "Vadeli Ödeme İmkanı",
+				AMOUNT: "Tutar",
+				DEFFEREDED_PAYMENT_COUNT: "Vade Sayısı",
+				DATE: "Tarih",
+				NEW_PRODUCTS: "Yeni Alınan Ürünler",
+				CHOOSE_CUSTOMER: "Müşteri Seçiniz ..",
+				RETURN: "İade",
+				TOPLAM_OF_NEW_PRODUCTS: "Yeni Alınacak Ürün Toplam Fiyatı",
+				TOPLAM_OF_PRODUCTS_TO_RETURN: "İade Edilecek Ürün Toplam Fiyatı",
+				TOTAL: "Toplam",
+				COMPLETE: "Tamamlama",
+				REDO: "Vazgeç",
+				OPERATION: "Son İşlem",
+				RETURN_OR_REFUND: "İade/Değişim",
+				REFUND_INFO: "İade için aşağıdaki tablodan bir müşteri seçip iadaeyi tamamla butuna tıklamakla tamamlayabilirsiniz.",
+				CHANGE_INFO: "Değişim için, aşağıdaki tablodan bir müşteri seçildikten sonra sağdaki tablodan alınacak ürünlerin barkodları okutulur."
 			}
 
 		},
@@ -70,7 +98,7 @@ export const locale = {
 				COLORS_SHORTCODES: "Renk Kısaltması",
 				BRANCH_NAME: "Şube Adı",
 				BRANCH_ADRES: "Adres",
-				PAYMENT_NAME: "Ödeme İsmi",
+				PAYMENT_NAME: "Ödeme Yöntemi",
 				PAYMENT_TYPE: "Vadeli Ödeme İmkanı",
 				ADD: "Ekle",
 				FILL: "Doldur",

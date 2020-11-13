@@ -19,7 +19,7 @@
             </mat-form-field>
 
             <mat-form-field class=" ml-8">
-                <input formControlName="Amount" [ngModel]="data - TotalPaied" matInput style="font-size: 20px;"
+                <input formControlName="Amount" [ngModel]="Total - TotalPaied" matInput style="font-size: 20px;"
                     type="text" placeholder="Miktar">
             </mat-form-field>
 
@@ -28,7 +28,7 @@
         </form>
     </div>
     <div fxflex="20" fxlayoutalign="center center">
-        <h1 [ngStyle]="{'color' : (data - TotalPaied) > 0 ? 'red' : 'green'}">{{data - TotalPaied}}</h1>
+        <h1 [ngStyle]="{'color' : (Total - TotalPaied) > 0 ? 'red' : 'green'}">{{Total - TotalPaied}}</h1>
     </div>
 </div>
 <div class="row">
@@ -77,8 +77,8 @@
                 [valueExpr]="'Id'" (onValueChanged)="customerInfoValueChanged($event)">
                 <dxo-drop-down-options [showTitle]="false"></dxo-drop-down-options>
             </dx-lookup> -->
-            <dx-select-box #customerInfoSelectBox [items]="customerInfoList" displayExpr="CustomerName"
-                [searchMode]="'contains'" [searchExpr]="'CustomerName'" [searchTimeout]="200"
+            <dx-select-box #customerInfoSelectBox [value]='customerInfoId' [dataSource]="customersSelectBoxDatasource"
+                displayExpr="CustomerName" [searchMode]="'contains'" [searchExpr]="'CustomerName'" [searchTimeout]="200"
                 (onValueChanged)="customerInfoValueChanged($event)" [minSearchLength]="0" [searchEnabled]="true">
             </dx-select-box>
         </mat-grid-tile>

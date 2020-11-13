@@ -28,6 +28,7 @@ export class DxStoreService {
             loadParams: storeOptions.loadParams,
             updateMethod: storeOptions.updateMethod,
             deleteMethod: storeOptions.deleteMethod,
+            loadMode: storeOptions.loadMode,
             onInserted: (values: UIResponse<any>, key) => {
                 storeOptions.onInserted(values, key);
                 if (!values.IsError)

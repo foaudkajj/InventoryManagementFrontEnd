@@ -40,3 +40,14 @@
 <swal #deleteSwal title="Delete?" text="This cannot be undone" icon="question" [showCancelButton]="true"
     [focusCancel]="true">
 </swal>
+
+<dx-load-panel
+    #loadPanel
+    shadingColor="rgba(0,0,0,0.4)"
+    [position]="{ of: '#appBody' }"
+    [(visible)]="isloading"
+    [showIndicator]="true"
+    [showPane]="true"
+    [shading]="true"
+    [closeOnOutsideClick]="false">
+</dx-load-panel>

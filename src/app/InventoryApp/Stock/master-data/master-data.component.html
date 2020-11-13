@@ -17,7 +17,7 @@
         <div class="content-card">
 
             <!-- CONTENT TOOLBAR -->
-            <div class="toolbar px-24 py-8" style="font-size: x-large;    background-color: #293955;color: white;">
+            <div class="toolbar primary px-24 py-8">
                 <span>{{ _translate.instant('STOCK_MODULE.MASTER_DATA.TITLE')}}</span>
             </div>
             <!-- / CONTENT TOOLBAR -->
@@ -48,7 +48,7 @@
 
                     <dxo-filter-row [visible]="true"></dxo-filter-row>
                     <dxo-header-filter [visible]="true"></dxo-header-filter>
-                    <dxo-group-panel [visible]="true"></dxo-group-panel>
+                    <dxo-group-panel [visible]="false"></dxo-group-panel>
 
                     <div *dxTemplate="let masterData of 'detail'">
 
@@ -64,8 +64,8 @@
                             </dxo-selection>
                         </dx-data-grid> -->
                         <dx-tag-box #masterDetailsTagBox [dataSource]="MasterDetailStore" [showSelectionControls]="true"
-                            applyValueMode="useButtons" [value]="masterData.data.ProductPropertyIds" [displayExpr]="tagBoxShowValue"
-                            valueExpr="Id">
+                            applyValueMode="useButtons" [value]="masterData.data.ProductPropertyIds"
+                            [displayExpr]="tagBoxShowValue" valueExpr="Id">
                         </dx-tag-box>
                         <button *ngIf="SelectedMDNumber == 3"
                             (click)="ButtonClick(masterDetailsTagBox.selectedItems,masterData.data.Id)"

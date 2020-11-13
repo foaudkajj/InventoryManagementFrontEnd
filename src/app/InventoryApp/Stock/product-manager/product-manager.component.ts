@@ -348,7 +348,7 @@ export class ProductManagerComponent implements OnInit {
 
 
 
-  async ProductTypeChanged(value: ProductTypeDto) {
+  async ProductTypeChanged(value) {
     this.SelectedProductType = value;
     this.FormItems = [];
     this.ProductGridColumns = [];

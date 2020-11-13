@@ -17,7 +17,7 @@
         <div class="content-card">
 
             <!-- CONTENT TOOLBAR -->
-            <div class="toolbar px-24 py-8" style="font-size: x-large;    background-color: #293955;color: white;">
+            <div class="toolbar primary px-24 py-8">
                 <span>{{_translate.instant('STOCK_MODULE.MASTER_DATA.TITLE')}}</span>
             </div>
             <!-- / CONTENT TOOLBAR -->
@@ -26,7 +26,7 @@
             <div class="p-24">
                 <mat-form-field class="ml-3 width-10">
                     <mat-select [value]="ProductTypes[0]" placeholder="{{ _translate.instant('COMMON.PLEASE_SELECT')}}"
-                        (selectionChange)="ProductTypeChanged($event.value)" autocomplete="off">
+                        (valueChange)="ProductTypeChanged($event)" autocomplete="off">
                         <mat-option *ngFor="let productType of ProductTypes" [value]="productType">
                             {{ productType.Name }}
                         </mat-option>

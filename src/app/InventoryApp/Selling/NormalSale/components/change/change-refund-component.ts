@@ -246,4 +246,10 @@ export class ChangeRefundComponentComponent implements OnInit {
     this.saleDetailsAndProductDtos = [];
   }
 
+  purchasedProductsDetailsGridSelectionChanged(e) {
+    e.component.collapseAll(-1);
+    e.component.expandRow(e.currentSelectedRowKeys[0]);
+    this.resetScreen();
+  }
+
 }

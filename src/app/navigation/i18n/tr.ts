@@ -84,7 +84,7 @@ export const locale = {
 				REDO: "Vazgeç",
 				OPERATION: "Son İşlem",
 				RETURN_OR_REFUND: "İade/Değişim",
-				REFUND_INFO: "İade için aşağıdaki tablodan bir müşteri seçip iadaeyi tamamla butuna tıklamakla tamamlayabilirsiniz.",
+				REFUND_INFO: "İade için aşağıdaki tablodan bir müşteri seçip sonra bir ürün seçilir. İadaeyi gerçekleştirmek için tamamla butuna tıklamakla yeterlidir.",
 				CHANGE_INFO: "Değişim için, aşağıdaki tablodan bir müşteri seçildikten sonra sağdaki tablodan alınacak ürünlerin barkodları okutulur."
 			}
 

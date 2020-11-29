@@ -113,6 +113,7 @@ export class ChangeRefundComponentComponent implements OnInit {
 
   isProductExist = false;
   lowProductCount = false;
+  hasCampaign = false;
   isProductCountEnough = false;
   async productCodeFocusOut() {
     this.PriceInput.nativeElement.focus();
@@ -139,6 +140,12 @@ export class ChangeRefundComponentComponent implements OnInit {
           this.isProductCountEnough = true;
         }
 
+        if (this.productView.CampaingId != 0) {
+          this.hasCampaign = true;
+        } else {
+          this.hasCampaign = false;
+        }
+
       } else {
         this.isProductExist = false;
         this.ProductAndPriceFormGroup.controls.SellingPrice.setValue(0);
@@ -163,6 +170,7 @@ export class ChangeRefundComponentComponent implements OnInit {
     this.AssingDataToProductsToSellTable();
     this.ProductAndPriceFormGroup.reset();
     this.lowProductCount = false;
+    this.hasCampaign = false;
     this.SumOfProductsToBeTakenInstead += this.productView.SellingPrice;
   }
 
@@ -213,8 +221,9 @@ export class ChangeRefundComponentComponent implements OnInit {
           let PaymentMethodIds: number[] = result.map(value => value.PaymentMethodId);
           let ProductIds: number[] = this.ProductsToSellTableRows.map(value => value.Id);
           let SellincPrices: number[] = this.ProductsToSellTableRows.map(value => value.SellingPrice);
+          let CampaignIds: number[] = this.ProductsToSellTableRows.map(value => value.CampaingId);
           let salePaymentMethods: SalePaymentMethod[] = result.map(value => <SalePaymentMethod>{ Amount: value.Amount, DefferedPaymentCount: value.DefferedPaymentCount, PaymentMethodId: value.PaymentMethodId });
-          let ProductSellingDTO: ProductSellingDto = { ProductIdsAndPrices: { SellingPrices: SellincPrices, ProductIds: ProductIds }, CustomerInfoId: result[0].CustomerInfo.Id, CustomerName: result[0].CustomerInfo.CustomerName, CustomerPhone: result[0].CustomerInfo.CustomerPhone, Receipt: result[0].Receipt, PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, UserId: this.userDetails.userId, SalePaymentMethods: salePaymentMethods };
+          let ProductSellingDTO: ProductSellingDto = { ProductIdsAndPricesAndCampaignIds: { SellingPrices: SellincPrices, ProductIds: ProductIds, CampaignIds: CampaignIds }, CustomerInfoId: result[0].CustomerInfo.Id, CustomerName: result[0].CustomerInfo.CustomerName, CustomerPhone: result[0].CustomerInfo.CustomerPhone, Receipt: result[0].Receipt, PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, UserId: this.userDetails.userId, SalePaymentMethods: salePaymentMethods };
           let changeProductDto: ChangeProductDto = { productsToChangeWith: ProductSellingDTO, purchasedProductsToChange: this.saleDetailsAndProductDtos }
           await this.normalSatisSerice.ChangeProducts(changeProductDto).toPromise();
           purchasedProcutsGridInstance.instance.refresh();
@@ -224,11 +233,13 @@ export class ChangeRefundComponentComponent implements OnInit {
       }));
 
     } else {
-      let PaymentMethodIds: number[] = [];
+      let PaymentMethodIds: number[] = this.ProductsToSellTableRows.map(value => 12);
       let ProductIds: number[] = this.ProductsToSellTableRows.map(value => value.Id);
       let SellincPrices: number[] = this.ProductsToSellTableRows.map(value => value.SellingPrice);
-      let salePaymentMethods: SalePaymentMethod[] = [];
-      let ProductSellingDTO: ProductSellingDto = { ProductIdsAndPrices: { SellingPrices: SellincPrices, ProductIds: ProductIds }, CustomerInfoId: this.customerInfoId, CustomerName: '', CustomerPhone: '', Receipt: '', PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, UserId: this.userDetails.userId, SalePaymentMethods: salePaymentMethods };
+      let CampaignIds: number[] = this.ProductsToSellTableRows.map(value => value.CampaingId);
+      // let salePaymentMethods: SalePaymentMethod[] = [];
+      let salePaymentMethods: SalePaymentMethod[] = this.ProductsToSellTableRows.map(value => <SalePaymentMethod>{ Amount: 0, DefferedPaymentCount: 1, PaymentMethodId: 12 });
+      let ProductSellingDTO: ProductSellingDto = { ProductIdsAndPricesAndCampaignIds: { SellingPrices: SellincPrices, ProductIds: ProductIds, CampaignIds: CampaignIds }, CustomerInfoId: this.customerInfoId, CustomerName: '', CustomerPhone: '', Receipt: '', PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, UserId: this.userDetails.userId, SalePaymentMethods: salePaymentMethods };
       let changeProductDto: ChangeProductDto = { productsToChangeWith: ProductSellingDTO, purchasedProductsToChange: this.saleDetailsAndProductDtos }
       await this.normalSatisSerice.ChangeProducts(changeProductDto).toPromise();
       purchasedProcutsGridInstance.instance.refresh();

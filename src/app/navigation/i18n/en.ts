@@ -114,14 +114,27 @@ export const locale = {
 				SELLING_PRICE: "Selling price",
 				EXPIRATION_DATE: "Expiration Date",
 				DESCRIPTION: "Description",
-				SAVE: "Save"
+				SAVE: "Save",
+				CAMPAIGNS: "Campaigns"
 			},
 			PRODUCT_MANAGEMENT: {
 				ADD: "Add",
 				REMOVE: "Remove",
 				PRODUCT_COUNT_ADD: "Product count add",
 				PRODUCT_COUNT_REMOVE: "Product count remove",
-				ALL: "All Products"
+				ALL: "All Products",
+				APPLY_CAMPAIGN: "KAMPANYA UYGULA",
+				APPLY: "Uygula",
+				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz"
+			},
+			CAMPAIGN: {
+				TITLE: "Kampanyalar",
+				NAME: "Kampanya İsmi",
+				PERCENT: "Discount rate",
+				START_DATE: "Başlangıç Tarihi",
+				END_DATE: "Bitiş Tarihi",
+				DESCRIPTION: "Açıklama",
+				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz"
 			}
 		},
 		ADMIN_MODULE: {
@@ -183,7 +196,8 @@ export const locale = {
 			ROLE_MANAGEMENT: "Role management",
 			STOCK_MODULE_PAGES: "Stok Module Pages",
 			ADMIN_MODULE_PAGES: "Admin Module pages",
-			SELLING_MODULE_PAGES: "Selling Module Pages"
+			SELLING_MODULE_PAGES: "Selling Module Pages",
+			CAMPAIGN: "Campaigns"
 		},
 		AUTH: {
 			GENERAL: {

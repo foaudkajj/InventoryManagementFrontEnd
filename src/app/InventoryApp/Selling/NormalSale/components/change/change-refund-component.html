@@ -28,8 +28,9 @@
                 </div>
 
 
-                <dx-data-grid id="gridContainer" #purchasedProducts [columnAutoWidth]="true" [allowColumnResizing]="true"
-                    [allowColumnReordering]="true" id="gridContainer" [dataSource]="purchasedProductsStore"
+                <dx-data-grid id="gridContainer" #purchasedProducts [columnAutoWidth]="true"
+                    [allowColumnResizing]="true" [allowColumnReordering]="true" id="gridContainer"
+                    [dataSource]="purchasedProductsStore"
                     (onSelectionChanged)="purchasedProductsDetailsGridSelectionChanged($event)" [showBorders]="true"
                     [masterDetail]="{ enabled: false, template: 'detail' }">
                     <dxo-scrolling columnRenderingMode="virtual" showScrollbar="always"></dxo-scrolling>
@@ -138,6 +139,9 @@
                         </mat-form-field>
                         <span class="status h6 p-4" [ngClass]="'red-500'" *ngIf="lowProductCount">
                             {{'SELLING_MODULE.NORMAL_SALE.REMAINING_PRODUCTS_COUNT' | translate:{'count': productView.Count} }}
+                        </span>
+                        <span class="status h6 p-4 ml-8" [ngClass]="'amber-500'" *ngIf="hasCampaign">
+                            {{'SELLING_MODULE.NORMAL_SALE.CAMPAING_PRODUCT' | translate:{'CampaignName': productView.CampaignDto?.Name} }}
                         </span>
                     </div>
                     <button class="ml-8"

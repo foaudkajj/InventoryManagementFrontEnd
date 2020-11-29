@@ -148,9 +148,10 @@
             </div>
 
             <!-- <div class="example-container mat-elevation-z8"> -->
-            <dx-data-grid [columns]="ProductGridColumns" [remoteOperations]="true" #productsGrid
-                [(selectedRowKeys)]="selectedProducts" [dataSource]="store" [allowColumnResizing]="true"
-                [columnAutoWidth]="true" [showBorders]="true" (onToolbarPreparing)="onToolbarPreparing($event)">
+            <dx-data-grid (onSelectionChanged)="onProductManagerGridSelectChanged($event)" [columns]="ProductGridColumns"
+                [remoteOperations]="true" #productsGrid [(selectedRowKeys)]="selectedProducts" [dataSource]="store"
+                [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true"
+                (onToolbarPreparing)="onToolbarPreparing($event)">
                 <!-- <dxi-column [allowFiltering]="false" [formItem]="{visible: false}" [allowEditing]="false"
                     [allowSorting]="false" cellTemplate="cellTemplate">
                 </dxi-column>
@@ -250,8 +251,14 @@
 
                 <div *dxTemplate="let data of 'printButton'">
                     <button [disabled]="selectedProducts.length == 0" (click)="PrintButton(data)" mat-icon-button
-                        color="primary" type="button" matTooltip="Sil">
+                        color="primary" type="button">
                         <mat-icon>print</mat-icon>
+                    </button>
+                </div>
+                <div *dxTemplate="let data of 'applyCampaignButton'">
+                    <button [disabled]="selectedProducts.length == 0" (click)=" applyCampaign(data)" mat-icon-button
+                        color="primary" type="button">
+                        {{'STOCK_MODULE.PRODUCT_MANAGEMENT.APPLY_CAMPAIGN' | translate}}
                     </button>
                 </div>
             </dx-data-grid>

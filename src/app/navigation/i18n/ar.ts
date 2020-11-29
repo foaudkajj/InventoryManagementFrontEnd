@@ -52,6 +52,7 @@ export const locale = {
 				SALE: "بيع",
 				RETURN: "إعادة",
 				CHANGE_RETURN: "إعادة/تبديل",
+				CAMPAING_PRODUCT:"يوجد تنزيلات على هذا المنتج - {{CampaignName}}",
 				SALES_SCREEN: {
 					SELECT_PAYMENT: "اختر طريقة الدفع",
 					CASH: "دفع نقدي",
@@ -121,14 +122,27 @@ export const locale = {
 				PRODUCT_TYPE_NAME: "اسم نوع المنتج",
 				EXPIRATION_DATE: "تاريخ انتهاء الصلاحية",
 				DESCRIPTION: "ملاحظة",
-				SAVE: "احفظ"
+				SAVE: "احفظ",
+				CAMPAIGNS: "العروض"
 			},
 			PRODUCT_MANAGEMENT: {
 				ADD: "زيادة",
 				REMOVE: "إنقاص",
 				PRODUCT_COUNT_ADD: "زيادة عدة المنتجات",
 				PRODUCT_COUNT_REMOVE: "إنقاص عدد المنتجات",
-				ALL: "جميع المتجات"
+				ALL: "جميع المتجات",
+				APPLY_CAMPAIGN: "KAMPANYA UYGULA",
+				APPLY: "Uygula",
+				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz"
+			},
+			CAMPAIGN: {
+				TITLE: "Kampanyalar",
+				NAME: "Kampanya İsmi",
+				PERCENT: "نسبة الخصم",
+				START_DATE: "Başlangıç Tarihi",
+				END_DATE: "Bitiş Tarihi",
+				DESCRIPTION: "Açıklama",
+				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz"
 			}
 		},
 		ADMIN_MODULE: {
@@ -188,7 +202,8 @@ export const locale = {
 			ROLE_MANAGEMENT: "إدارة وصول المستخدمين",
 			STOCK_MODULE_PAGES: "Stok Modulü Sayfaları",
 			ADMIN_MODULE_PAGES: "Admin Modulü Sayfaları",
-			SELLING_MODULE_PAGES: "Satış Modulü Sayfaları"
+			SELLING_MODULE_PAGES: "Satış Modulü Sayfaları",
+			CAMPAIGN: "العروض"
 		},
 		AUTH: {
 			GENERAL: {

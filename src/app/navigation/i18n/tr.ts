@@ -48,6 +48,7 @@ export const locale = {
 				SEARCH_IN_SALES: "Satılanlar Ürünlerde Ara",
 				SOLED_PRODUCTS: "Satılan Ürünler",
 				REMAINING_PRODUCTS_COUNT: "Bu üründen stokta sadece {{count}} adet kalmıştır.",
+				CAMPAING_PRODUCT: "Bu ürün {{CampaignName}} kapsamında",
 				SALE: "Satış",
 				RETURN: "İade",
 				CHANGE_RETURN: "Değişim \ İade",
@@ -120,14 +121,27 @@ export const locale = {
 				PRODUCT_TYPE_NAME: "Üürn Çeişiti İsmi",
 				EXPIRATION_DATE: "Son Kullanma Tarihi",
 				DESCRIPTION: "Açıklama",
-				SAVE: "Kaydet"
+				SAVE: "Kaydet",
+				CAMPAIGNS: "Kampanyalar"
 			},
 			PRODUCT_MANAGEMENT: {
 				ADD: "Arttır",
 				REMOVE: "Eksilt",
 				PRODUCT_COUNT_ADD: "Stok Adeti Arttırma",
 				PRODUCT_COUNT_REMOVE: "Stok Adeti Eksilt",
-				ALL: "Tüm Ürünler"
+				ALL: "Tüm Ürünler",
+				APPLY_CAMPAIGN: "KAMPANYA UYGULA",
+				APPLY: "Uygula",
+				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz"
+			},
+			CAMPAIGN: {
+				TITLE: "Kampanyalar",
+				NAME: "Kampanya İsmi",
+				PERCENT: "İndirim Oranı",
+				START_DATE: "Başlangıç Tarihi",
+				END_DATE: "Bitiş Tarihi",
+				DESCRIPTION: "Açıklama",
+				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz"
 			}
 		},
 		ADMIN_MODULE: {
@@ -189,7 +203,8 @@ export const locale = {
 			ROLE_MANAGEMENT: "Rol Yönetimi",
 			STOCK_MODULE_PAGES: "Stok Modulü Sayfaları",
 			ADMIN_MODULE_PAGES: "Admin Modulü Sayfaları",
-			SELLING_MODULE_PAGES: "Satış Modulü Sayfaları"
+			SELLING_MODULE_PAGES: "Satış Modulü Sayfaları",
+			CAMPAIGN: "Kampanyalar"
 		},
 		AUTH: {
 			GENERAL: {

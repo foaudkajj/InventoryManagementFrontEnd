@@ -119,6 +119,7 @@ export class SalesComponentComponent implements OnInit {
     this.AssingDataToProductsToSellTable();
     this.ProductAndPriceFormGroup.reset();
     this.lowProductCount = false;
+    this.hasCampaign = false;
   }
 
   AssingDataToProductsToSellTable() {
@@ -148,8 +149,9 @@ export class SalesComponentComponent implements OnInit {
         let PaymentMethodIds: number[] = result.map(value => value.PaymentMethodId);
         let ProductIds: number[] = this.ProductsToSellTableRows.map(value => value.Id);
         let SellincPrices: number[] = this.ProductsToSellTableRows.map(value => value.SellingPrice);
+        let CampaignIds: number[] = this.ProductsToSellTableRows.map(value => value.CampaingId);
         let salePaymentMethods: SalePaymentMethod[] = result.map(value => <SalePaymentMethod>{ Amount: value.Amount, DefferedPaymentCount: value.DefferedPaymentCount, PaymentMethodId: value.PaymentMethodId });
-        let ProductSellingDto: ProductSellingDto = { ProductIdsAndPrices: { SellingPrices: SellincPrices, ProductIds: ProductIds }, CustomerInfoId: result[0].CustomerInfo.Id, CustomerName: result[0].CustomerInfo.CustomerName, CustomerPhone: result[0].CustomerInfo.CustomerPhone, Receipt: result[0].Receipt, PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, UserId: this.userDetails.userId, SalePaymentMethods: salePaymentMethods };
+        let ProductSellingDto: ProductSellingDto = { ProductIdsAndPricesAndCampaignIds: { SellingPrices: SellincPrices, ProductIds: ProductIds, CampaignIds: CampaignIds }, CustomerInfoId: result[0].CustomerInfo.Id, CustomerName: result[0].CustomerInfo.CustomerName, CustomerPhone: result[0].CustomerInfo.CustomerPhone, Receipt: result[0].Receipt, PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, UserId: this.userDetails.userId, SalePaymentMethods: salePaymentMethods };
         await this.normalSatisSerice.SellProducts(ProductSellingDto).toPromise();
         this.ProductsToSellTableRows = [];
         this.soledProductsGrid.instance.refresh();
@@ -161,6 +163,7 @@ export class SalesComponentComponent implements OnInit {
 
   isProductExist = false;
   lowProductCount = false;
+  hasCampaign = false;
   isProductCountEnough = false;
   async productCodeFocusOut() {
     this.PriceInput.nativeElement.focus();
@@ -185,6 +188,12 @@ export class SalesComponentComponent implements OnInit {
           this.isProductCountEnough = false;
         } else {
           this.isProductCountEnough = true;
+        }
+
+        if (this.productView.CampaingId != 0) {
+          this.hasCampaign = true;
+        } else {
+          this.hasCampaign = false;
         }
 
       } else {

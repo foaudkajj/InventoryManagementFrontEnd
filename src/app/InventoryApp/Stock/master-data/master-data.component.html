@@ -39,11 +39,8 @@
             <div class="example-container mat-elevation-z8">
 
                 <dx-data-grid #MasterDataGrid id="gridContainer" [dataSource]="MasterDataStore" [showBorders]="true"
-                    [masterDetail]="{ enabled: SelectedMDNumber == 3, template: 'detail' }">
-                    <ng-container *ngFor="let column of Columns">
-                        <dxi-column [caption]="column.caption" [dataField]="column.dataField"></dxi-column>
-                    </ng-container>
-                    <dxo-editing mode="form" [allowUpdating]="false" [allowDeleting]="true" [allowAdding]="true">
+                    [masterDetail]="{ enabled: SelectedMDNumber == 3, template: 'detail' }" [columns]="Columns">
+                    <dxo-editing mode="form" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
                     </dxo-editing>
 
                     <dxo-filter-row [visible]="true"></dxo-filter-row>

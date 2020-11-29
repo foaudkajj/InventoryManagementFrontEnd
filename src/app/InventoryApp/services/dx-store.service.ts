@@ -13,7 +13,9 @@ import { SwalService } from './Swal.Service';
 import { UIResponse } from '../Models/UIResponse';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DxStoreService {
     constructor(private swal: SwalService, private router: Router) {
     }

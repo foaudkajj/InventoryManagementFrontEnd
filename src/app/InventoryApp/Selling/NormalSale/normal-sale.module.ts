@@ -16,7 +16,6 @@ import { PaymentMethodsService } from 'app/InventoryApp/services/payment-methods
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ConsumerInfosService } from 'app/InventoryApp/services/ConsumerInfo.service';
 import { InventorySharedModule } from 'app/InventoryApp/inventory-shared.module';
-import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
 import { SalesComponentComponent } from './components/sales/sales-component.component';
 import { ReturnComponentComponent } from './components/return/return-component.component';
 import { ChangeRefundComponentComponent } from './components/change/change-refund-component';
@@ -50,6 +49,6 @@ import { MatDividerModule } from '@angular/material/divider';
     DxNumberBoxModule
   ],
   entryComponents: [PaymentScreenComponent],
-  providers: [PaymentMethodsService, ConsumerInfosService, DxStoreService]
+  providers: [PaymentMethodsService, ConsumerInfosService]
 })
 export class NormalSaleModule { }

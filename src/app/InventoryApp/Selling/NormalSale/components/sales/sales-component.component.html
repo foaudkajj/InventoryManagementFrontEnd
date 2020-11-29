@@ -125,31 +125,31 @@
             <dxo-filter-row [visible]="true"></dxo-filter-row>
             <dxo-header-filter [visible]="true"></dxo-header-filter>
             <!-- <dxo-search-panel [visible]="true" [placeholder]="_translate.instant('COMMON.SEARCH')">
-        </dxo-search-panel> -->
+            </dxo-search-panel> -->
             <!-- <dxo-group-panel [visible]="true"></dxo-group-panel> -->
             <dxo-selection mode="single"></dxo-selection>
-            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.DATE')" dataType="date"
-                dataField="Date" format="dd.MM.yyyy, HH:mm" caption="Title" [filterValue]="today"></dxi-column>
-            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.TOTAL')" alignment="left"
-                dataField="Total" format="currency" dataType="number">
+            <dxi-column [caption]="'SELLING_MODULE.NORMAL_SALE.DATE'| translate" dataType="date" dataField="Date"
+                format="dd.MM.yyyy, HH:mm" caption="Title" [filterValue]="today"></dxi-column>
+            <dxi-column [caption]="'SELLING_MODULE.NORMAL_SALE.TOTAL' | translate" alignment="left" dataField="Total"
+                format="currency" dataType="number">
                 <dxo-format type="currency" precision="2"></dxo-format>
             </dxi-column>
-            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.USER_CODE')" alignment="left"
+            <dxi-column [caption]="'SELLING_MODULE.NORMAL_SALE.USER_CODE'| translate" alignment="left"
                 dataField="User.UserCode" dataType="string"></dxi-column>
-            <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.BRANCH_NAME')"
-                dataField="Branch.Location" dataType="string"></dxi-column>
+            <dxi-column [caption]="'SELLING_MODULE.NORMAL_SALE.BRANCH_NAME'| translate" dataField="Branch.Location"
+                dataType="string"></dxi-column>
             <dxo-group-panel [visible]="false"></dxo-group-panel>
             <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
             <!-- <div class="option" *dxTemplate="let data of 'calendar'">
-            <dx-date-box width="100%" [(value)]="RangeStartDate"
-                placeholder="{{_translate.instant('COMMON.START_DATE')}}">
-            </dx-date-box>
-        </div>
-        <div class="option" *dxTemplate="let data of 'calendar2'">
-            <dx-date-box width="100%" [(value)]="RangeEndDate"
-                placeholder="{{_translate.instant('COMMON.END_DATE')}}">
-            </dx-date-box>
-        </div> -->
+                <dx-date-box width="100%" [(value)]="RangeStartDate"
+                    placeholder="{{_translate.instant('COMMON.START_DATE')}}">
+                </dx-date-box>
+            </div>
+            <div class="option" *dxTemplate="let data of 'calendar2'">
+                <dx-date-box width="100%" [(value)]="RangeEndDate"
+                    placeholder="{{_translate.instant('COMMON.END_DATE')}}">
+                </dx-date-box>
+            </div> -->
             <dxo-summary>
                 <dxi-total-item column="Total" summaryType="sum" [valueFormat]="{type: 'currency', precision:'2'}">
                 </dxi-total-item>
@@ -162,59 +162,57 @@
                     [showBorders]="true" [allowColumnResizing]="true" [allowColumnReordering]="true"
                     [columnAutoWidth]="true">
                     <dxo-scrolling columnRenderingMode="virtual" showScrollbar="always"></dxo-scrolling>
-                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_NAME')"
+                    <dxi-column width="auto" [caption]="'SELLING_MODULE.NORMAL_SALE.PRODUCT_NAME' | translate"
                         dataField="ProductName"></dxi-column>
-                    <dxi-column width="auto"
-                        [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_BARCODE')"
+                    <dxi-column width="auto" [caption]="'SELLING_MODULE.NORMAL_SALE.PRODUCT_BARCODE'| translate"
                         dataField="ProductBarcode"></dxi-column>
-                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')"
+                    <dxi-column width="auto" [caption]="'SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE'| translate"
                         dataField="ProductCode"></dxi-column>
-                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.COLOR_NAME')"
+                    <dxi-column width="auto" [caption]="'SELLING_MODULE.NORMAL_SALE.COLOR_NAME'| translate"
                         dataField="ColorName"></dxi-column>
                     <dxi-column width="auto" cellTemplate="cellTemplate"
-                        [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.GENDER')" dataField="Gender">
+                        [caption]="'SELLING_MODULE.NORMAL_SALE.GENDER'| translate" dataField="Gender">
                     </dxi-column>
-                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_YEAR')"
+                    <dxi-column width="auto" [caption]="'SELLING_MODULE.NORMAL_SALE.PRODUCT_YEAR'| translate"
                         dataField="ProductYear"></dxi-column>
-                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.SIZE')"
-                        dataField="Size"></dxi-column>
-                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_COUNT')"
+                    <dxi-column width="auto" [caption]="'SELLING_MODULE.NORMAL_SALE.SIZE'| translate" dataField="Size">
+                    </dxi-column>
+                    <dxi-column width="auto" [caption]="'SELLING_MODULE.NORMAL_SALE.PRODUCT_COUNT'| translate"
                         dataField="ProductCount"></dxi-column>
-                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.BRANCH_NAME')"
+                    <dxi-column width="auto" [caption]="'SELLING_MODULE.NORMAL_SALE.BRANCH_NAME'| translate"
                         dataField="BranchName"></dxi-column>
-                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.SELLING_PRICE')"
+                    <dxi-column width="auto" [caption]="'SELLING_MODULE.NORMAL_SALE.SELLING_PRICE'| translate"
                         dataField="Price" format="currency" dataType="number">
                         <dxo-format type="currency" precision="2"></dxo-format>
                     </dxi-column>
 
                     <div *dxTemplate="let data of 'cellTemplate'">
-                        {{data.value ? _translate.instant('COMMON.FEMALE') : _translate.instant('COMMON.MALE')}}
+                        {{data.value ? ('COMMON.FEMALE'| translate): ('COMMON.MALE'| translate) }}
                     </div>
                     <!-- <dxo-search-panel [text]="soledProductsDetailsText" [visible]="false"
-                    [placeholder]="_translate.instant('COMMON.SEARCH')">
-                </dxo-search-panel> -->
+                        [placeholder]="_translate.instant('COMMON.SEARCH')">
+                    </dxo-search-panel> -->
                 </dx-data-grid>
 
                 <dx-data-grid #paymentDetailGrid [showColumnLines]="false" [showRowLines]="true" [showBorders]="true"
                     [rowAlternationEnabled]="true" [dataSource]="sale.data.PaymentDetails" [showBorders]="true"
                     [allowColumnResizing]="true" [allowColumnReordering]="true" [columnAutoWidth]="true" class="mt-5">
                     <dxo-scrolling columnRenderingMode="virtual" showScrollbar="always"></dxo-scrolling>
-                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PAYMENT_NAME')"
+                    <dxi-column width="auto" [caption]="'SELLING_MODULE.NORMAL_SALE.PAYMENT_NAME'| translate"
                         dataField="PaymentName"></dxi-column>
                     <!--    <dxi-column [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PAYMENT_TYPE')" dataField="PaymentType"></dxi-column> -->
                     <dxi-column width="auto"
-                        [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.DEFFEREDED_PAYMENT_COUNT')"
+                        [caption]="'SELLING_MODULE.NORMAL_SALE.DEFFEREDED_PAYMENT_COUNT'| translate"
                         dataField="DefferedPaymentCount"></dxi-column>
-                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.RECEIPT')"
+                    <dxi-column width="auto" [caption]="'SELLING_MODULE.NORMAL_SALE.RECEIPT'| translate"
                         dataField="Receipt"></dxi-column>
-                    <dxi-column width="auto" [caption]="_translate.instant('SELLING_MODULE.NORMAL_SALE.AMOUNT')"
+                    <dxi-column width="auto" [caption]="'SELLING_MODULE.NORMAL_SALE.AMOUNT'| translate"
                         dataField="Amount" format="currency">
                         <dxo-format type="currency" precision="2"></dxo-format>
                     </dxi-column>
                     <!-- <dxo-search-panel [visible]="true" [placeholder]="_translate.instant('COMMON.SEARCH')">
-                </dxo-search-panel> -->
+                    </dxo-search-panel> -->
                 </dx-data-grid>
             </div>
         </dx-data-grid>
     </div>
-</div>

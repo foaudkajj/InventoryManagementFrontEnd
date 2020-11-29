@@ -204,7 +204,7 @@ export const locale = {
 			STOCK_MODULE_PAGES: "Stok Modulü Sayfaları",
 			ADMIN_MODULE_PAGES: "Admin Modulü Sayfaları",
 			SELLING_MODULE_PAGES: "Satış Modulü Sayfaları",
-			CAMPAIGN: "Kampanyalar"
+			SOLED_PRODUCTS: "Satılan Ürünler"
 		},
 		AUTH: {
 			GENERAL: {

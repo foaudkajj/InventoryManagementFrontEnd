@@ -23,7 +23,8 @@
                         id="ProductBarcode" matInput
                         [placeholder]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')">
                     <mat-error *ngIf="hasError('ProductBarcode', 'required')">
-                        {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName: _translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')} }}
+                        {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:
+                        _translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')} }}
                     </mat-error>
                     <mat-error *ngIf="hasError('ProductBarcode', 'maxlength')">
                         {{'VALIDATIONS.MAX_LENGTH' | translate:{'maxLength': 12} }}
@@ -36,14 +37,24 @@
                     <input type="number" #PriceInput formControlName="SellingPrice" id="SellingPrice" matInput
                         placeholder="{{_translate.instant('SELLING_MODULE.NORMAL_SALE.SELLING_PRICE')}}" min="1">
                     <mat-error *ngIf="hasError('SellingPrice', 'required')">
-                        {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName: _translate.instant('SELLING_MODULE.NORMAL_SALE.SELLING_PRICE')} }}
+                        {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:
+                        _translate.instant('SELLING_MODULE.NORMAL_SALE.SELLING_PRICE')} }}
                     </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <!-- <mat-label>Satıcı Listesi</mat-label> -->
+                    <mat-select formControlName="UserId" id="UserId">
+                        <mat-option *ngFor="let user of UserList" [value]="user.Id">
+                            {{user.Name}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
                 <span class="status h6 p-4" [ngClass]="'red-500'" *ngIf="lowProductCount">
                     {{'SELLING_MODULE.NORMAL_SALE.REMAINING_PRODUCTS_COUNT' | translate:{'count': productView.Count} }}
                 </span>
                 <span class="status h6 p-4 ml-8" [ngClass]="'amber-500'" *ngIf="hasCampaign">
-                    {{'SELLING_MODULE.NORMAL_SALE.CAMPAING_PRODUCT' | translate:{'CampaignName': productView.CampaignDto?.Name} }}
+                    {{'SELLING_MODULE.NORMAL_SALE.CAMPAING_PRODUCT' | translate:{'CampaignName':
+                    productView.CampaignDto?.Name} }}
                 </span>
             </div>
             <button class="ml-8"

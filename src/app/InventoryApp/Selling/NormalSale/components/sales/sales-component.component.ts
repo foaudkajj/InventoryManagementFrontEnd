@@ -60,8 +60,8 @@ export class SalesComponentComponent implements OnInit {
   filterByToday: Array<any>;
   today: Date = new Date();
   userDetails = JSON.parse(localStorage.getItem('user')) as LoginResponse;
-
-
+  UserList = [{ Id: 1, Name: "Orhan" }, { Id: 1015, Name: "Uğur" }]
+  selectedUserId: number;
 
   constructor(public _translate: TranslateService,
     private normalSatisSerice: NormalSatisService,
@@ -93,6 +93,9 @@ export class SalesComponentComponent implements OnInit {
       SellingPrice: ['', Validators.compose([
         Validators.required,
       ])],
+      UserId: [1, Validators.compose([
+        Validators.required,
+      ])],
     });
   }
 
@@ -114,6 +117,7 @@ export class SalesComponentComponent implements OnInit {
 
   productView: ProductView;
   AddProduct() {
+    this.selectedUserId = this.ProductAndPriceFormGroup.controls.UserId.value;
     this.productView.SellingPrice = this.ProductAndPriceFormGroup.controls.SellingPrice.value;
     this.ProductsToSellTableRows.push(this.productView);
     this.AssingDataToProductsToSellTable();
@@ -151,7 +155,8 @@ export class SalesComponentComponent implements OnInit {
         let SellincPrices: number[] = this.ProductsToSellTableRows.map(value => value.SellingPrice);
         let CampaignIds: number[] = this.ProductsToSellTableRows.map(value => value.CampaingId);
         let salePaymentMethods: SalePaymentMethod[] = result.map(value => <SalePaymentMethod>{ Amount: value.Amount, DefferedPaymentCount: value.DefferedPaymentCount, PaymentMethodId: value.PaymentMethodId });
-        let ProductSellingDto: ProductSellingDto = { ProductIdsAndPricesAndCampaignIds: { SellingPrices: SellincPrices, ProductIds: ProductIds, CampaignIds: CampaignIds }, CustomerInfoId: result[0].CustomerInfo.Id, CustomerName: result[0].CustomerInfo.CustomerName, CustomerPhone: result[0].CustomerInfo.CustomerPhone, Receipt: result[0].Receipt, PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, UserId: this.userDetails.userId, SalePaymentMethods: salePaymentMethods };
+        //UserId: this.userDetails.userId,
+        let ProductSellingDto: ProductSellingDto = { ProductIdsAndPricesAndCampaignIds: { SellingPrices: SellincPrices, ProductIds: ProductIds, CampaignIds: CampaignIds }, CustomerInfoId: result[0].CustomerInfo.Id, CustomerName: result[0].CustomerInfo.CustomerName, CustomerPhone: result[0].CustomerInfo.CustomerPhone, Receipt: result[0].Receipt, PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, UserId: this.selectedUserId, BranchId: this.ProductsToSellTableRows[0].BranchId, SalePaymentMethods: salePaymentMethods };
         await this.normalSatisSerice.SellProducts(ProductSellingDto).toPromise();
         this.ProductsToSellTableRows = [];
         this.soledProductsGrid.instance.refresh();

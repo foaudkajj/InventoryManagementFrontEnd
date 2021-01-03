@@ -12,12 +12,12 @@ import { DxReportViewerComponent } from 'devexpress-reporting-angular';
   styleUrls: ['./report-viewer.component.scss'
   ]
 })
-export class ReportViewerComponent implements OnInit {
+export class ReportViewerComponent {
 
   @ViewChild("reportViewer") viewer: DxReportViewerComponent;
 
   // The report's path. The Document Viewer opens it when the application starts.
-  reportUrl: string = ReportUrls.ProductTicket;
+  reportUrl: string = '';
   // Backend's project URI.
   hostUrl: string = environment.reportingUrl;
   invokeAction: string = '/DXXRDV';
@@ -43,11 +43,10 @@ export class ReportViewerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.route.snapshot.queryParamMap)
-    const ProductBarcode: string = this.route.snapshot.queryParamMap.get('ProductBarcode');
-    this.reportUrl += '?ProductBarcode=' + ProductBarcode
-
-
+    this.reportUrl = this.route.snapshot.queryParamMap.get('ReportName');
+    console.log(this.route.snapshot.queryParamMap.get('ReportName'))
+    // const ProductBarcode: string = this.route.snapshot.queryParamMap.get('ProductBarcode');
+    // this.reportUrl += '?ProductBarcode=' + ProductBarcode;
   }
 
 }

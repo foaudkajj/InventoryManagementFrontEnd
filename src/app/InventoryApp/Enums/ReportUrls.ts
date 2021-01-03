@@ -1,3 +1,4 @@
 export enum ReportUrls {
-    ProductTicket = "ProductTicket",
+    ProductTicket = "ProductLabel",
+    BestSellingProducts = "BestSellingProducts"
 }

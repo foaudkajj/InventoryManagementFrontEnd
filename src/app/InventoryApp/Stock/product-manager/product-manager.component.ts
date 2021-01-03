@@ -39,6 +39,7 @@ import { CampaignApplyingScreenComponent } from './components/campaignApplying/c
 import { ApplyCampaignRequestDto } from 'app/InventoryApp/Models/DTOs/ApplyCampaignRequestDto';
 import { CampaignService } from 'app/InventoryApp/services/campaign-service';
 import { CampaignDto } from 'app/InventoryApp/Models/CampaignDto';
+import { ReportUrls } from 'app/InventoryApp/Enums/ReportUrls';
 
 @Component({
   selector: 'app-product-manager',
@@ -278,15 +279,9 @@ export class ProductManagerComponent implements OnInit {
 
     for (const selectedProduct of (this.productsGrid.instance.getSelectedRowsData() as ProductView[])) {
       QueryParams = QueryParams.concat(selectedProduct.ProductBarcode, ',')
-      // if (selectedProduct.Count != 0)
-      //   Array.from({ length: selectedProduct.Count }).map(m => QueryParams = QueryParams.concat(selectedProduct.ProductFullCode, ','));
-      // else
-      //   QueryParams = QueryParams.concat(selectedProduct.ProductFullCode, ',')
-
     }
 
-    let url = this.router.createUrlTree(['ReportViewer'], { queryParams: { ProductBarcode: QueryParams.substring(0, QueryParams.length - 1) } })
-    console.log(url.toString())
+    let url = this.router.createUrlTree(['ReportViewer'], { queryParams: { ReportName: `${ReportUrls.ProductTicket}?ProductBarcode=${QueryParams.substring(0, QueryParams.length - 1)}` } })
     window.open('#' + url.toString(), '_blank')
 
   }
@@ -297,7 +292,7 @@ export class ProductManagerComponent implements OnInit {
     // this.router.navigate(['ReportViewer'], {
     //   queryParams: { ProductFullCode: row.ProductFullCode }
     // });
-    let url = this.router.createUrlTree(['ReportViewer'], { queryParams: { ProductBarcode: row.ProductBarcode } })
+    let url = this.router.createUrlTree(['ReportViewer'], { queryParams: { ReportName: `${ReportUrls.ProductTicket}?ProductBarcode=${row.ProductBarcode}` } })
     window.open('#' + url.toString(), '_blank')
     // this.BarcodeObject.BarcodeValue = row.ProductFullCode;
     // console.log(row)
@@ -393,6 +388,7 @@ export class ProductManagerComponent implements OnInit {
       this.AddDefaultProductGridColumns();
       this.productsGrid?.instance.clearFilter();
     }
+    this.productsGrid.instance.deselectAll();
 
 
   }

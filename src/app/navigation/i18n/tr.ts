@@ -142,6 +142,11 @@ export const locale = {
 				END_DATE: "Bitiş Tarihi",
 				DESCRIPTION: "Açıklama",
 				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz"
+			},
+			PRODUCT_REPORTS: {
+				TITLE: "Raporlar",
+				REPORT_LIST: "Raport Listesi",
+				SHOW: "Raporu Göster"
 			}
 		},
 		ADMIN_MODULE: {
@@ -204,7 +209,8 @@ export const locale = {
 			STOCK_MODULE_PAGES: "Stok Modulü Sayfaları",
 			ADMIN_MODULE_PAGES: "Admin Modulü Sayfaları",
 			SELLING_MODULE_PAGES: "Satış Modulü Sayfaları",
-			SOLED_PRODUCTS: "Satılan Ürünler"
+			SOLED_PRODUCTS: "Satılan Ürünler",
+			PRODUCT_REPORTS: "Ürün Raporları"
 		},
 		AUTH: {
 			GENERAL: {

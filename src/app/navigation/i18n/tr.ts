@@ -145,8 +145,15 @@ export const locale = {
 			},
 			PRODUCT_REPORTS: {
 				TITLE: "Raporlar",
-				REPORT_LIST: "Raport Listesi",
-				SHOW: "Raporu Göster"
+				REPORT_LIST: "Rapor Listesi",
+				SHOW: "Raporu Göster",
+				BEST_SELLING_PRODUCTS: "En Çok Satan Ürün",
+				BEST_SELLERS: "En Çok Satış Yapan Satıcılar",
+				BEST_SELLING_CATEGORIES: "En Çok Satan Kategoriler",
+				BEST_SELLING_COLORS: "En Çok Satan Renkler",
+				BEST_SELLING_TOP_TEN_SIZES: "En Çok Satan Bedenler",
+				MOST_PROFITABLE_PRODUCTS: "En Çok kârlı Ürünler",
+				LEAST_PROFITABLE_PRODUCTS: "En Az kârlı Ürünler"
 			}
 		},
 		ADMIN_MODULE: {

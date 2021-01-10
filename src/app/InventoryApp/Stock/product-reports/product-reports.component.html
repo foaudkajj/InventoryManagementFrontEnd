@@ -29,8 +29,8 @@
                     <mat-select placeholder="{{ _translate.instant('STOCK_MODULE.PRODUCT_REPORTS.REPORT_LIST')}}"
                         (selectionChange)="ReportSelectBoxChanged($event.value)" autocomplete="off"
                         [(value)]="selectedReport">
-                        <mat-option *ngFor="let report of ReportList" [value]="report">
-                            {{ report }}
+                        <mat-option *ngFor="let report of ReportList" [value]="report.Value">
+                            {{ report.Translate | translate }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

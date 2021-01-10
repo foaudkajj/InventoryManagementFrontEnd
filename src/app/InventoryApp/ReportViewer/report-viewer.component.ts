@@ -42,9 +42,16 @@ export class ReportViewerComponent {
     };
   }
 
+
+  CustomizeParameterEditors(e) {
+    // console.log(e)
+    if (e.args.parameter.name === "From" || e.args.parameter.name === "To") {
+      // e.args.info.editor = { header: 'custom-dx-date' };
+    }
+  }
+
   ngOnInit(): void {
     this.reportUrl = this.route.snapshot.queryParamMap.get('ReportName');
-    console.log(this.route.snapshot.queryParamMap.get('ReportName'))
     // const ProductBarcode: string = this.route.snapshot.queryParamMap.get('ProductBarcode');
     // this.reportUrl += '?ProductBarcode=' + ProductBarcode;
   }

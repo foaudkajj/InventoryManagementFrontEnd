@@ -67,6 +67,18 @@
                     </dxo-summary>
 
                     <div *dxTemplate="let sale of 'detail'">
+                        <dx-data-grid #customerInfoGrid [showColumnLines]="false" [showRowLines]="true"
+                            [showBorders]="true" [rowAlternationEnabled]="true" [dataSource]="[sale.data.CustomerInfo]"
+                            [showBorders]="true" [allowColumnResizing]="true" [allowColumnReordering]="true"
+                            [columnAutoWidth]="true">
+                            <dxo-scrolling columnRenderingMode="virtual" showScrollbar="always"></dxo-scrolling>
+                            <dxi-column [caption]="'SELLING_MODULE.CHANGE.CUSTOMER_NAME' | translate"
+                                dataField="CustomerName">
+                            </dxi-column>
+                            <dxi-column [caption]="'SELLING_MODULE.CHANGE.CUSTOMER_PHONE' | translate"
+                                dataField="CustomerPhone">
+                            </dxi-column>
+                        </dx-data-grid>
                         <!--	<div class="master-detail-caption">{{employee.data.FirstName + " " + employee.data.LastName + "'s Tasks:"}}</div>-->
                         <dx-data-grid #soledProductsDetailsGrid [showColumnLines]="false" [showRowLines]="true"
                             [showBorders]="true" [rowAlternationEnabled]="true"

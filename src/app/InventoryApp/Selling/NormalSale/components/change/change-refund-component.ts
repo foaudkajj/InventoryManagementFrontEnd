@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { fuseAnimations } from '@fuse/animations';
 import { TranslateService } from '@ngx-translate/core';
 import { ChangeProductDto } from 'app/InventoryApp/Models/DTOs/ChangeProductDto';
+import { NewProductListToTakeDto } from 'app/InventoryApp/Models/DTOs/NewProductListToTakeDto';
+import { PaymentDetailsDto } from 'app/InventoryApp/Models/DTOs/PaymentDetailsDto';
 import { PaymentPopup } from 'app/InventoryApp/Models/DTOs/PaymentPopup';
 import { ProductSellingDto } from 'app/InventoryApp/Models/DTOs/ProductSellingDTO';
 import { ProductView } from 'app/InventoryApp/Models/DTOs/ProductView';
@@ -33,19 +35,19 @@ import { Subscription } from 'rxjs';
 export class ChangeRefundComponentComponent implements OnInit {
   customersSelectBoxDatasource: DataSource;
   purchasedProductsStore: CustomStore;
-  customerInfoId = 0;
+  selectedCustomerInfoId = 0;
   @ViewChild('PriceInput') PriceInput: ElementRef;
   @ViewChild('productCode') productCode: ElementRef;
   // @ViewChild('purchasedProductsDetailsGrid') purchasedProductsDetailsGrid: DxDataGridComponent;
   // @ViewChild('purchasedProducts') purchasedProducts: DxDataGridComponent;
   @ViewChild('productsToChangeWith') productsToChangeWith: DxDataGridComponent;
   ProductAndPriceFormGroup: FormGroup;
-  productView: ProductView;
+  newAddedProductToTake: ProductView;
   ProductsToSellTableId: number = 0;
   ProductsToSellDataSource: ProductView[] = [];
   ProductsToSellTableRows: ProductView[] = [];
   Genders: any = [{ Value: 0, ViewValue: 'Erkek' }, { Value: 1, ViewValue: 'Kadın' }]
-  Operations: any = [{ Id: 0, Value: 'Satıldı' }, { Id: 1, Value: 'İade Edildi' }, { Id: 2, Value: 'Başka bir ürünle değiştirild' }]
+  Operations: any = [{ Id: 0, Value: 'Satıldı' }, { Id: 1, Value: 'İade Edildi' }, { Id: 2, Value: 'Başka bir ürünle değiştirild' }, , { Id: 3, Value: 'Değiştirlen bir ürünün yerine bu alındı' }]
   selectedRows: number[];
   SumOfProductsToReturn: number = 0;
   SumOfProductsToBeTakenInstead: number = 0;
@@ -53,7 +55,7 @@ export class ChangeRefundComponentComponent implements OnInit {
   private unsubscribe: Subscription[] = [];
   ProductsToSellTotalPrice: number;
   userDetails = JSON.parse(localStorage.getItem('user')) as LoginResponse;
-  saleDetailsAndProductDtos: SaleDetailsAndProductDto[] = [];
+  saleDetailsAndProductOfPreviouslyTakenProducts: SaleDetailsAndProductDto[] = [];
   constructor(public _translate: TranslateService,
     private dxStore: DxStoreService,
     private normalSatisSerice: NormalSatisService,
@@ -85,7 +87,7 @@ export class ChangeRefundComponentComponent implements OnInit {
 
   getCustomerPurchasedProducts() {
     let storeOptions: DxStoreOptions = {
-      loadUrl: "NormalSatis/GetCustomerPurchasedProducts", loadParams: { CustomerInfoId: this.customerInfoId }
+      loadUrl: "NormalSatis/GetCustomerPurchasedProducts", loadParams: { CustomerInfoId: this.selectedCustomerInfoId }
     };
     this.purchasedProductsStore = this.dxStore.GetStore(storeOptions);
   }
@@ -105,9 +107,9 @@ export class ChangeRefundComponentComponent implements OnInit {
   onCustomerInfoValueChanged(e) {
     const previousValue = e.previousValue;
     const newValue = e.value;
-    this.customerInfoId = newValue;
+    this.selectedCustomerInfoId = newValue;
     this.SumOfProductsToReturn = 0;
-    this.saleDetailsAndProductDtos = [];
+    this.saleDetailsAndProductOfPreviouslyTakenProducts = [];
     this.getCustomerPurchasedProducts();
   }
 
@@ -122,25 +124,25 @@ export class ChangeRefundComponentComponent implements OnInit {
       let res: UIResponse<ProductView> = await this.normalSatisSerice.GetProductDetails(productCode).toPromise();
       if (!res.IsError) {
         this.isProductExist = true;
-        this.productView = res.Entity;
-        this.ProductAndPriceFormGroup.controls.SellingPrice.setValue(this.productView.SellingPrice);
-        this.productView.TempId = this.ProductsToSellTableId++;
+        this.newAddedProductToTake = res.Entity;
+        this.ProductAndPriceFormGroup.controls.SellingPrice.setValue(this.newAddedProductToTake.SellingPrice);
+        this.newAddedProductToTake.TempId = this.ProductsToSellTableId++;
 
-        let ProductCount = this.ProductsToSellDataSource.filter(fi => fi.Id == this.productView.Id).length;
-        this.productView.Count -= ProductCount;
-        if (this.productView.Count <= 10) {
+        let ProductCount = this.ProductsToSellDataSource.filter(fi => fi.Id == this.newAddedProductToTake.Id).length;
+        this.newAddedProductToTake.Count -= ProductCount;
+        if (this.newAddedProductToTake.Count <= 10) {
           this.lowProductCount = true;
         } else {
           this.lowProductCount = false;
         }
 
-        if (this.productView.Count == 0) {
+        if (this.newAddedProductToTake.Count == 0) {
           this.isProductCountEnough = false;
         } else {
           this.isProductCountEnough = true;
         }
 
-        if (this.productView.CampaingId != 0) {
+        if (this.newAddedProductToTake.CampaingId != 0) {
           this.hasCampaign = true;
         } else {
           this.hasCampaign = false;
@@ -165,13 +167,13 @@ export class ChangeRefundComponentComponent implements OnInit {
   }
 
   AddProduct() {
-    this.productView.SellingPrice = this.ProductAndPriceFormGroup.controls.SellingPrice.value;
-    this.ProductsToSellTableRows.push(this.productView);
+    this.newAddedProductToTake.SellingPrice = this.ProductAndPriceFormGroup.controls.SellingPrice.value;
+    this.ProductsToSellTableRows.push(this.newAddedProductToTake);
     this.AssingDataToProductsToSellTable();
     this.ProductAndPriceFormGroup.reset();
     this.lowProductCount = false;
     this.hasCampaign = false;
-    this.SumOfProductsToBeTakenInstead += this.productView.SellingPrice;
+    this.SumOfProductsToBeTakenInstead += this.newAddedProductToTake.SellingPrice;
   }
 
   AssingDataToProductsToSellTable() {
@@ -185,13 +187,14 @@ export class ChangeRefundComponentComponent implements OnInit {
   }
 
 
-  AddToReturn(data, saleDetails) {
+
+  AddToReturn(data) {
     if (data?.AddedToRefunList) {
-      this.saleDetailsAndProductDtos = this.saleDetailsAndProductDtos.filter(fi => fi.ProductId != data.ProductId && fi.SaleId != data.SaleId);
+      this.saleDetailsAndProductOfPreviouslyTakenProducts = this.saleDetailsAndProductOfPreviouslyTakenProducts.filter(fi => fi.ProductId != data.ProductId && fi.SaleId != data.SaleId);
       this.SumOfProductsToReturn -= data.Price;
       data.AddedToRefunList = false;
     } else {
-      this.saleDetailsAndProductDtos.push(data);
+      this.saleDetailsAndProductOfPreviouslyTakenProducts.push(data);
       this.SumOfProductsToReturn += data.Price;
       data.AddedToRefunList = true;
     }
@@ -201,8 +204,12 @@ export class ChangeRefundComponentComponent implements OnInit {
   async openSatisDialog(purchasedProcutsGridInstance: DxDataGridComponent) {
     this.ProductsToSellTotalPrice = (this.SumOfProductsToBeTakenInstead - this.SumOfProductsToReturn);
 
+    let ProductIdListONewProducts: number[] = this.ProductsToSellTableRows.map(value => value.Id);
+    let ProductIdListOfPreviouslyTakenProducts = this.saleDetailsAndProductOfPreviouslyTakenProducts.map(value => value.ProductId);
+    let SaleIdOfOldProdcuts = this.saleDetailsAndProductOfPreviouslyTakenProducts[0].SaleId;
     if (this.ProductsToSellDataSource.length == 0) {
-      await this.normalSatisSerice.RefundProducts(this.saleDetailsAndProductDtos).toPromise();
+      let refundProductsDto: RefundProductsDto = { CustomerInfoId: this.selectedCustomerInfoId, Total: this.ProductsToSellTotalPrice, ProductIdListOfPreviouslyTakenProducts: ProductIdListOfPreviouslyTakenProducts, SaleIdOfOldProdcuts: SaleIdOfOldProdcuts }
+      await this.normalSatisSerice.RefundProducts(refundProductsDto).toPromise();
       purchasedProcutsGridInstance.instance.refresh();
       this.resetScreen();
 
@@ -212,19 +219,26 @@ export class ChangeRefundComponentComponent implements OnInit {
       const dialogRef = this.dialog.open(PaymentScreenComponent, {
         height: '600px',
         width: '800px',
-        data: { Total: this.ProductsToSellTotalPrice, CustomerInfoId: this.customerInfoId }
+        data: { Total: this.ProductsToSellTotalPrice, CustomerInfoId: this.selectedCustomerInfoId }
       });
 
       this.unsubscribe.push(dialogRef.afterClosed().subscribe(async (result: PaymentPopup[]) => {
         if (result?.length > 0) {
           console.log(result)
-          let PaymentMethodIds: number[] = result.map(value => value.PaymentMethodId);
-          let ProductIds: number[] = this.ProductsToSellTableRows.map(value => value.Id);
-          let SellincPrices: number[] = this.ProductsToSellTableRows.map(value => value.SellingPrice);
-          let CampaignIds: number[] = this.ProductsToSellTableRows.map(value => value.CampaingId);
-          let salePaymentMethods: SalePaymentMethod[] = result.map(value => <SalePaymentMethod>{ Amount: value.Amount, DefferedPaymentCount: value.DefferedPaymentCount, PaymentMethodId: value.PaymentMethodId });
-          let ProductSellingDTO: ProductSellingDto = { ProductIdsAndPricesAndCampaignIds: { SellingPrices: SellincPrices, ProductIds: ProductIds, CampaignIds: CampaignIds }, CustomerInfoId: result[0].CustomerInfo.Id, CustomerName: result[0].CustomerInfo.CustomerName, CustomerPhone: result[0].CustomerInfo.CustomerPhone, Receipt: result[0].Receipt, PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, UserId: this.userDetails.userId, SalePaymentMethods: salePaymentMethods };
-          let changeProductDto: ChangeProductDto = { productsToChangeWith: ProductSellingDTO, purchasedProductsToChange: this.saleDetailsAndProductDtos }
+          let PaymentDetails: PaymentDetailsDto[] = result.map(paymentPopupResult => {
+            let paymentDetails: PaymentDetailsDto = {
+              PaymentId: paymentPopupResult.PaymentMethodId,
+              amount: paymentPopupResult.Amount,
+              defferedPaymentCount: paymentPopupResult.DefferedPaymentCount,
+              receipt: paymentPopupResult.Receipt
+            }
+            return paymentDetails;
+          });
+
+          let PriceListOfNewProducts: number[] = this.ProductsToSellTableRows.map(value => value.SellingPrice);
+          let newProductListToTake: NewProductListToTakeDto = { ProductIdList: ProductIdListONewProducts, ProductPrices: PriceListOfNewProducts };
+
+          let changeProductDto: ChangeProductDto = { newProductListToTake: newProductListToTake, paymentDetails: PaymentDetails, customerInfoDto: { Id: result[0].CustomerInfo.Id, CustomerName: result[0].CustomerInfo.CustomerName, CustomerPhone: result[0].CustomerInfo.CustomerPhone }, ProductIdListOfPreviouslyTakenProducts: ProductIdListOfPreviouslyTakenProducts, SaleIdOfOldProdcuts: SaleIdOfOldProdcuts, Total: this.ProductsToSellTotalPrice }
           await this.normalSatisSerice.ChangeProducts(changeProductDto).toPromise();
           purchasedProcutsGridInstance.instance.refresh();
           this.resetScreen();
@@ -233,14 +247,11 @@ export class ChangeRefundComponentComponent implements OnInit {
       }));
 
     } else {
-      let PaymentMethodIds: number[] = this.ProductsToSellTableRows.map(value => 12);
-      let ProductIds: number[] = this.ProductsToSellTableRows.map(value => value.Id);
-      let SellincPrices: number[] = this.ProductsToSellTableRows.map(value => value.SellingPrice);
-      let CampaignIds: number[] = this.ProductsToSellTableRows.map(value => value.CampaingId);
-      // let salePaymentMethods: SalePaymentMethod[] = [];
-      let salePaymentMethods: SalePaymentMethod[] = this.ProductsToSellTableRows.map(value => <SalePaymentMethod>{ Amount: 0, DefferedPaymentCount: 1, PaymentMethodId: 12 });
-      let ProductSellingDTO: ProductSellingDto = { ProductIdsAndPricesAndCampaignIds: { SellingPrices: SellincPrices, ProductIds: ProductIds, CampaignIds: CampaignIds }, CustomerInfoId: this.customerInfoId, CustomerName: '', CustomerPhone: '', Receipt: '', PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, BranchId: this.ProductsToSellTableRows[0].BranchId, UserId: this.userDetails.userId, SalePaymentMethods: salePaymentMethods };
-      let changeProductDto: ChangeProductDto = { productsToChangeWith: ProductSellingDTO, purchasedProductsToChange: this.saleDetailsAndProductDtos }
+
+      let PriceListOfNewProducts: number[] = this.ProductsToSellTableRows.map(value => value.SellingPrice);
+      let newProductListToTake: NewProductListToTakeDto = { ProductIdList: ProductIdListONewProducts, ProductPrices: PriceListOfNewProducts };
+
+      let changeProductDto: ChangeProductDto = { paymentDetails: [{ PaymentId: 12, amount: 0, defferedPaymentCount: 0, receipt: '' }], customerInfoDto: { Id: this.selectedCustomerInfoId }, SaleIdOfOldProdcuts: SaleIdOfOldProdcuts, Total: this.ProductsToSellTotalPrice, newProductListToTake: newProductListToTake, ProductIdListOfPreviouslyTakenProducts: ProductIdListOfPreviouslyTakenProducts }
       await this.normalSatisSerice.ChangeProducts(changeProductDto).toPromise();
       purchasedProcutsGridInstance.instance.refresh();
       this.resetScreen();
@@ -254,10 +265,16 @@ export class ChangeRefundComponentComponent implements OnInit {
     this.SumOfProductsToBeTakenInstead = 0;
     this.ProductsToSellTableRows = [];
     this.ProductsToSellDataSource = [];
-    this.saleDetailsAndProductDtos = [];
+    this.saleDetailsAndProductOfPreviouslyTakenProducts = [];
   }
 
   purchasedProductsDetailsGridSelectionChanged(e) {
+    e.currentSelectedRowKeys.forEach(firstLevel => {
+      firstLevel.SaleDetailsAndProducts.forEach(saleDetailsAndProducts => {
+        saleDetailsAndProducts.AddedToRefunList = false;
+      });
+
+    });
     e.component.collapseAll(-1);
     e.component.expandRow(e.currentSelectedRowKeys[0]);
     this.resetScreen();

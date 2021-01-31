@@ -89,6 +89,7 @@ export class PaymentScreenComponent implements OnInit {
   }
 
   AddToPaymentMethodsTable() {
+    this.paymentsMD = this.paymentsMD.filter(fi => fi.Id != this.PaymentMethodsTableFormGroup.controls.Payment.value.Id);
     this.AddedPayments.push({ CustomerInfo: { CustomerName: this.customerInfo.CustomerName, CustomerPhone: this.customerInfo.CustomerPhone }, Receipt: this.ReceiptCode, PaymentMethodId: this.PaymentMethodsTableFormGroup.controls.Payment.value.Id, Amount: this.PaymentMethodsTableFormGroup.controls.Amount.value, PaymentName: this.PaymentMethodsTableFormGroup.controls.Payment.value.PaymentName, DefferedPaymentCount: (this.PaymentMethodsTableFormGroup.controls.DefferedPaymentCount.value || 1) });
     this.dataSource.data = this.AddedPayments;
     this.PaymentMethodsTableFormGroup.controls.Amount.setValidators(Validators.max((this.data - this.getTotal())));

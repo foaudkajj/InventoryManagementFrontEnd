@@ -1,5 +1,5 @@
 export declare interface CustomerInfoDto {
     Id?: number;
-    CustomerName: string;
-    CustomerPhone: string;
+    CustomerName?: string;
+    CustomerPhone?: string;
 }

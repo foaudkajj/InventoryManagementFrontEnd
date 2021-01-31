@@ -35,8 +35,8 @@ export class NormalSatisService extends BaseService {
     return result$;
   }
 
-  RefundProducts(saleDetailsAndProductDtos: SaleDetailsAndProductDto[]): Observable<any> {
-    let result$ = this.post(`NormalSatis/RefundProducts`, saleDetailsAndProductDtos);
+  RefundProducts(refundProductsDto: RefundProductsDto): Observable<any> {
+    let result$ = this.post(`NormalSatis/RefundProducts`, refundProductsDto);
     return result$;
   }
 

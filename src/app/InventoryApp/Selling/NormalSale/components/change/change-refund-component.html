@@ -41,27 +41,34 @@
                     <dxi-column [caption]="'SELLING_MODULE.CHANGE.CUSTOMER_PHONE' | translate"
                         dataField="CustomerInfo.CustomerPhone">
                     </dxi-column>
-                    <dxi-column [caption]="'SELLING_MODULE.CHANGE.PAYMENT_NAME'  | translate"
-                        dataField="PaymentMethod.PaymentName">
-                    </dxi-column>
-                    <dxi-column width="auto" [caption]="'SELLING_MODULE.CHANGE.AMOUNT'| translate" dataField="Amount"
-                        format="currency">
-                        <dxo-format type="currency" precision="2"></dxo-format>
-                    </dxi-column>
-                    <dxi-column [caption]="'SELLING_MODULE.CHANGE.DEFFEREDED_PAYMENT_COUNT' | translate"
-                        dataField="DefferedPaymentCount">
-                    </dxi-column>
-                    <dxi-column [caption]="'SELLING_MODULE.CHANGE.DATE' | translate" dataType="date"
-                        dataField="Sale.Date" format="dd.MM.yyyy, HH:mm"></dxi-column>
+                    <dxi-column [caption]="'SELLING_MODULE.CHANGE.DATE' | translate" dataType="date" dataField="Date"
+                        format="dd.MM.yyyy, HH:mm"></dxi-column>
                     <dxo-paging [pageSize]="5"></dxo-paging>
                     <dxo-pager [showPageSizeSelector]="false" [showInfo]="true">
                     </dxo-pager>
 
-                    <div *dxTemplate="let salePaymentMethod of 'detail'">
+                    <div *dxTemplate="let saleDetails of 'detail'">
+                        <dx-data-grid #paymentDetailGrid [showColumnLines]="false" [showRowLines]="true"
+                            [showBorders]="true" [rowAlternationEnabled]="true"
+                            [dataSource]="saleDetails.data.SalePaymentMethods" [showBorders]="true"
+                            [allowColumnResizing]="true" [allowColumnReordering]="true" [columnAutoWidth]="true"
+                            class="mt-5">
+                            <dxo-scrolling columnRenderingMode="virtual" showScrollbar="always"></dxo-scrolling>
+                            <dxi-column [caption]="'SELLING_MODULE.CHANGE.PAYMENT_NAME'  | translate"
+                                dataField="PaymentMethod.PaymentName">
+                            </dxi-column>
+                            <dxi-column width="auto" [caption]="'SELLING_MODULE.CHANGE.AMOUNT'| translate"
+                                dataField="Amount" format="currency">
+                                <dxo-format type="currency" precision="2"></dxo-format>
+                            </dxi-column>
+                            <dxi-column [caption]="'SELLING_MODULE.CHANGE.DEFFEREDED_PAYMENT_COUNT' | translate"
+                                dataField="DefferedPaymentCount">
+                            </dxi-column>
+                        </dx-data-grid>
                         <dx-data-grid #purchasedProductsDetailsGrid [(selectedRowKeys)]="selectedRows"
                             [showColumnLines]="false" [showRowLines]="true" [showBorders]="true"
                             [rowAlternationEnabled]="true" [columnAutoWidth]="false"
-                            [dataSource]="salePaymentMethod.data.Sale.SaleDetailsAndProducts" [wordWrapEnabled]="true">
+                            [dataSource]="saleDetails.data.SaleDetailsAndProducts" [wordWrapEnabled]="true">
                             <dxi-column width="auto" cellTemplate="returnButtonTemplate"
                                 [caption]="'SELLING_MODULE.NORMAL_SALE.RETURN' | translate">
                             </dxi-column>
@@ -98,9 +105,10 @@
                                 {{data.value ? ('COMMON.FEMALE'|translate) : ('COMMON.MALE'|translate)}}
                             </div>
                             <div *dxTemplate="let row of 'returnButtonTemplate'">
-                                <button [disabled]="row.data.Operations != 0"
-                                    (click)="AddToReturn(row.data,salePaymentMethod.data)" color="success">
-                                    {{ (row.data?.AddedToRefunList ?  'SELLING_MODULE.CHANGE.REDO' : 'SELLING_MODULE.CHANGE.RETURN_OR_REFUND') | translate}}
+                                <button [disabled]="row.data.Operations != 0 && row.data.Operations != 3"
+                                    (click)="AddToReturn(row.data)" color="success">
+                                    {{ (row.data?.AddedToRefunList ? 'SELLING_MODULE.CHANGE.REDO' :
+                                    'SELLING_MODULE.CHANGE.RETURN_OR_REFUND') | translate}}
                                 </button>
                             </div>
                         </dx-data-grid>
@@ -121,7 +129,8 @@
                                 formControlName="ProductBarcode" id="ProductBarcode" matInput
                                 [placeholder]="'SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE'|translate">
                             <mat-error *ngIf="hasError('ProductBarcode', 'required')">
-                                {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName: 'SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE'|translate} }}
+                                {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:
+                                'SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE'|translate} }}
                             </mat-error>
                             <mat-error *ngIf="hasError('ProductBarcode', 'maxlength')">
                                 {{'VALIDATIONS.MAX_LENGTH' | translate:{'maxLength': 12} }}
@@ -134,14 +143,17 @@
                             <input type="number" #PriceInput formControlName="SellingPrice" id="SellingPrice" matInput
                                 placeholder="{{'SELLING_MODULE.NORMAL_SALE.SELLING_PRICE'|translate}}" min="1">
                             <mat-error *ngIf="hasError('SellingPrice', 'required')">
-                                {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName: 'SELLING_MODULE.NORMAL_SALE.SELLING_PRICE'|translate} }}
+                                {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:
+                                'SELLING_MODULE.NORMAL_SALE.SELLING_PRICE'|translate} }}
                             </mat-error>
                         </mat-form-field>
                         <span class="status h6 p-4" [ngClass]="'red-500'" *ngIf="lowProductCount">
-                            {{'SELLING_MODULE.NORMAL_SALE.REMAINING_PRODUCTS_COUNT' | translate:{'count': productView.Count} }}
+                            {{'SELLING_MODULE.NORMAL_SALE.REMAINING_PRODUCTS_COUNT' | translate:{'count':
+                            newAddedProductToTake.Count} }}
                         </span>
                         <span class="status h6 p-4 ml-8" [ngClass]="'amber-500'" *ngIf="hasCampaign">
-                            {{'SELLING_MODULE.NORMAL_SALE.CAMPAING_PRODUCT' | translate:{'CampaignName': productView.CampaignDto?.Name} }}
+                            {{'SELLING_MODULE.NORMAL_SALE.CAMPAING_PRODUCT' | translate:{'CampaignName':
+                            newAddedProductToTake.CampaignDto?.Name} }}
                         </span>
                     </div>
                     <button class="ml-8"
@@ -238,7 +250,8 @@
                             <div class="dx-field-label">{{'SELLING_MODULE.CHANGE.TOTAL' | translate}}:</div>
                             <div class="dx-field-value">
                                 {{Math.abs(SumOfProductsToReturn - SumOfProductsToBeTakenInstead)}} TL
-                                ({{SumOfProductsToReturn - SumOfProductsToBeTakenInstead > 0 ? "Verilecek" : "Alınacak" }})
+                                ({{SumOfProductsToReturn - SumOfProductsToBeTakenInstead > 0 ? "Verilecek" : "Alınacak"
+                                }})
                             </div>
                         </div>
                         <div class="dx-field">

@@ -1,12 +1,6 @@
-export class RefundProductsDto {
-    SaleId: number[];
-    ProductId: number[];
-
-    /**
-     *
-     */
-    constructor() {
-        this.SaleId = [];
-        this.ProductId = [];
-    }
+export interface RefundProductsDto {
+    SaleIdOfOldProdcuts: number;
+    ProductIdListOfPreviouslyTakenProducts: number[];
+    Total: number;
+    CustomerInfoId: number;
 }

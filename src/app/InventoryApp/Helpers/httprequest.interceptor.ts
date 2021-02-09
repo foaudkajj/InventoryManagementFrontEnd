@@ -4,13 +4,17 @@ import { Observable, throwError } from 'rxjs';
 
 
 import { UserService } from '../services/user.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SwalService } from '../services/Swal.Service';
+import { LoadPanelService } from '../services/loadpnale.service';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
-    constructor(private router: Router, private swalService: SwalService) { }
+    private _pendingRequests = 0;
+    constructor(private router: Router,
+        private swalService: SwalService,
+        private loadPnaelSerivce: LoadPanelService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -20,6 +24,12 @@ export class RequestInterceptor implements HttpInterceptor {
                 "Bearer " + sessionStorage.getItem("Authorization")
             );
         const authReq = request.clone({ headers: headers });
+        if (authReq.url.includes("/api/")) {
+            if (this._pendingRequests === 0)
+                this.loadPnaelSerivce.postLoadingChanged(true);
+            this._pendingRequests++;
+        }
+
         return next.handle(authReq).pipe(
             catchError(error => {
                 if (error instanceof HttpErrorResponse && error.status === 401) {
@@ -32,6 +42,15 @@ export class RequestInterceptor implements HttpInterceptor {
                     }
                 }
                 return throwError(error);
+            }),
+            finalize(() => {
+                if (authReq.url.includes("/api/")) {
+                    this._pendingRequests--;
+                }
+                if (this._pendingRequests === 0) {
+                    this.loadPnaelSerivce.postLoadingChanged(false);
+                }
+
             }));
 
     }

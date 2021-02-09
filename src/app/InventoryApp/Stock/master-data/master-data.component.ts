@@ -49,8 +49,8 @@ export class MasterDataComponent implements OnInit {
     this.MasterData = [{ Value: 0, ViewValue: this._translate.instant('STOCK_MODULE.MASTER_DATA.BRANCHES') },
     { Value: 1, ViewValue: this._translate.instant('STOCK_MODULE.MASTER_DATA.COLORS') },
     { Value: 2, ViewValue: this._translate.instant('STOCK_MODULE.MASTER_DATA.PAYMENT_METHODS') },
-    // { Value: 3, ViewValue: this._translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_PROPERTY') },
     { Value: 3, ViewValue: this._translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_TYPE') },
+    { Value: 4, ViewValue: this._translate.instant('STOCK_MODULE.MASTER_DATA.CAMPAIGNS') },
     ]
   }
 
@@ -78,12 +78,6 @@ export class MasterDataComponent implements OnInit {
       };
       this.Columns = [{ dataField: "PaymentName", caption: this._translate.instant('STOCK_MODULE.MASTER_DATA.PAYMENT_NAME') }, { dataField: "PaymentType", caption: this._translate.instant('STOCK_MODULE.MASTER_DATA.PAYMENT_TYPE') }];
     }
-    // else if (value == 3) {
-    //   MasterDataStoreOptions = {
-    //     loadUrl: "ProductProperty/Get", deleteUrl: "ProductProperty/Delete", deleteMethod: "POST", updateUrl: "ProductProperty/Update", updateMethod: "POST", insertUrl: "ProductProperty/Insert", Key: "Id"
-    //   };
-    //   this.Columns = [{ dataField: "Name", caption: this._translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_PROPERTY_NAME') }, { dataField: "Type", caption: this._translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_PROPERTY_TYPE') }];
-    // }
     else if (value == 3) {
       MasterDataStoreOptions = {
         loadUrl: "ProductType/Get", deleteUrl: "ProductType/Delete", deleteMethod: "POST", updateUrl: "ProductType/Update", updateMethod: "POST", insertUrl: "ProductType/Insert", Key: "Id"
@@ -94,6 +88,16 @@ export class MasterDataComponent implements OnInit {
         loadUrl: "ProductProperty/Get", deleteUrl: "ProductProperty/Delete", deleteMethod: "POST", updateUrl: "ProductProperty/Update", updateMethod: "POST", insertUrl: "ProductProperty/Insert", Key: "Id"
       };
       this.MasterDetailColumns = [{ dataField: "DataField", caption: this._translate.instant('STOCK_MODULE.MASTER_DATA.PRODUCT_PROPERTY_NAME') }];
+    } else if (value == 4) {
+
+      MasterDataStoreOptions = {
+        loadUrl: "Campaign/Get", deleteUrl: "Campaign/Delete", deleteMethod: "POST", updateUrl: "Campaign/Update", updateMethod: "POST", insertUrl: "Campaign/Insert", Key: "Id"
+      };
+      this.Columns = [{ dataField: "Name", caption: this._translate.instant('STOCK_MODULE.CAMPAIGN.NAME'), allowEditing: false },
+      { dataField: "Percent", caption: this._translate.instant('STOCK_MODULE.CAMPAIGN.PERCENT'), allowEditing: false },
+      { dataField: "StartDate", caption: this._translate.instant('STOCK_MODULE.CAMPAIGN.START_DATE'), dataType: "date" },
+      { dataField: "EndDate", caption: this._translate.instant('STOCK_MODULE.CAMPAIGN.END_DATE'), dataType: "date" },
+      { dataField: "Description", caption: this._translate.instant('STOCK_MODULE.CAMPAIGN.DESCRIPTION') }];
     }
 
 

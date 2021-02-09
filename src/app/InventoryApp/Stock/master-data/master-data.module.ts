@@ -16,7 +16,6 @@ import { PaymentMethodsService } from 'app/InventoryApp/services/payment-methods
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { InventorySharedModule } from 'app/InventoryApp/inventory-shared.module';
-import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
 import { ProductTypeService } from 'app/InventoryApp/services/product-type.service';
 import { DxTagBoxModule } from 'devextreme-angular';
 
@@ -27,14 +26,8 @@ import { DxTagBoxModule } from 'devextreme-angular';
     MasterDataRoutingModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatCheckboxModule,
-    MatTableModule,
-    MatIconModule,
-    MatPaginatorModule,
-    MatInputModule,
-    MatButtonModule,
     DxTagBoxModule
   ],
-  providers: [ColorsService, BranchesService, PaymentMethodsService, DxStoreService, ProductTypeService]
+  providers: [ColorsService, BranchesService, PaymentMethodsService, ProductTypeService]
 })
 export class MasterDataModule { }

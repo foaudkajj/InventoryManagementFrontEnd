@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ProductDto } from '../Models/ProductDto';
+import { ApplyCampaignRequestDto } from '../Models/DTOs/ApplyCampaignRequestDto';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,11 @@ export class ProductService extends BaseService {
 
   IncreaseProductCount(ProductId: number, Count: number): Observable<any> {
     let result$ = this.get(`Products/IncreaseProductCount?ProductId=${ProductId}&Count=${Count}`);
+    return result$;
+  }
+
+  ApplyCampaign(applyCampaignDto: ApplyCampaignRequestDto): Observable<any> {
+    let result$ = this.post(`Products/ApplyCampaign`, applyCampaignDto);
     return result$;
   }
 

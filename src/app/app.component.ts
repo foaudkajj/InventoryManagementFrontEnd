@@ -24,6 +24,7 @@ import { Router, NavigationStart } from '@angular/router';
 import config from 'devextreme/core/config';
 import { FuseNavigation } from '@fuse/types';
 import { LoginResponse } from './InventoryApp/Models/LoginResponse';
+import { LoadPanelService } from './InventoryApp/services/loadpnale.service';
 
 
 @Component({
@@ -33,6 +34,7 @@ import { LoginResponse } from './InventoryApp/Models/LoginResponse';
 })
 export class AppComponent implements OnInit, OnDestroy {
     fuseConfig: any;
+    isloading: boolean = false;
     navigationItems: FuseNavigation[] = (JSON.parse(localStorage.getItem('user')) as LoginResponse)?.navigationItems;
     // navigation: any;
     // stockNavigation: any;
@@ -61,8 +63,18 @@ export class AppComponent implements OnInit, OnDestroy {
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
         private _platform: Platform,
-        private router: Router
+        private router: Router,
+        private loadPanelService: LoadPanelService
     ) {
+
+        // Subscribe loadpanel service
+        this.loadPanelService.loadingChanged.subscribe(res => {
+            setTimeout(() => {
+                this.isloading = res;
+            }, 0);
+        });
+
+
         // Load messages for Devextreme
         loadMessages(trMessages);
         locale('tr');

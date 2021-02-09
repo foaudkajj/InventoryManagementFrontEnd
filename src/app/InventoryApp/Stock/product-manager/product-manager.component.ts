@@ -33,6 +33,13 @@ import { FormConf } from 'app/InventoryApp/Models/DTOs/FormConf';
 import { Column } from 'devextreme/ui/data_grid';
 import { dxFormButtonItem, dxFormEmptyItem, dxFormGroupItem, dxFormSimpleItem, dxFormTabbedItem } from 'devextreme/ui/form';
 import { LoadOptions } from 'devextreme/data/load_options';
+import dxButton from 'devextreme/ui/button';
+import { MatDialog } from '@angular/material/dialog';
+import { CampaignApplyingScreenComponent } from './components/campaignApplying/campaign-applying-screen.component';
+import { ApplyCampaignRequestDto } from 'app/InventoryApp/Models/DTOs/ApplyCampaignRequestDto';
+import { CampaignService } from 'app/InventoryApp/services/campaign-service';
+import { CampaignDto } from 'app/InventoryApp/Models/CampaignDto';
+import { ReportUrls } from 'app/InventoryApp/Enums/ReportUrls';
 
 @Component({
   selector: 'app-product-manager',
@@ -45,6 +52,7 @@ export class ProductManagerComponent implements OnInit {
   ProductForm: FormGroup;
   colorsList: Color[];
   branchesList: Branch[];
+  campaignList: CampaignDto[];
   Genders: any = [{ Value: 0, ViewValue: 'Erkek' }, { Value: 1, ViewValue: 'Kadın' }]
   displayedColumns = ['ProductName', 'ProductCode', 'ColorName', 'Gender', 'Price', 'SellingPrice', 'ProductYear', 'Size', 'BranchName', 'Count', 'ProductBarcode', 'actions'];
   dataSource: DataSource; //MatTableDataSource<ProductView> = new MatTableDataSource();
@@ -55,15 +63,18 @@ export class ProductManagerComponent implements OnInit {
   ProductGridColumns: Column[] = [];
   @ViewChild('formInstance') formInstance: DxFormComponent;
   SelectedProductType: ProductTypeDto;
+  applyCampaignBtnInstance: dxButton;
   constructor(private fb: FormBuilder,
     private colorService: ColorsService,
     private productService: ProductService,
     private branchesService: BranchesService,
+    private campaignService: CampaignService,
     public _translate: TranslateService,
     private router: Router,
     private dxStore: DxStoreService,
     private swal: SwalService,
-    private productTypeService: ProductTypeService
+    private productTypeService: ProductTypeService,
+    public dialog: MatDialog
   ) { }
 
   async ngOnInit() {
@@ -71,6 +82,7 @@ export class ProductManagerComponent implements OnInit {
     this.initLoginForm();
     await this.getColors();
     await this.getBranches();
+    await this.getCampaigns();
     this.filTable();
   }
   async initProductTypes() {
@@ -81,7 +93,6 @@ export class ProductManagerComponent implements OnInit {
     this.AddDefaultProductGridColumns();
     let storeOption: DxStoreOptions = {
       loadUrl: "Products", insertUrl: "Products", updateUrl: "Products", deleteUrl: "Products", Key: "Id",
-      onLoaded: (result) => console.log("LOadedProduct"),
       onInserted: (values: UIResponse<AddProductsDto>, key) => {
         // this.ProductForm.reset();
         if (values.IsError) {
@@ -104,6 +115,10 @@ export class ProductManagerComponent implements OnInit {
   }
   getBranches() {
     return this.branchesService.GetBranches().toPromise().then(res => this.branchesList = (res.data as Branch[]))
+  }
+
+  getCampaigns() {
+    return this.campaignService.GetCampaigns().toPromise().then(res => this.campaignList = (res.data as CampaignDto[]))
   }
   getColors() {
     return this.colorService.GetColors().toPromise().then(res => this.colorsList = (res.data as Color[]));
@@ -244,7 +259,19 @@ export class ProductManagerComponent implements OnInit {
     e.toolbarOptions.items.unshift({
       location: 'after',
       template: 'printButton',
-    });
+    },
+      {
+        location: 'after',
+        widget: 'dxButton',
+        options: {
+          onInitialized: (args) => {
+            this.applyCampaignBtnInstance = args.component;
+          },
+          text: this._translate.instant('STOCK_MODULE.PRODUCT_MANAGEMENT.APPLY_CAMPAIGN'),
+          disabled: true,
+          onClick: this.applyCampaign.bind(this)
+        }
+      });
   }
 
   async PrintButton() {
@@ -252,15 +279,9 @@ export class ProductManagerComponent implements OnInit {
 
     for (const selectedProduct of (this.productsGrid.instance.getSelectedRowsData() as ProductView[])) {
       QueryParams = QueryParams.concat(selectedProduct.ProductBarcode, ',')
-      // if (selectedProduct.Count != 0)
-      //   Array.from({ length: selectedProduct.Count }).map(m => QueryParams = QueryParams.concat(selectedProduct.ProductFullCode, ','));
-      // else
-      //   QueryParams = QueryParams.concat(selectedProduct.ProductFullCode, ',')
-
     }
 
-    let url = this.router.createUrlTree(['ReportViewer'], { queryParams: { ProductBarcode: QueryParams.substring(0, QueryParams.length - 1) } })
-    console.log(url.toString())
+    let url = this.router.createUrlTree(['ReportViewer'], { queryParams: { ReportName: `${ReportUrls.ProductTicket}?ProductBarcode=${QueryParams.substring(0, QueryParams.length - 1)}` } })
     window.open('#' + url.toString(), '_blank')
 
   }
@@ -271,8 +292,7 @@ export class ProductManagerComponent implements OnInit {
     // this.router.navigate(['ReportViewer'], {
     //   queryParams: { ProductFullCode: row.ProductFullCode }
     // });
-    let url = this.router.createUrlTree(['ReportViewer'], { queryParams: { ProductBarcode: row.ProductBarcode } })
-    console.log(url.toString())
+    let url = this.router.createUrlTree(['ReportViewer'], { queryParams: { ReportName: `${ReportUrls.ProductTicket}?ProductBarcode=${row.ProductBarcode}` } })
     window.open('#' + url.toString(), '_blank')
     // this.BarcodeObject.BarcodeValue = row.ProductFullCode;
     // console.log(row)
@@ -286,33 +306,33 @@ export class ProductManagerComponent implements OnInit {
 
   }
 
-  editRow(data) {
-    this.productsGrid.instance.editRow(data.rowIndex);
-  }
+  // editRow(data) {
+  //   this.productsGrid.instance.editRow(data.rowIndex);
+  // }
 
-  downloadAsPDF() {
-    // console.log(document.getElementById("pdfTable"))
-    return html2canvas(document.getElementById("pdfTable"), {
-      onclone: function (clonedDoc) {
-        clonedDoc.getElementById('pdfTable').style.visibility = 'visible';
-      }
-    }).then(canvas => {
-      var pdf = new jsPDF('l', 'pt', [canvas.width, canvas.height]);
-      var imgData = canvas.toDataURL("image/png", 1.0);
-      pdf.addImage(imgData, 0, 0, (canvas.width), (canvas.height));
+  // downloadAsPDF() {
+  //   // console.log(document.getElementById("pdfTable"))
+  //   return html2canvas(document.getElementById("pdfTable"), {
+  //     onclone: function (clonedDoc) {
+  //       clonedDoc.getElementById('pdfTable').style.visibility = 'visible';
+  //     }
+  //   }).then(canvas => {
+  //     var pdf = new jsPDF('l', 'pt', [canvas.width, canvas.height]);
+  //     var imgData = canvas.toDataURL("image/png", 1.0);
+  //     pdf.addImage(imgData, 0, 0, (canvas.width), (canvas.height));
 
-      var blob = new Blob([pdf.output('blob')], { type: "application/pdf" });
-      window.open(URL.createObjectURL(blob), Math.random().toString(), "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes");
-      // console.log(url)
-      // pdf.save('converteddoc.pdf');
+  //     var blob = new Blob([pdf.output('blob')], { type: "application/pdf" });
+  //     window.open(URL.createObjectURL(blob), Math.random().toString(), "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes");
+  //     // console.log(url)
+  //     // pdf.save('converteddoc.pdf');
 
-    }).finally(() => { });
-  }
+  //   }).finally(() => { });
+  // }
 
-  getGendere(gender: number) {
-    // 0 means Erkek, 1 means Kadin
-    return gender ? "Kadın" : "Erkek"
-  }
+  // getGendere(gender: number) {
+  //   // 0 means Erkek, 1 means Kadin
+  //   return gender ? "Kadın" : "Erkek"
+  // }
 
   increaseCountPopup(product: ProductView, operation: 'ADD' | 'REMOVE') {
 
@@ -348,7 +368,7 @@ export class ProductManagerComponent implements OnInit {
 
 
 
-  async ProductTypeChanged(value: ProductTypeDto) {
+  async ProductTypeChanged(value) {
     this.SelectedProductType = value;
     this.FormItems = [];
     this.ProductGridColumns = [];
@@ -368,6 +388,7 @@ export class ProductManagerComponent implements OnInit {
       this.AddDefaultProductGridColumns();
       this.productsGrid?.instance.clearFilter();
     }
+    this.productsGrid.instance.deselectAll();
 
 
   }
@@ -470,6 +491,7 @@ export class ProductManagerComponent implements OnInit {
       { dataField: "SellingPrice", caption: this._translate.instant("STOCK_MODULE.MASTER_DATA.SELLING_PRICE"), format: { type: 'currency', precision: 2 }, validationRules: [{ type: "numeric", min: 0 }, { type: "required" }], allowHeaderFiltering: false },
       { dataField: "ProductCode", caption: this._translate.instant("STOCK_MODULE.MASTER_DATA.PRODUCT_CODE"), validationRules: [{ type: "required" }], allowHeaderFiltering: false },
       { dataField: "BranchId", caption: this._translate.instant("STOCK_MODULE.MASTER_DATA.BRANCH_NAME"), validationRules: [{ type: "required" }], lookup: { dataSource: this.branchesList, displayExpr: "Name", valueExpr: "Id" } },
+      { dataField: "CampaignId", caption: this._translate.instant("STOCK_MODULE.MASTER_DATA.CAMPAIGNS"), validationRules: [{ type: "required" }], lookup: { dataSource: this.campaignList, displayExpr: "Name", valueExpr: "Id" } },
       ... this.ProductGridColumns
     ]
     this.ProductGridColumns.push({ cellTemplate: 'increaseCount', formItem: { visible: false }, allowEditing: false, allowSorting: false, allowFiltering: false });
@@ -478,6 +500,23 @@ export class ProductManagerComponent implements OnInit {
 
   propertyDisplayValue(rowData) {
     return this._translate.instant(rowData.Translate);
+  }
+
+  onProductManagerGridSelectChanged(e) {
+    this.applyCampaignBtnInstance.option("disabled", (this.selectedProducts.length == 0))
+  }
+
+  async applyCampaign() {
+    const dialogRef = this.dialog.open(CampaignApplyingScreenComponent);
+
+    await dialogRef.afterClosed().toPromise().then(async (CampaignId: number) => {
+      if (CampaignId && CampaignId != 0) {
+        let payload: ApplyCampaignRequestDto = { CampaignId: CampaignId, ProductsId: this.selectedProducts }
+        await this.productService.ApplyCampaign(payload).toPromise();
+        this.productsGrid.instance.deselectAll();
+        this.productsGrid.instance.refresh();
+      }
+    })
   }
 
 }

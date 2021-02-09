@@ -1,6 +1,8 @@
 export declare interface PaymentDetailsDto {
-    paymentName: string;
-    paymentType: boolean;
+
+    PaymentId: number;
+    paymentName?: string;
+    paymentType?: boolean;
     defferedPaymentCount: number;
     receipt: string;
     amount: number;

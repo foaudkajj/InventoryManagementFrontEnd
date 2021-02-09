@@ -12,15 +12,17 @@ import { ProductService } from 'app/InventoryApp/services/products.service';
 import { BranchesService } from 'app/InventoryApp/services/branches.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { EticketTemplateComponent } from './eticket-template/eticket-template.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
-import { DxBoxModule, DxDataGridModule, DxFormModule, DxTagBoxModule } from 'devextreme-angular';
-import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
+import { DxBoxModule, DxButtonModule, DxDataGridModule, DxFormModule, DxSelectBoxModule, DxTagBoxModule } from 'devextreme-angular';
 import { InventorySharedModule } from 'app/InventoryApp/inventory-shared.module';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { CampaignApplyingScreenComponent } from './components/campaignApplying/campaign-applying-screen.component';
+import { EticketTemplateComponent } from './components/eticket-template/eticket-template.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CampaignService } from 'app/InventoryApp/services/campaign-service';
 
 @NgModule({
-  declarations: [ProductManagerComponent, EticketTemplateComponent],
+  declarations: [ProductManagerComponent, EticketTemplateComponent, CampaignApplyingScreenComponent, CampaignApplyingScreenComponent],
   imports: [
     InventorySharedModule,
     ProductManagerRoutingModule,
@@ -36,8 +38,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
     DxDataGridModule,
     MatGridListModule,
     DxTagBoxModule,
-    DxFormModule
+    DxFormModule,
+    DxSelectBoxModule,
+    MatDialogModule,
+    DxButtonModule
   ],
-  providers: [ColorsService, ProductService, BranchesService, DxStoreService]
+  providers: [ColorsService, ProductService, BranchesService, CampaignService]
 })
 export class ProductManagerModule { }

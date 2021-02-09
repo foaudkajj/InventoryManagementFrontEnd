@@ -13,7 +13,9 @@ import { SwalService } from './Swal.Service';
 import { UIResponse } from '../Models/UIResponse';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DxStoreService {
     constructor(private swal: SwalService, private router: Router) {
     }
@@ -28,6 +30,7 @@ export class DxStoreService {
             loadParams: storeOptions.loadParams,
             updateMethod: storeOptions.updateMethod,
             deleteMethod: storeOptions.deleteMethod,
+            loadMode: storeOptions.loadMode,
             onInserted: (values: UIResponse<any>, key) => {
                 storeOptions.onInserted(values, key);
                 if (!values.IsError)

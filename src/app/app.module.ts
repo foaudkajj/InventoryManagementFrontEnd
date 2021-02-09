@@ -21,6 +21,7 @@ import { SampleModule } from 'app/main/sample/sample.module';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { RequestInterceptor } from './InventoryApp/Helpers/httprequest.interceptor';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { DxLoadPanelModule } from 'devextreme-angular';
 
 const appRoutes: Routes = [
     { path: "", redirectTo: "login", pathMatch: "full" },
@@ -74,6 +75,8 @@ const appRoutes: Routes = [
         // App modules
         LayoutModule,
         SampleModule,
+
+        DxLoadPanelModule,
 
 
         SweetAlert2Module.forRoot()

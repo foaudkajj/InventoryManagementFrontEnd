@@ -20,7 +20,7 @@ export const locale = {
 		SELLING_MODULE: {
 			NORMAL_SALE: {
 				TITLE: "Normal Sale",
-				SELLING_PRICE: "Selling price",
+				SELLING_PRICE: "Price",
 				DATE: "Date",
 				TOTAL: "Total",
 				USER_CODE: "User code",
@@ -47,6 +47,9 @@ export const locale = {
 				PRICE: "Price",
 				SEARCH_IN_SALES: "Search in sales",
 				SOLED_PRODUCTS: "Soled products",
+				SALE: "Sale",
+				RETURN: "RETURN",
+				CHANGE_RETURN: "Change",
 				SALES_SCREEN: {
 					SELECT_PAYMENT: "Select payment",
 					CASH: "Cash",
@@ -57,6 +60,31 @@ export const locale = {
 					TOTAL: "Total",
 					COMPLETE_PAYMENT: "Coplete payment"
 				}
+			},
+			RETURN: {
+				TITLE: "Return"
+			},
+			CHANGE: {
+				TITLE: "Değişim Ekranı",
+				CUSTOMER_NAME: "Müşteri İsmi",
+				CUSTOMER_PHONE: "Müşteri Tel. No",
+				PAYMENT_NAME: "Ödeme Yöntemi",
+				PAYMENT_TYPE: "Vadeli Ödeme İmkanı",
+				AMOUNT: "Tutar",
+				DEFFEREDED_PAYMENT_COUNT: "Vade Sayısı",
+				DATE: "Tarih",
+				NEW_PRODUCTS: "Yeni Alınan Ürünler",
+				CHOOSE_CUSTOMER: "Müşteri Seçiniz ..",
+				RETURN: "İade",
+				TOPLAM_OF_NEW_PRODUCTS: "Yeni Alınacak Ürün Toplam Fiyatı",
+				TOPLAM_OF_PRODUCTS_TO_RETURN: "İade Edilecek Ürün Toplam Fiyatı",
+				TOTAL: "Toplam",
+				COMPLETE: "Tamamlama",
+				REDO: "Vazgeç",
+				OPERATION: "Son İşlem",
+				RETURN_OR_REFUND: "İade veya Değişim",
+				REFUND_INFO: "İade için aşağıdaki tablodan bir müşteri seçip iadaeyi tamamla butuna tıklamakla tamamlayabilirsiniz.",
+				CHANGE_INFO: "değişim için ise, aşağıdaki tablodan bir müşteri seçildikten sonra sağdaki tablodan iade edilen ürün yerine alınacak ürünlerin barkodları okutulur."
 			}
 
 		},
@@ -86,14 +114,39 @@ export const locale = {
 				SELLING_PRICE: "Selling price",
 				EXPIRATION_DATE: "Expiration Date",
 				DESCRIPTION: "Description",
-				SAVE: "Save"
+				SAVE: "Save",
+				CAMPAIGNS: "Campaigns"
 			},
 			PRODUCT_MANAGEMENT: {
 				ADD: "Add",
 				REMOVE: "Remove",
 				PRODUCT_COUNT_ADD: "Product count add",
 				PRODUCT_COUNT_REMOVE: "Product count remove",
-				ALL: "All Products"
+				ALL: "All Products",
+				APPLY_CAMPAIGN: "KAMPANYA UYGULA",
+				APPLY: "Uygula",
+				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz"
+			},
+			CAMPAIGN: {
+				TITLE: "Kampanyalar",
+				NAME: "Kampanya İsmi",
+				PERCENT: "Discount rate",
+				START_DATE: "Başlangıç Tarihi",
+				END_DATE: "Bitiş Tarihi",
+				DESCRIPTION: "Açıklama",
+				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz"
+			},
+			PRODUCT_REPORTS: {
+				TITLE: "Reports",
+				REPORT_LIST: "Report List",
+				SHOW:"Show Report",
+				BEST_SELLING_PRODUCTS: "En Çok Satan Ürün",
+				BEST_SELLERS: "En Çok Satış Yapan Satıcılar",
+				BEST_SELLING_CATEGORIES: "En Çok Satan Kategoriler",
+				BEST_SELLING_COLORS: "En Çok Satan Renkler",
+				BEST_SELLING_TOP_TEN_SIZES: "En Çok Satan Bedenler",
+				MOST_PROFITABLE_PRODUCTS: "En Çok kârlı Ürünler",
+				LEAST_PROFITABLE_PRODUCTS: "En Az kârlı Ürünler"
 			}
 		},
 		ADMIN_MODULE: {
@@ -155,7 +208,9 @@ export const locale = {
 			ROLE_MANAGEMENT: "Role management",
 			STOCK_MODULE_PAGES: "Stok Module Pages",
 			ADMIN_MODULE_PAGES: "Admin Module pages",
-			SELLING_MODULE_PAGES: "Selling Module Pages"
+			SELLING_MODULE_PAGES: "Selling Module Pages",
+			SOLED_PRODUCTS: "Soled Products",
+			PRODUCT_REPORTS: "Product Reports"
 		},
 		AUTH: {
 			GENERAL: {

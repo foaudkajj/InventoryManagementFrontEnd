@@ -13,7 +13,7 @@ export class ConsumerInfosService extends BaseService {
     }
 
     GetConsumerInfos(): Observable<any> {
-        let result$ = this.get(`CustomerInfo`);
+        let result$ = this.get(`CustomerInfo/Get`);
         return result$;
     }
 
@@ -23,7 +23,7 @@ export class ConsumerInfosService extends BaseService {
     }
 
     AddConsumerInfos(colors: CustomerInfoDto[]): Observable<any> {
-        let result$ = this.post(`CustomerInfo`, colors);
+        let result$ = this.post(`CustomerInfo/Insert`, colors);
         return result$;
     }
 

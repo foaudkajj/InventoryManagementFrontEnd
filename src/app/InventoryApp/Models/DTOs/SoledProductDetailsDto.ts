@@ -10,4 +10,5 @@ export declare interface SoledProductDetailsDto {
     branchName: string;
     Description: string;
     ExpirationDate: Date;
+    Price: number;
 }

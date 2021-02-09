@@ -1,0 +1,13 @@
+<div class="dx-fieldset">
+    <div class="dx-field">
+        <div class="dx-field-label">{{'STOCK_MODULE.PRODUCT_MANAGEMENT.CHOOSE_CAMPAIGN' | translate}}</div>
+        <dx-select-box #campaignSelectBox [dataSource]="campaignsSelectBoxDS" [searchEnabled]="true" valueExpr="Id"
+            displayExpr="Name" [searchExpr]="['Name']">
+        </dx-select-box>
+    </div>
+    <div class="dx-field">
+        <dx-button stylingMode="contained" [text]="'STOCK_MODULE.PRODUCT_MANAGEMENT.APPLY' | translate" type="normal"
+            (onClick)="applyCampaign($event,campaignSelectBox)">
+        </dx-button>
+    </div>
+</div>

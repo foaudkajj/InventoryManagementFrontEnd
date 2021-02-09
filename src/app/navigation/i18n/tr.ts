@@ -20,7 +20,7 @@ export const locale = {
 		SELLING_MODULE: {
 			NORMAL_SALE: {
 				TITLE: "Normal Satış",
-				SELLING_PRICE: "Satış Fiyatı",
+				SELLING_PRICE: "Fiyat",
 				DATE: "Tarih",
 				TOTAL: "Toplam",
 				USER_CODE: "Satıcı Kodu",
@@ -47,7 +47,11 @@ export const locale = {
 				PRICE: "Fiyat",
 				SEARCH_IN_SALES: "Satılanlar Ürünlerde Ara",
 				SOLED_PRODUCTS: "Satılan Ürünler",
-				REMAINING_PRODUCTS_COUNT: "Bu üründen stokta sadece {{count}} tane kalmıştır.",
+				REMAINING_PRODUCTS_COUNT: "Bu üründen stokta sadece {{count}} adet kalmıştır.",
+				CAMPAING_PRODUCT: "Bu ürün {{CampaignName}} kapsamında",
+				SALE: "Satış",
+				RETURN: "İade",
+				CHANGE_RETURN: "Değişim \ İade",
 				SALES_SCREEN: {
 					SELECT_PAYMENT: "Ödeme Seçiniz",
 					CASH: "Nakit",
@@ -58,6 +62,31 @@ export const locale = {
 					TOTAL: "Toplam",
 					COMPLETE_PAYMENT: "Ödemeyi Tamamla"
 				}
+			},
+			RETURN: {
+				TITLE: "İade Ekranı"
+			},
+			CHANGE: {
+				TITLE: "Değişim Ekranı",
+				CUSTOMER_NAME: "Müşteri İsmi",
+				CUSTOMER_PHONE: "Müşteri Tel. No",
+				PAYMENT_NAME: "Ödeme Yöntemi",
+				PAYMENT_TYPE: "Vadeli Ödeme İmkanı",
+				AMOUNT: "Tutar",
+				DEFFEREDED_PAYMENT_COUNT: "Vade Sayısı",
+				DATE: "Tarih",
+				NEW_PRODUCTS: "Yeni Alınan Ürünler",
+				CHOOSE_CUSTOMER: "Müşteri Seçiniz ..",
+				RETURN: "İade",
+				TOPLAM_OF_NEW_PRODUCTS: "Yeni Alınacak Ürün Toplam Fiyatı",
+				TOPLAM_OF_PRODUCTS_TO_RETURN: "İade Edilecek Ürün Toplam Fiyatı",
+				TOTAL: "Toplam",
+				COMPLETE: "Tamamlama",
+				REDO: "Vazgeç",
+				OPERATION: "Son İşlem",
+				RETURN_OR_REFUND: "İade/Değişim",
+				REFUND_INFO: "İade için aşağıdaki tablodan bir müşteri seçip sonra bir ürün seçilir. İadaeyi gerçekleştirmek için tamamla butuna tıklamakla yeterlidir.",
+				CHANGE_INFO: "Değişim için, aşağıdaki tablodan bir müşteri seçildikten sonra sağdaki tablodan alınacak ürünlerin barkodları okutulur."
 			}
 
 		},
@@ -70,7 +99,7 @@ export const locale = {
 				COLORS_SHORTCODES: "Renk Kısaltması",
 				BRANCH_NAME: "Şube Adı",
 				BRANCH_ADRES: "Adres",
-				PAYMENT_NAME: "Ödeme İsmi",
+				PAYMENT_NAME: "Ödeme Yöntemi",
 				PAYMENT_TYPE: "Vadeli Ödeme İmkanı",
 				ADD: "Ekle",
 				FILL: "Doldur",
@@ -92,14 +121,39 @@ export const locale = {
 				PRODUCT_TYPE_NAME: "Üürn Çeişiti İsmi",
 				EXPIRATION_DATE: "Son Kullanma Tarihi",
 				DESCRIPTION: "Açıklama",
-				SAVE: "Kaydet"
+				SAVE: "Kaydet",
+				CAMPAIGNS: "Kampanyalar"
 			},
 			PRODUCT_MANAGEMENT: {
 				ADD: "Arttır",
 				REMOVE: "Eksilt",
 				PRODUCT_COUNT_ADD: "Stok Adeti Arttırma",
 				PRODUCT_COUNT_REMOVE: "Stok Adeti Eksilt",
-				ALL: "Tüm Ürünler"
+				ALL: "Tüm Ürünler",
+				APPLY_CAMPAIGN: "KAMPANYA UYGULA",
+				APPLY: "Uygula",
+				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz"
+			},
+			CAMPAIGN: {
+				TITLE: "Kampanyalar",
+				NAME: "Kampanya İsmi",
+				PERCENT: "İndirim Oranı",
+				START_DATE: "Başlangıç Tarihi",
+				END_DATE: "Bitiş Tarihi",
+				DESCRIPTION: "Açıklama",
+				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz"
+			},
+			PRODUCT_REPORTS: {
+				TITLE: "Raporlar",
+				REPORT_LIST: "Rapor Listesi",
+				SHOW: "Raporu Göster",
+				BEST_SELLING_PRODUCTS: "En Çok Satan Ürün",
+				BEST_SELLERS: "En Çok Satış Yapan Satıcılar",
+				BEST_SELLING_CATEGORIES: "En Çok Satan Kategoriler",
+				BEST_SELLING_COLORS: "En Çok Satan Renkler",
+				BEST_SELLING_TOP_TEN_SIZES: "En Çok Satan Bedenler",
+				MOST_PROFITABLE_PRODUCTS: "En Çok kârlı Ürünler",
+				LEAST_PROFITABLE_PRODUCTS: "En Az kârlı Ürünler"
 			}
 		},
 		ADMIN_MODULE: {
@@ -161,7 +215,9 @@ export const locale = {
 			ROLE_MANAGEMENT: "Rol Yönetimi",
 			STOCK_MODULE_PAGES: "Stok Modulü Sayfaları",
 			ADMIN_MODULE_PAGES: "Admin Modulü Sayfaları",
-			SELLING_MODULE_PAGES: "Satış Modulü Sayfaları"
+			SELLING_MODULE_PAGES: "Satış Modulü Sayfaları",
+			SOLED_PRODUCTS: "Satılan Ürünler",
+			PRODUCT_REPORTS: "Ürün Raporları"
 		},
 		AUTH: {
 			GENERAL: {

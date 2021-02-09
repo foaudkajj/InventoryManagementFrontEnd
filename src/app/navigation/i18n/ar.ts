@@ -20,7 +20,7 @@ export const locale = {
 		SELLING_MODULE: {
 			NORMAL_SALE: {
 				TITLE: "البيع العادي",
-				SELLING_PRICE: "سعر المبيع",
+				SELLING_PRICE: "السعر",
 				DATE: "تاريخ",
 				TOTAL: "الاجمالي",
 				USER_CODE: "كود البائع",
@@ -49,6 +49,10 @@ export const locale = {
 				SEARCH_IN_SALES: "ابحث في المبيعات",
 				SOLED_PRODUCTS: "المنتجات المباعة",
 				REMAINING_PRODUCTS_COUNT: "بقي {{count}} قطع من هذا المنتج في المخزن.",
+				SALE: "بيع",
+				RETURN: "إعادة",
+				CHANGE_RETURN: "إعادة/تبديل",
+				CAMPAING_PRODUCT: "يوجد تنزيلات على هذا المنتج - {{CampaignName}}",
 				SALES_SCREEN: {
 					SELECT_PAYMENT: "اختر طريقة الدفع",
 					CASH: "دفع نقدي",
@@ -59,6 +63,31 @@ export const locale = {
 					TOTAL: "المجموع",
 					COMPLETE_PAYMENT: "أتمم عملية الدفع"
 				}
+			},
+			RETURN: {
+				TITLE: "الإعادة"
+			},
+			CHANGE: {
+				TITLE: "Değişim Ekranı",
+				CUSTOMER_NAME: "Müşteri İsmi",
+				CUSTOMER_PHONE: "Müşteri Tel. No",
+				PAYMENT_NAME: "Ödeme Yöntemi",
+				PAYMENT_TYPE: "Vadeli Ödeme İmkanı",
+				AMOUNT: "Tutar",
+				DEFFEREDED_PAYMENT_COUNT: "Vade Sayısı",
+				DATE: "Tarih",
+				NEW_PRODUCTS: "Yeni Alınan Ürünler",
+				CHOOSE_CUSTOMER: "Müşteri Seçiniz ..",
+				RETURN: "İade",
+				TOPLAM_OF_NEW_PRODUCTS: "Yeni Alınacak Ürün Toplam Fiyatı",
+				TOPLAM_OF_PRODUCTS_TO_RETURN: "İade Edilecek Ürün Toplam Fiyatı",
+				TOTAL: "Toplam",
+				COMPLETE: "Tamamlama",
+				REDO: "Vazgeç",
+				OPERATION: "Son İşlem",
+				RETURN_OR_REFUND: "İade veya Değişim",
+				REFUND_INFO: "İade için aşağıdaki tablodan bir müşteri seçip iadaeyi tamamla butuna tıklamakla tamamlayabilirsiniz.",
+				CHANGE_INFO: "değişim için ise, aşağıdaki tablodan bir müşteri seçildikten sonra sağdaki tablodan iade edilen ürün yerine alınacak ürünlerin barkodları okutulur."
 			}
 
 		},
@@ -93,14 +122,40 @@ export const locale = {
 				PRODUCT_TYPE_NAME: "اسم نوع المنتج",
 				EXPIRATION_DATE: "تاريخ انتهاء الصلاحية",
 				DESCRIPTION: "ملاحظة",
-				SAVE: "احفظ"
+				SAVE: "احفظ",
+				CAMPAIGNS: "العروض",
+
 			},
 			PRODUCT_MANAGEMENT: {
 				ADD: "زيادة",
 				REMOVE: "إنقاص",
 				PRODUCT_COUNT_ADD: "زيادة عدة المنتجات",
 				PRODUCT_COUNT_REMOVE: "إنقاص عدد المنتجات",
-				ALL: "جميع المتجات"
+				ALL: "جميع المتجات",
+				APPLY_CAMPAIGN: "KAMPANYA UYGULA",
+				APPLY: "Uygula",
+				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz"
+			},
+			CAMPAIGN: {
+				TITLE: "Kampanyalar",
+				NAME: "Kampanya İsmi",
+				PERCENT: "نسبة الخصم",
+				START_DATE: "Başlangıç Tarihi",
+				END_DATE: "Bitiş Tarihi",
+				DESCRIPTION: "Açıklama",
+				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz"
+			},
+			PRODUCT_REPORTS: {
+				TITLE: "التقارير",
+				REPORT_LIST: "قائمة التقاير",
+				SHOW: "أظهر التقرير",
+				BEST_SELLING_PRODUCTS: "En Çok Satan Ürün",
+				BEST_SELLERS: "En Çok Satış Yapan Satıcılar",
+				BEST_SELLING_CATEGORIES: "En Çok Satan Kategoriler",
+				BEST_SELLING_COLORS: "En Çok Satan Renkler",
+				BEST_SELLING_TOP_TEN_SIZES: "En Çok Satan Bedenler",
+				MOST_PROFITABLE_PRODUCTS: "En Çok kârlı Ürünler",
+				LEAST_PROFITABLE_PRODUCTS: "En Az kârlı Ürünler"
 			}
 		},
 		ADMIN_MODULE: {
@@ -160,7 +215,9 @@ export const locale = {
 			ROLE_MANAGEMENT: "إدارة وصول المستخدمين",
 			STOCK_MODULE_PAGES: "Stok Modulü Sayfaları",
 			ADMIN_MODULE_PAGES: "Admin Modulü Sayfaları",
-			SELLING_MODULE_PAGES: "Satış Modulü Sayfaları"
+			SELLING_MODULE_PAGES: "Satış Modulü Sayfaları",
+			SOLED_PRODUCTS: "المبيعات",
+			PRODUCT_REPORTS: "تقارير المنتجات"
 		},
 		AUTH: {
 			GENERAL: {

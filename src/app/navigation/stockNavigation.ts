@@ -30,5 +30,12 @@ export const stockNavigation: FuseNavigation[] = [
         translate: 'NAV.MASTERDATA',
         type: 'item',
         url: '/stock/masterdata'
+    },
+    {
+        key: 'campaign',
+        title: 'Kampanya',
+        translate: 'NAV.CAMPAIGN',
+        type: 'item',
+        url: '/stock/campaign'
     }
 ];

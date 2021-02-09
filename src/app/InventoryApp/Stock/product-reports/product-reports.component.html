@@ -1,0 +1,48 @@
+<div id="maidDefenetion" class="page-layout carded fullwidth">
+
+    <!-- TOP BACKGROUND -->
+    <!-- <div class="top-bg accent"></div> -->
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- CONTENT HEADER -->
+        <!-- <div class="header accent p-24" fxLayout="row" fxLayoutAlign="start center">
+            <h2 class="m-0">Full width with content scroll</h2>
+        </div> -->
+        <!-- / CONTENT HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT TOOLBAR -->
+            <div class="toolbar primary px-24 py-8">
+                <span>{{ _translate.instant('STOCK_MODULE.PRODUCT_REPORTS.TITLE')}}</span>
+            </div>
+            <!-- / CONTENT TOOLBAR -->
+
+            <!-- CONTENT -->
+            <div class="p-24">
+
+                <mat-form-field class="ml-3 width-10">
+                    <mat-select placeholder="{{ _translate.instant('STOCK_MODULE.PRODUCT_REPORTS.REPORT_LIST')}}"
+                        (selectionChange)="ReportSelectBoxChanged($event.value)" autocomplete="off"
+                        [(value)]="selectedReport">
+                        <mat-option *ngFor="let report of ReportList" [value]="report.Value">
+                            {{ report.Translate | translate }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button class="ml-8" mat-stroked-button (click)="ShowReport()" [disabled]="selectedReport == ''"
+                    color="accent">{{_translate.instant('STOCK_MODULE.PRODUCT_REPORTS.SHOW')}}</button>
+
+            </div>
+
+            <!-- <div class="example-container mat-elevation-z8">
+
+
+            </div> -->
+        </div>
+    </div>
+</div>

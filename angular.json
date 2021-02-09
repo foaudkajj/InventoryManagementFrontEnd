@@ -34,7 +34,8 @@
               "node_modules/@devexpress/analytics-core/dist/css/dx-analytics.light.css",
               "node_modules/@devexpress/analytics-core/dist/css/dx-analytics.common.css",
               "node_modules/devexpress-reporting/dist/css/dx-webdocumentviewer.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
             "scripts": [],
             "showCircularDependencies": false

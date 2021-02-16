@@ -187,6 +187,11 @@
                         dataField="ProductName"></dxi-column>
                     <dxi-column width="auto" [caption]="'SELLING_MODULE.NORMAL_SALE.PRODUCT_BARCODE'| translate"
                         dataField="ProductBarcode"></dxi-column>
+                    <dxi-column width="auto" [caption]="'SELLING_MODULE.CHANGE.OPERATION' | translate"
+                        dataField="Operations">
+                        <dxo-lookup [dataSource]="Operations" displayExpr="Value" valueExpr="Id">
+                        </dxo-lookup>
+                    </dxi-column>
                     <dxi-column width="auto" [caption]="'SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE'| translate"
                         dataField="ProductCode"></dxi-column>
                     <dxi-column width="auto" [caption]="'SELLING_MODULE.NORMAL_SALE.COLOR_NAME'| translate"

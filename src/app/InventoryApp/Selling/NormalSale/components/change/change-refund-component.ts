@@ -18,11 +18,13 @@ import { UIResponse } from 'app/InventoryApp/Models/UIResponse';
 import { PaymentScreenComponent } from 'app/InventoryApp/Selling/PaymentScreen/payment-screen.component';
 import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
 import { NormalSatisService } from 'app/InventoryApp/services/normal-satis.service';
+import { SwalService } from 'app/InventoryApp/services/Swal.Service';
 import { DxDataGridComponent } from 'devextreme-angular';
 import { DxoGridComponent } from 'devextreme-angular/ui/nested';
 import CustomStore from 'devextreme/data/custom_store';
 import DataSource from 'devextreme/data/data_source';
 import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-change-component',
@@ -60,7 +62,8 @@ export class ChangeRefundComponentComponent implements OnInit {
     private dxStore: DxStoreService,
     private normalSatisSerice: NormalSatisService,
     private fb: FormBuilder,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private swal: SwalService) { }
 
   ngOnInit(): void {
     this.initlizeCustomersSelectBox();
@@ -209,7 +212,7 @@ export class ChangeRefundComponentComponent implements OnInit {
     let SaleIdOfOldProdcuts = this.saleDetailsAndProductOfPreviouslyTakenProducts[0].SaleId;
     if (this.ProductsToSellDataSource.length == 0) {
       let refundProductsDto: RefundProductsDto = { CustomerInfoId: this.selectedCustomerInfoId, Total: this.ProductsToSellTotalPrice, ProductIdListOfPreviouslyTakenProducts: ProductIdListOfPreviouslyTakenProducts, SaleIdOfOldProdcuts: SaleIdOfOldProdcuts }
-      await this.normalSatisSerice.RefundProducts(refundProductsDto).toPromise();
+      await this.normalSatisSerice.RefundProducts(refundProductsDto).pipe(tap(t => this.swal.showSuccessMessage())).toPromise();
       purchasedProcutsGridInstance.instance.refresh();
       this.resetScreen();
 
@@ -239,7 +242,7 @@ export class ChangeRefundComponentComponent implements OnInit {
           let newProductListToTake: NewProductListToTakeDto = { ProductIdList: ProductIdListONewProducts, ProductPrices: PriceListOfNewProducts };
 
           let changeProductDto: ChangeProductDto = { newProductListToTake: newProductListToTake, paymentDetails: PaymentDetails, customerInfoDto: { Id: result[0].CustomerInfo.Id, CustomerName: result[0].CustomerInfo.CustomerName, CustomerPhone: result[0].CustomerInfo.CustomerPhone }, ProductIdListOfPreviouslyTakenProducts: ProductIdListOfPreviouslyTakenProducts, SaleIdOfOldProdcuts: SaleIdOfOldProdcuts, Total: this.ProductsToSellTotalPrice }
-          await this.normalSatisSerice.ChangeProducts(changeProductDto).toPromise();
+          await this.normalSatisSerice.ChangeProducts(changeProductDto).pipe(tap(t => this.swal.showSuccessMessage())).toPromise();
           purchasedProcutsGridInstance.instance.refresh();
           this.resetScreen();
         }
@@ -252,7 +255,7 @@ export class ChangeRefundComponentComponent implements OnInit {
       let newProductListToTake: NewProductListToTakeDto = { ProductIdList: ProductIdListONewProducts, ProductPrices: PriceListOfNewProducts };
 
       let changeProductDto: ChangeProductDto = { paymentDetails: [{ PaymentId: 12, amount: 0, defferedPaymentCount: 0, receipt: '' }], customerInfoDto: { Id: this.selectedCustomerInfoId }, SaleIdOfOldProdcuts: SaleIdOfOldProdcuts, Total: this.ProductsToSellTotalPrice, newProductListToTake: newProductListToTake, ProductIdListOfPreviouslyTakenProducts: ProductIdListOfPreviouslyTakenProducts }
-      await this.normalSatisSerice.ChangeProducts(changeProductDto).toPromise();
+      await this.normalSatisSerice.ChangeProducts(changeProductDto).pipe(tap(t => this.swal.showSuccessMessage())).toPromise();
       purchasedProcutsGridInstance.instance.refresh();
       this.resetScreen();
     }

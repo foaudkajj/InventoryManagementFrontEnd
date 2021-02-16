@@ -18,6 +18,7 @@ import { SwalService } from 'app/InventoryApp/services/Swal.Service';
 import { DxDataGridComponent, DxLookupComponent } from 'devextreme-angular';
 import CustomStore from 'devextreme/data/custom_store';
 import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sales-component',
@@ -62,7 +63,7 @@ export class SalesComponentComponent implements OnInit {
   userDetails = JSON.parse(localStorage.getItem('user')) as LoginResponse;
   UserList = [{ Id: 1, Name: "Orhan" }, { Id: 1015, Name: "Uğur" }]
   selectedUserId: number;
-
+  Operations: any = [{ Id: 0, Value: 'Satıldı' }, { Id: 1, Value: 'İade Edildi' }, { Id: 2, Value: 'Başka bir ürünle değiştirild' }, , { Id: 3, Value: 'Değiştirlen bir ürünün yerine bu alındı' }]
   constructor(public _translate: TranslateService,
     private normalSatisSerice: NormalSatisService,
     private swal: SwalService,
@@ -157,7 +158,7 @@ export class SalesComponentComponent implements OnInit {
         let salePaymentMethods: SalePaymentMethod[] = result.map(value => <SalePaymentMethod>{ Amount: value.Amount, DefferedPaymentCount: value.DefferedPaymentCount, PaymentMethodId: value.PaymentMethodId });
         //UserId: this.userDetails.userId,
         let ProductSellingDto: ProductSellingDto = { ProductIdsAndPricesAndCampaignIds: { SellingPrices: SellincPrices, ProductIds: ProductIds, CampaignIds: CampaignIds }, CustomerInfoId: result[0].CustomerInfo.Id, CustomerName: result[0].CustomerInfo.CustomerName, CustomerPhone: result[0].CustomerInfo.CustomerPhone, Receipt: result[0].Receipt, PaymentMethodIds: PaymentMethodIds, Total: this.ProductsToSellTotalPrice, UserId: this.selectedUserId, BranchId: this.ProductsToSellTableRows[0].BranchId, SalePaymentMethods: salePaymentMethods };
-        await this.normalSatisSerice.SellProducts(ProductSellingDto).toPromise();
+        await this.normalSatisSerice.SellProducts(ProductSellingDto).pipe(tap(t => this.swal.showSuccessMessage())).toPromise();
         this.ProductsToSellTableRows = [];
         this.soledProductsGrid.instance.refresh();
       }

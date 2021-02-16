@@ -249,7 +249,8 @@
                         <div class="dx-field">
                             <div class="dx-field-label">{{'SELLING_MODULE.CHANGE.TOTAL' | translate}}:</div>
                             <div class="dx-field-value">
-                                {{Math.abs(SumOfProductsToReturn - SumOfProductsToBeTakenInstead)}} TL
+                                {{Math.round(Math.abs(SumOfProductsToReturn - SumOfProductsToBeTakenInstead) * 100 /
+                                100)}} TL
                                 ({{SumOfProductsToReturn - SumOfProductsToBeTakenInstead > 0 ? "Verilecek" : "Alınacak"
                                 }})
                             </div>

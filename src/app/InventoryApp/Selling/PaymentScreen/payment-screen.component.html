@@ -93,7 +93,7 @@
             <mat-form-field class=" ml-8">
                 <input [disabled]="customerInfoSelectBox.instance.option('value')"
                     [(ngModel)]="customerInfo.CustomerPhone" matInput style="font-size: 20px;" type="text"
-                    placeholder="Tel">
+                    [textMask]="{mask: mask}" placeholder="Tel">
             </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>

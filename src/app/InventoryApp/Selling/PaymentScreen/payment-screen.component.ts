@@ -19,7 +19,7 @@ import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
   styleUrls: ['./payment-screen.component.scss']
 })
 export class PaymentScreenComponent implements OnInit {
-
+mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
   selectedPayment: PaymentMethod;
   IsDefferedPayment: boolean = false;
   // Payments from Master Data

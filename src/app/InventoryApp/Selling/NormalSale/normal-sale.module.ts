@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-
+import { TextMaskModule } from 'angular2-text-mask';
 import { NormalSaleRoutingModule } from './normal-sale-routing.module';
 import { NormalSaleComponent } from './normal-sale.component';
 import { DxBoxModule, DxDataGridModule, DxDateBoxModule, DxFormModule, DxLookupModule, DxNumberBoxModule, DxSelectBoxModule, DxTabsModule, DxTextBoxModule } from 'devextreme-angular';
@@ -46,7 +46,8 @@ import { MatDividerModule } from '@angular/material/divider';
     DxBoxModule,
     DxTextBoxModule,
     MatDividerModule,
-    DxNumberBoxModule
+    DxNumberBoxModule,
+    TextMaskModule
   ],
   entryComponents: [PaymentScreenComponent],
   providers: [PaymentMethodsService, ConsumerInfosService]

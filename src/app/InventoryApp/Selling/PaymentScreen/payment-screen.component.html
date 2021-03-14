@@ -28,7 +28,7 @@
         </form>
     </div>
     <div fxflex="20" fxlayoutalign="center center">
-        <h1 [ngStyle]="{'color' : (Total - TotalPaied) > 0 ? 'red' : 'green'}">{{Total - TotalPaied}}</h1>
+        <h1 [ngStyle]="{'color' : (Total - TotalPaied) > 0 ? 'red' : 'green'}">{{Total - TotalPaied}} TL</h1>
     </div>
 </div>
 <div class="row">
@@ -98,7 +98,7 @@
         </mat-grid-tile>
         <mat-grid-tile>
             <button
-                [disabled]="dataSource.data.length == 0 || (!customerInfoSelectBox.instance.option('value') && (!customerInfo.CustomerName || !customerInfo.CustomerPhone))"
+                [disabled]="(Total - TotalPaied) >= 1 || dataSource.data.length == 0 || (!customerInfoSelectBox.instance.option('value') && (!customerInfo.CustomerName || !customerInfo.CustomerPhone))"
                 class=" ml-8" mat-raised-button color="accent"
                 (click)="ClosePopup()">{{translate.instant('SELLING_MODULE.NORMAL_SALE.SALES_SCREEN.COMPLETE_PAYMENT')}}</button>
         </mat-grid-tile>

@@ -38,7 +38,8 @@
 
             <div class="example-container mat-elevation-z8">
 
-                <dx-data-grid #MasterDataGrid id="gridContainer" [dataSource]="MasterDataStore" [showBorders]="true"
+                <dx-data-grid #MasterDataGrid id="gridContainer" (onEditorPreparing)='gridEditorPreparing($event)'
+                    [dataSource]="MasterDataStore" [showBorders]="true"
                     [masterDetail]="{ enabled: SelectedMDNumber == 3, template: 'detail' }" [columns]="Columns">
                     <dxo-editing mode="form" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
                     </dxo-editing>

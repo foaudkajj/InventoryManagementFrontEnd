@@ -93,8 +93,8 @@ export class MasterDataComponent implements OnInit {
       MasterDataStoreOptions = {
         loadUrl: "Campaign/Get", deleteUrl: "Campaign/Delete", deleteMethod: "POST", updateUrl: "Campaign/Update", updateMethod: "POST", insertUrl: "Campaign/Insert", Key: "Id"
       };
-      this.Columns = [{ dataField: "Name", caption: this._translate.instant('STOCK_MODULE.CAMPAIGN.NAME'), allowEditing: false },
-      { dataField: "Percent", caption: this._translate.instant('STOCK_MODULE.CAMPAIGN.PERCENT'), allowEditing: false },
+      this.Columns = [{ dataField: "Name", caption: this._translate.instant('STOCK_MODULE.CAMPAIGN.NAME') },
+      { dataField: "Percent", caption: this._translate.instant('STOCK_MODULE.CAMPAIGN.PERCENT') },
       { dataField: "StartDate", caption: this._translate.instant('STOCK_MODULE.CAMPAIGN.START_DATE'), dataType: "date" },
       { dataField: "EndDate", caption: this._translate.instant('STOCK_MODULE.CAMPAIGN.END_DATE'), dataType: "date" },
       { dataField: "Description", caption: this._translate.instant('STOCK_MODULE.CAMPAIGN.DESCRIPTION') }];
@@ -138,6 +138,14 @@ export class MasterDataComponent implements OnInit {
   tagBoxShowValue(row) {
     if (this.SelectedMDNumber == 3) {
       return row && this._translate.instant(row.Translate)
+    }
+  }
+
+  gridEditorPreparing(e) {
+    if (this.SelectedMDNumber == 4) {
+      if (e.parentType === "dataRow" && (e.dataField === "Name" || e.dataField === "Percent") && !e.row.isNewRow) {
+        e.editorOptions.disabled = true;
+      }
     }
   }
 

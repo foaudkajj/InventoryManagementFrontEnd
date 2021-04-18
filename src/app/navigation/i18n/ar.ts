@@ -134,7 +134,8 @@ export const locale = {
 				ALL: "جميع المتجات",
 				APPLY_CAMPAIGN: "KAMPANYA UYGULA",
 				APPLY: "Uygula",
-				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz"
+				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz",
+				SHOW_OUT_OF_STOCK: 'أظهر المنتجات المنتهية'
 			},
 			CAMPAIGN: {
 				TITLE: "Kampanyalar",

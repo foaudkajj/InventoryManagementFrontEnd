@@ -17,13 +17,12 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { ConsumerInfosService } from 'app/InventoryApp/services/ConsumerInfo.service';
 import { InventorySharedModule } from 'app/InventoryApp/inventory-shared.module';
 import { SalesComponentComponent } from './components/sales/sales-component.component';
-import { ReturnComponentComponent } from './components/return/return-component.component';
 import { ChangeRefundComponentComponent } from './components/change/change-refund-component';
 import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
-  declarations: [NormalSaleComponent, PaymentScreenComponent, SalesComponentComponent, ReturnComponentComponent, ChangeRefundComponentComponent],
+  declarations: [NormalSaleComponent, PaymentScreenComponent, SalesComponentComponent, ChangeRefundComponentComponent],
   imports: [
     InventorySharedModule,
     NormalSaleRoutingModule,

@@ -12,17 +12,16 @@ import { ProductService } from 'app/InventoryApp/services/products.service';
 import { BranchesService } from 'app/InventoryApp/services/branches.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { NgxBarcodeModule } from 'ngx-barcode';
-import { DxBoxModule, DxButtonModule, DxDataGridModule, DxFormModule, DxSelectBoxModule, DxTagBoxModule } from 'devextreme-angular';
+// import { NgxBarcodeModule } from 'ngx-barcode';
+import { DxBoxModule, DxButtonModule, DxDataGridModule, DxFormModule, DxSelectBoxModule, DxTagBoxModule, DxTextAreaModule } from 'devextreme-angular';
 import { InventorySharedModule } from 'app/InventoryApp/inventory-shared.module';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CampaignApplyingScreenComponent } from './components/campaignApplying/campaign-applying-screen.component';
-import { EticketTemplateComponent } from './components/eticket-template/eticket-template.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CampaignService } from 'app/InventoryApp/services/campaign-service';
 
 @NgModule({
-  declarations: [ProductManagerComponent, EticketTemplateComponent, CampaignApplyingScreenComponent, CampaignApplyingScreenComponent],
+  declarations: [ProductManagerComponent, CampaignApplyingScreenComponent, CampaignApplyingScreenComponent],
   imports: [
     InventorySharedModule,
     ProductManagerRoutingModule,
@@ -33,7 +32,7 @@ import { CampaignService } from 'app/InventoryApp/services/campaign-service';
     MatPaginatorModule,
     MatInputModule,
     MatButtonModule,
-    NgxBarcodeModule,
+    // NgxBarcodeModule,
     DxBoxModule,
     DxDataGridModule,
     MatGridListModule,
@@ -41,7 +40,8 @@ import { CampaignService } from 'app/InventoryApp/services/campaign-service';
     DxFormModule,
     DxSelectBoxModule,
     MatDialogModule,
-    DxButtonModule
+    DxButtonModule,
+    DxTextAreaModule
   ],
   providers: [ColorsService, ProductService, BranchesService, CampaignService]
 })

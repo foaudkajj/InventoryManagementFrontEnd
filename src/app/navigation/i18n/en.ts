@@ -125,7 +125,8 @@ export const locale = {
 				ALL: "All Products",
 				APPLY_CAMPAIGN: "KAMPANYA UYGULA",
 				APPLY: "Uygula",
-				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz"
+				CHOOSE_CAMPAIGN: "Bir Kampanya Seçiniz",
+				SHOW_OUT_OF_STOCK: "Show Out Of Stock Products"
 			},
 			CAMPAIGN: {
 				TITLE: "Kampanyalar",
@@ -139,7 +140,7 @@ export const locale = {
 			PRODUCT_REPORTS: {
 				TITLE: "Reports",
 				REPORT_LIST: "Report List",
-				SHOW:"Show Report",
+				SHOW: "Show Report",
 				BEST_SELLING_PRODUCTS: "En Çok Satan Ürün",
 				BEST_SELLERS: "En Çok Satış Yapan Satıcılar",
 				BEST_SELLING_CATEGORIES: "En Çok Satan Kategoriler",

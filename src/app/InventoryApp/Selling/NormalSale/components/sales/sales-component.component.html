@@ -151,16 +151,6 @@
                 dataType="string"></dxi-column>
             <dxo-group-panel [visible]="false"></dxo-group-panel>
             <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
-            <!-- <div class="option" *dxTemplate="let data of 'calendar'">
-                <dx-date-box width="100%" [(value)]="RangeStartDate"
-                    placeholder="{{_translate.instant('COMMON.START_DATE')}}">
-                </dx-date-box>
-            </div>
-            <div class="option" *dxTemplate="let data of 'calendar2'">
-                <dx-date-box width="100%" [(value)]="RangeEndDate"
-                    placeholder="{{_translate.instant('COMMON.END_DATE')}}">
-                </dx-date-box>
-            </div> -->
             <dxo-summary>
                 <dxi-total-item column="Total" summaryType="sum" [valueFormat]="{type: 'currency', precision:'2'}">
                 </dxi-total-item>

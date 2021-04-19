@@ -78,7 +78,8 @@
                 <dxo-drop-down-options [showTitle]="false"></dxo-drop-down-options>
             </dx-lookup> -->
             <dx-select-box #customerInfoSelectBox [value]='customerInfoId' [dataSource]="customersSelectBoxDatasource"
-                displayExpr="CustomerName" [searchMode]="'contains'" [searchExpr]="'CustomerName'" [searchTimeout]="200"
+                displayExpr="CustomerName" [searchMode]="'contains'"
+                [searchExpr]="['CustomerName','AccentInsensitiveCustomerName']" [searchTimeout]="200"
                 (onValueChanged)="customerInfoValueChanged($event)" [minSearchLength]="0" [searchEnabled]="true">
             </dx-select-box>
         </mat-grid-tile>

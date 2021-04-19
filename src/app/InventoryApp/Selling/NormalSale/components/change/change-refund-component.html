@@ -21,7 +21,7 @@
                     <div class="dx-field">
                         <div class="dx-field-label">{{'SELLING_MODULE.CHANGE.CHOOSE_CUSTOMER' | translate}}</div>
                         <dx-select-box [dataSource]="customersSelectBoxDatasource" [searchEnabled]="true" valueExpr="Id"
-                            displayExpr="CustomerName" [searchExpr]="['CustomerName']"
+                            displayExpr="CustomerName" [searchExpr]="['CustomerName','AccentInsensitiveCustomerName']"
                             (onValueChanged)="onCustomerInfoValueChanged($event)">
                         </dx-select-box>
                     </div>

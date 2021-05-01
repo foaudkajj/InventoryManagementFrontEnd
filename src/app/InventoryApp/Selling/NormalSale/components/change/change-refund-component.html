@@ -259,7 +259,9 @@
                             <div class="dx-field-value">
                                 <button mat-raised-button [disabled]="SumOfProductsToReturn == 0"
                                     (click)="openSatisDialog(purchasedProducts)"
-                                    color="primary">{{'SELLING_MODULE.CHANGE.COMPLETE' | translate}}</button>
+                                    color="primary">{{(ProductsToSellTableRows.length >
+                                    0? 'SELLING_MODULE.CHANGE.CHANGE_BUTTON':'SELLING_MODULE.CHANGE.RETURN_BUTTON') |
+                                    translate}}</button>
                             </div>
                         </div>
                     </div>

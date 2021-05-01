@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
-import swal from "sweetalert2";
+import swal, { SweetAlertIcon } from "sweetalert2";
 
 @Injectable({ providedIn: "root" })
 export class SwalService {
@@ -21,25 +21,26 @@ export class SwalService {
         })
     }
 
-    showDeletingMessage() {
-        // let theResult =false
-        return swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+    static showWarningMessage(message: string) {
+        swal.fire({
             icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            title: message,
+            showConfirmButton: false,
+            timer: 1500
         })
     }
 
-
-    showDeletConforme() {
-        swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-        )
+    static showConfirmMessage(title: string, message: string, confirmButtonText: string, cancelButtonText: string, type: SweetAlertIcon = 'warning') {
+        // let theResult =false
+        return swal.fire({
+            title: title,
+            text: message,
+            icon: type,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: confirmButtonText,
+            cancelButtonText: cancelButtonText
+        })
     }
 }

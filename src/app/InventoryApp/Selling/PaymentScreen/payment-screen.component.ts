@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef, ViewChild, AfterViewInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { PaymentMethod } from 'app/InventoryApp/Models/PaymentMethod';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -8,7 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { PaymentPopup } from 'app/InventoryApp/Models/DTOs/PaymentPopup';
 import { CustomerInfoDto } from 'app/InventoryApp/Models/DTOs/CustomerInfoDto';
 import { ConsumerInfosService } from 'app/InventoryApp/services/ConsumerInfo.service';
-import { DxLookupComponent } from 'devextreme-angular';
+import { DxFormComponent, DxLookupComponent } from 'devextreme-angular';
 import { DxStoreOptions } from 'app/InventoryApp/Models/DxStoreOptions';
 import DataSource from 'devextreme/data/data_source';
 import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
@@ -18,7 +18,7 @@ import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
   templateUrl: './payment-screen.component.html',
   styleUrls: ['./payment-screen.component.scss']
 })
-export class PaymentScreenComponent implements OnInit {
+export class PaymentScreenComponent implements OnInit, AfterViewInit {
   Math = Math;
   mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
   selectedPayment: PaymentMethod;
@@ -33,24 +33,46 @@ export class PaymentScreenComponent implements OnInit {
   TotalPaied: number = 0;
   PaymentMethodsTableFormGroup: FormGroup;
   ReceiptCode: string;
-  customerInfo: CustomerInfoDto = { Id: 0, CustomerName: '', CustomerPhone: '' };
-  customerInfoId: number = 0;
+  customerInfoId: number = 6;
   customerInfoList: CustomerInfoDto[];
+  IsChangeRefund = false;
   @ViewChild("customerInfoSelectBox") customerInfoSelectbox: DxLookupComponent;
+  @ViewChild("formInstance") formInstance: DxFormComponent;
   customersSelectBoxDatasource: DataSource;
   Total: number = 0;
+  containsNumberReg = /\d/;
+  toolTipVisibility = false;
+  formSubmitButtonOptions: any = {
+    text: this.translate.instant('SELLING_MODULE.NORMAL_SALE.SALES_SCREEN.COMPLETE_PAYMENT'),
+    type: "success",
+    useSubmitBehavior: true,
+    onClick: () => this.ClosePopup(),
+    disabled: (this.Total - this.TotalPaied) >= 1 || this.dataSource.data.length == 0
+  }
   constructor(public translate: TranslateService,
     private paymentMethods: PaymentMethodsService,
     public dialogRef: MatDialogRef<PaymentScreenComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
-    private dxStore: DxStoreService) { }
+    private dxStore: DxStoreService) {
+    this.customerInfoValueChanged = this.customerInfoValueChanged.bind(this);
+    this.ChnageSubmitButtonDisablility = this.ChnageSubmitButtonDisablility.bind(this);
+  }
+  ngAfterViewInit(): void {
+    if (this.customerInfoId > 0) {
+      var customerInfoEditor = this.formInstance.instance.getEditor("CustomerInfo");
+      customerInfoEditor.option('value', this.customerInfoId);
+      this.formInstance.instance.itemOption("CustomerInfo", "disabled", true);
+      this.formInstance.instance.itemOption("CustomerInfo", "colSpan", 2);
+      this.formInstance.instance.itemOption("CustomerPhone", "visible", false);
+    }
+  }
 
   ngOnInit() {
     this.Total = this.data.Total;
+    this.IsChangeRefund = this.data?.IsChangeRefund ?? false;
     this.customerInfoId = this.data.CustomerInfoId;
-    this.customerInfo.Id = this.data.CustomerInfoId;
     this.paymentMethods.GetPaymentMethods().toPromise().then((res: { data: PaymentMethod[] }) => this.paymentsMD = res.data);
     this.initlizeCustomersSelectBox();
     this.InitlizeFormTable();
@@ -79,7 +101,8 @@ export class PaymentScreenComponent implements OnInit {
       DefferedPaymentCount: [''],
       Amount: ['', Validators.compose([
         Validators.required,
-        Validators.max((this.data - this.TotalPaied))
+        Validators.max((this.data - this.TotalPaied)),
+        Validators.min(0.1)
       ])],
     });
   }
@@ -91,24 +114,36 @@ export class PaymentScreenComponent implements OnInit {
 
   AddToPaymentMethodsTable() {
     this.paymentsMD = this.paymentsMD.filter(fi => fi.Id != this.PaymentMethodsTableFormGroup.controls.Payment.value.Id);
-    this.AddedPayments.push({ CustomerInfo: { CustomerName: this.customerInfo.CustomerName, CustomerPhone: this.customerInfo.CustomerPhone }, Receipt: this.ReceiptCode, PaymentMethodId: this.PaymentMethodsTableFormGroup.controls.Payment.value.Id, Amount: this.PaymentMethodsTableFormGroup.controls.Amount.value, PaymentName: this.PaymentMethodsTableFormGroup.controls.Payment.value.PaymentName, DefferedPaymentCount: (this.PaymentMethodsTableFormGroup.controls.DefferedPaymentCount.value || 1) });
+    this.AddedPayments.push({ CustomerInfo: { CustomerName: '', CustomerPhone: '' }, Receipt: this.ReceiptCode, PaymentMethodId: this.PaymentMethodsTableFormGroup.controls.Payment.value.Id, Amount: this.PaymentMethodsTableFormGroup.controls.Amount.value, PaymentName: this.PaymentMethodsTableFormGroup.controls.Payment.value.PaymentName, DefferedPaymentCount: (this.PaymentMethodsTableFormGroup.controls.DefferedPaymentCount.value || 1) });
     this.dataSource.data = this.AddedPayments;
-    this.PaymentMethodsTableFormGroup.controls.Amount.setValidators(Validators.max((this.data - this.getTotal())));
+    this.PaymentMethodsTableFormGroup.controls.Amount.setValidators([Validators.max((this.data - this.getTotal())), Validators.required, Validators.min(0.1)]);
     this.PaymentMethodsTableFormGroup.updateValueAndValidity();
     this.PaymentMethodsTableFormGroup.reset();
     this.cdr.detectChanges();
+    this.ChnageSubmitButtonDisablility();
   }
 
   ClosePopup() {
-    this.AddedPayments = this.dataSource.data.map(value => {
-      value.Receipt = this.ReceiptCode;
-      value.CustomerInfo.CustomerName = this.customerInfo.CustomerName;
-      value.CustomerInfo.CustomerPhone = this.customerInfo.CustomerPhone;
-      value.CustomerInfo.Id = this.customerInfoSelectbox.instance.option('value')?.Id ?? this.customerInfoId;
-      // console.log(this.customerInfoSelectbox.selectedItem)
-      return value;
-    });
-    this.dialogRef.close(this.dataSource.data)
+    if (this.formInstance.instance.validate().isValid) {
+      if (this.formInstance.instance.option("formData")?.CustomerInfo.Id != 0) {
+        this.AddedPayments = this.dataSource.data.map(value => {
+          value.Receipt = this.ReceiptCode;
+          value.CustomerInfo.Id = this.formInstance.instance.option("formData")?.CustomerInfo.Id;
+          return value;
+        });
+      } else {
+        this.AddedPayments = this.dataSource.data.map(value => {
+          value.Receipt = this.ReceiptCode;
+          value.CustomerInfo.CustomerName = this.formInstance.instance.option("formData")?.CustomerInfo.CustomerName;
+          value.CustomerInfo.CustomerPhone = this.formInstance.instance.option("formData")?.CustomerPhone;
+          value.CustomerInfo.Id = 0;
+          return value;
+        });
+      }
+      console.log(this.AddedPayments)
+      this.dialogRef.close(this.dataSource.data)
+    }
+
   }
 
   getTotal() {
@@ -131,12 +166,37 @@ export class PaymentScreenComponent implements OnInit {
   }
 
   customerInfoValueChanged(e) {
-    console.log(e)
-    if (e.value) {
-      this.customerInfo = { Id: e.value.Id, CustomerName: e.value.CustomerName, CustomerPhone: e.value.CustomerPhone };
+    var secondEditor = this.formInstance.instance.getEditor("CustomerPhone");
+    secondEditor.option('value', e.value.CustomerPhone)
+
+    this.ChnageSubmitButtonDisablility();
+
+    if (e.value?.Id > 0) {
+      secondEditor.option('disabled', true);
     } else {
-      this.customerInfo = { Id: 0, CustomerName: null, CustomerPhone: null };
+      secondEditor.option('disabled', false);
     }
   }
 
+  addCustomerInfoItem(data) {
+    if (!data.text) {
+      data.customItem = null;
+      return;
+    }
+    let newItem = { CustomerName: data.text, Id: 0, CustomerPhone: '' };
+    data.customItem = newItem;
+  }
+
+  ChnageSubmitButtonDisablility() {
+    let button = this.formInstance.instance.getButton("submitButton");
+    if ((this.Total - this.TotalPaied) >= 1 || this.dataSource.data.length == 0) {
+      button.option("disabled", true);
+    } else {
+      button.option("disabled", false);
+    }
+
+  }
+
 }
+
+

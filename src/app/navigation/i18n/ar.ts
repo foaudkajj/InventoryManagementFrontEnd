@@ -15,7 +15,8 @@ export const locale = {
 			SEARCH: "Ara ...",
 			START_DATE: "Başlangıç Tarihi",
 			END_DATE: "Bitiş Tarihi",
-			PLEASE_SELECT: "Lütfen Seçiniz ..."
+			PLEASE_SELECT: "Lütfen Seçiniz ...",
+			UNDO: 'Vazgeç'
 		},
 		SELLING_MODULE: {
 			NORMAL_SALE: {
@@ -83,11 +84,20 @@ export const locale = {
 				TOPLAM_OF_PRODUCTS_TO_RETURN: "İade Edilecek Ürün Toplam Fiyatı",
 				TOTAL: "Toplam",
 				COMPLETE: "Tamamlama",
+				RETURN_BUTTON: 'İade Et',
+				CHANGE_BUTTON: 'Değiştir',
 				REDO: "Vazgeç",
 				OPERATION: "Son İşlem",
 				RETURN_OR_REFUND: "İade veya Değişim",
 				REFUND_INFO: "İade için aşağıdaki tablodan bir müşteri seçip iadaeyi tamamla butuna tıklamakla tamamlayabilirsiniz.",
-				CHANGE_INFO: "değişim için ise, aşağıdaki tablodan bir müşteri seçildikten sonra sağdaki tablodan iade edilen ürün yerine alınacak ürünlerin barkodları okutulur."
+				CHANGE_INFO: "değişim için ise, aşağıdaki tablodan bir müşteri seçildikten sonra sağdaki tablodan iade edilen ürün yerine alınacak ürünlerin barkodları okutulur.",
+				CHANGE_CONFIRMATION_BUTTON: 'Değişimi Yap',
+				CHANGE_CONFIRMATION_MESSAGE: 'Seçtiğiniz Ürünlerin Yeni Ürünlerle Değişimi Yapılacak. Onaylıyor musunuz?',
+				CHANGE_CONFIRMATION_TITLE: 'Değişim Onayı',
+				REFUND_CONFIRMATION_BUTTON: 'İade Et',
+				REFUND_CONFIRMATION_MESSAGE: 'Seçtiğiniz Ürünler İade Edilecek. Onaylıyor musunuz?',
+				REFUND_CONFIRMATION_TITLE: 'İade Onayı',
+				CUSTOMERINFO_SELECTBOX_HELPTEXT: 'Lütfen yeni bir müşteri giriyor iseniz, İsmini girdikten sonra enter tuşuna basınız.'
 			}
 
 		},

@@ -211,10 +211,14 @@ export class ChangeRefundComponentComponent implements OnInit {
     let ProductIdListOfPreviouslyTakenProducts = this.saleDetailsAndProductOfPreviouslyTakenProducts.map(value => value.ProductId);
     let SaleIdOfOldProdcuts = this.saleDetailsAndProductOfPreviouslyTakenProducts[0].SaleId;
     if (this.ProductsToSellDataSource.length == 0) {
-      let refundProductsDto: RefundProductsDto = { CustomerInfoId: this.selectedCustomerInfoId, Total: this.ProductsToSellTotalPrice, ProductIdListOfPreviouslyTakenProducts: ProductIdListOfPreviouslyTakenProducts, SaleIdOfOldProdcuts: SaleIdOfOldProdcuts }
-      await this.normalSatisSerice.RefundProducts(refundProductsDto).pipe(tap(t => this.swal.showSuccessMessage())).toPromise();
-      purchasedProcutsGridInstance.instance.refresh();
-      this.resetScreen();
+      let confirmPopupResult = await SwalService.showConfirmMessage(this._translate.instant('SELLING_MODULE.CHANGE.REFUND_CONFIRMATION_TITLE'), this._translate.instant('SELLING_MODULE.CHANGE.REFUND_CONFIRMATION_MESSAGE'), this._translate.instant('SELLING_MODULE.CHANGE.REFUND_CONFIRMATION_BUTTON'), this._translate.instant('COMMON.UNDO'))
+      if (confirmPopupResult.isConfirmed) {
+        let refundProductsDto: RefundProductsDto = { CustomerInfoId: this.selectedCustomerInfoId, Total: this.ProductsToSellTotalPrice, ProductIdListOfPreviouslyTakenProducts: ProductIdListOfPreviouslyTakenProducts, SaleIdOfOldProdcuts: SaleIdOfOldProdcuts }
+        await this.normalSatisSerice.RefundProducts(refundProductsDto).pipe(tap(t => this.swal.showSuccessMessage())).toPromise();
+        purchasedProcutsGridInstance.instance.refresh();
+        this.resetScreen();
+      }
+
 
 
     } else if (this.ProductsToSellTotalPrice > 0) {
@@ -222,7 +226,7 @@ export class ChangeRefundComponentComponent implements OnInit {
       const dialogRef = this.dialog.open(PaymentScreenComponent, {
         height: '600px',
         width: '800px',
-        data: { Total: this.ProductsToSellTotalPrice, CustomerInfoId: this.selectedCustomerInfoId }
+        data: { Total: this.ProductsToSellTotalPrice, CustomerInfoId: this.selectedCustomerInfoId, IsChangeRefund: true }
       });
 
       this.unsubscribe.push(dialogRef.afterClosed().subscribe(async (result: PaymentPopup[]) => {
@@ -250,14 +254,16 @@ export class ChangeRefundComponentComponent implements OnInit {
       }));
 
     } else {
+      let confirmPopupResult = await SwalService.showConfirmMessage(this._translate.instant('SELLING_MODULE.CHANGE.CHANGE_CONFIRMATION_TITLE'), this._translate.instant('SELLING_MODULE.CHANGE.CHANGE_CONFIRMATION_MESSAGE'), this._translate.instant('SELLING_MODULE.CHANGE.CHANGE_CONFIRMATION_BUTTON'), this._translate.instant('COMMON.UNDO'))
+      if (confirmPopupResult.isConfirmed) {
+        let PriceListOfNewProducts: number[] = this.ProductsToSellTableRows.map(value => value.SellingPrice);
+        let newProductListToTake: NewProductListToTakeDto = { ProductIdList: ProductIdListONewProducts, ProductPrices: PriceListOfNewProducts };
 
-      let PriceListOfNewProducts: number[] = this.ProductsToSellTableRows.map(value => value.SellingPrice);
-      let newProductListToTake: NewProductListToTakeDto = { ProductIdList: ProductIdListONewProducts, ProductPrices: PriceListOfNewProducts };
-
-      let changeProductDto: ChangeProductDto = { paymentDetails: [{ PaymentId: 12, amount: 0, defferedPaymentCount: 0, receipt: '' }], customerInfoDto: { Id: this.selectedCustomerInfoId }, SaleIdOfOldProdcuts: SaleIdOfOldProdcuts, Total: this.ProductsToSellTotalPrice, newProductListToTake: newProductListToTake, ProductIdListOfPreviouslyTakenProducts: ProductIdListOfPreviouslyTakenProducts }
-      await this.normalSatisSerice.ChangeProducts(changeProductDto).pipe(tap(t => this.swal.showSuccessMessage())).toPromise();
-      purchasedProcutsGridInstance.instance.refresh();
-      this.resetScreen();
+        let changeProductDto: ChangeProductDto = { paymentDetails: [{ PaymentId: 12, amount: 0, defferedPaymentCount: 0, receipt: '' }], customerInfoDto: { Id: this.selectedCustomerInfoId }, SaleIdOfOldProdcuts: SaleIdOfOldProdcuts, Total: this.ProductsToSellTotalPrice, newProductListToTake: newProductListToTake, ProductIdListOfPreviouslyTakenProducts: ProductIdListOfPreviouslyTakenProducts }
+        await this.normalSatisSerice.ChangeProducts(changeProductDto).pipe(tap(t => this.swal.showSuccessMessage())).toPromise();
+        purchasedProcutsGridInstance.instance.refresh();
+        this.resetScreen();
+      }
     }
 
 

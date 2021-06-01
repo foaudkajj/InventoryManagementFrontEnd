@@ -157,7 +157,8 @@ export const locale = {
 				BEST_SELLING_COLORS: "En Çok Satan Renkler",
 				BEST_SELLING_TOP_TEN_SIZES: "En Çok Satan Bedenler",
 				MOST_PROFITABLE_PRODUCTS: "En Çok kârlı Ürünler",
-				LEAST_PROFITABLE_PRODUCTS: "En Az kârlı Ürünler"
+				LEAST_PROFITABLE_PRODUCTS: "En Az kârlı Ürünler",
+				BEST_SELLING_CATEGORIES_BY_GENDER: "En Çok Satan Kategoriler - Cinsiyete Göre"
 			}
 		},
 		ADMIN_MODULE: {

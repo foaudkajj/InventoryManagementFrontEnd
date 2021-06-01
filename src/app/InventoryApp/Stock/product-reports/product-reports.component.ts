@@ -17,6 +17,7 @@ export class ProductReportsComponent implements OnInit {
     { Value: 'BestSellingSizes', Translate: 'STOCK_MODULE.PRODUCT_REPORTS.BEST_SELLING_TOP_TEN_SIZES' },
     { Value: 'MostProfitableProducts', Translate: 'STOCK_MODULE.PRODUCT_REPORTS.MOST_PROFITABLE_PRODUCTS' },
     { Value: 'LeastProfitableProducts', Translate: 'STOCK_MODULE.PRODUCT_REPORTS.LEAST_PROFITABLE_PRODUCTS' },
+    { Value: 'BestSellingCategoriesByGender', Translate: 'STOCK_MODULE.PRODUCT_REPORTS.BEST_SELLING_CATEGORIES_BY_GENDER' },
 
   ];
   selectedReport = '';

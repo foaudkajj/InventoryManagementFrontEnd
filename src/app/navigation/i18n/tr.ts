@@ -165,7 +165,8 @@ export const locale = {
 				BEST_SELLING_TOP_TEN_SIZES: "En Çok Satan Bedenler",
 				MOST_PROFITABLE_PRODUCTS: "En Çok kârlı Ürünler",
 				LEAST_PROFITABLE_PRODUCTS: "En Az kârlı Ürünler",
-				BEST_SELLING_CATEGORIES_BY_GENDER: "En Çok Satan Kategoriler - Cinsiyete Göre"
+				BEST_SELLING_CATEGORIES_BY_GENDER: "En Çok Satan Kategoriler - Cinsiyete Göre",
+				TOTAL_PROFIT_CATEGORY_GENDER: "Kategori ve Cinsiyete Göre Toplam Kâr"
 			}
 		},
 		ADMIN_MODULE: {

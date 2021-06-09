@@ -36,7 +36,7 @@ import { tap } from 'rxjs/operators';
 })
 export class ChangeRefundComponentComponent implements OnInit {
   customersSelectBoxDatasource: DataSource;
-  purchasedProductsStore: CustomStore;
+  purchasedProductsDS: DataSource;
   selectedCustomerInfoId = 0;
   @ViewChild('PriceInput') PriceInput: ElementRef;
   @ViewChild('productCode') productCode: ElementRef;
@@ -92,7 +92,9 @@ export class ChangeRefundComponentComponent implements OnInit {
     let storeOptions: DxStoreOptions = {
       loadUrl: "NormalSatis/GetCustomerPurchasedProducts", loadParams: { CustomerInfoId: this.selectedCustomerInfoId }
     };
-    this.purchasedProductsStore = this.dxStore.GetStore(storeOptions);
+    this.purchasedProductsDS = new DataSource({
+      store: this.dxStore.GetStore(storeOptions)
+    })
   }
 
   InitilizeProductAndPriceForm() {
@@ -159,8 +161,8 @@ export class ChangeRefundComponentComponent implements OnInit {
 
   }
 
-  focusOutWhenProductCodeEntered(value: string) {
-    if (value.length == 12) {
+  focusOutWhenProductCodeEntered(event) {
+    if (event.target.value.length == 12) {
       this.PriceInput.nativeElement.focus();
     }
   }

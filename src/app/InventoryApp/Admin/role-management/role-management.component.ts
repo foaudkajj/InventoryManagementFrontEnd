@@ -7,6 +7,7 @@ import { RoleService } from 'app/InventoryApp/services/Role.Service';
 import { SwalService } from 'app/InventoryApp/services/Swal.Service';
 import { DxDataGridComponent, DxTreeListComponent } from 'devextreme-angular';
 import CustomStore from 'devextreme/data/custom_store';
+import DataSource from 'devextreme/data/data_source';
 import { tap } from 'rxjs/operators';
 
 @Component({
@@ -19,8 +20,8 @@ export class RoleManagementComponent implements OnInit {
   @ViewChild('RolesGrid') RolesGrid: DxDataGridComponent;
   @ViewChild('PermessionsTree') PermessionsTree: DxTreeListComponent;
 
-  rolesGridStore: CustomStore;
-  permessionsListStore: CustomStore;
+  rolesGridDS: DataSource;
+  permessionsListDS: DataSource;
   constructor(public translate: TranslateService,
     private dxStore: DxStoreService,
     private RolesService: RoleService,
@@ -39,7 +40,9 @@ export class RoleManagementComponent implements OnInit {
       onRemoved: () => this.RolesGrid.instance.refresh(),
       onUpdated: () => this.RolesGrid.instance.refresh()
     };
-    this.rolesGridStore = this.dxStore.GetStore(usersGridStoreOption);
+    this.rolesGridDS = new DataSource({
+      store: this.dxStore.GetStore(usersGridStoreOption)
+    })
 
     let permessionsListStoreOption: DxStoreOptions = {
       loadUrl: "Roles/GetRolePermessions", Key: "Id",
@@ -47,11 +50,13 @@ export class RoleManagementComponent implements OnInit {
       onRemoved: () => this.PermessionsTree.instance.refresh(),
       onUpdated: () => this.PermessionsTree.instance.refresh()
     };
-    this.permessionsListStore = this.dxStore.GetStore(permessionsListStoreOption);
+    this.permessionsListDS = new DataSource({
+      store: this.dxStore.GetStore(permessionsListStoreOption)
+    })
 
   }
 
-  async Save(keys: [], roleId: number) {
+  async Save(keys: any[], roleId: number) {
     const roleIdAndPermessions: RoleIdAndPermessions = { roleId: roleId, rolePermessions: keys };
     await this.RolesService.SaveRolePermessions(roleIdAndPermessions).pipe(tap(t => this.swal.showSuccessMessage())).toPromise();
   }

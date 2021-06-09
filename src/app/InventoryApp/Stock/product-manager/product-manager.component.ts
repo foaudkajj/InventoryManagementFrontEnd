@@ -53,7 +53,7 @@ export class ProductManagerComponent implements OnInit {
   Genders: any = [{ Value: 0, ViewValue: 'Erkek' }, { Value: 1, ViewValue: 'Kadın' }]
   dataSource: DataSource; //MatTableDataSource<ProductView> = new MatTableDataSource();
   store: CustomStore;
-  selectedProducts: [] = [];
+  selectedProducts: any[] = [];
   ProductTypes: ProductTypeDto[] = [{ Id: 0, Name: this._translate.instant("STOCK_MODULE.PRODUCT_MANAGEMENT.ALL"), ProductPropertyIds: [], ProductProperties: [], Products: [], ProductTypeAndProperties: [] }];
   FormItems: Array<dxFormSimpleItem | dxFormGroupItem | dxFormTabbedItem | dxFormEmptyItem | dxFormButtonItem> = [];
   ProductGridColumns: Column[] = [];
@@ -177,7 +177,7 @@ export class ProductManagerComponent implements OnInit {
       });
   }
 
-  async PrintButton() {
+  async PrintButton(data) {
     let QueryParams = '';
 
     for (const selectedProduct of (this.productsGrid.instance.getSelectedRowsData() as ProductView[])) {
@@ -364,7 +364,7 @@ export class ProductManagerComponent implements OnInit {
     this.applyCampaignBtnInstance.option("disabled", (this.selectedProducts.length == 0))
   }
 
-  async applyCampaign() {
+  async applyCampaign(data) {
     const dialogRef = this.dialog.open(CampaignApplyingScreenComponent);
 
     await dialogRef.afterClosed().toPromise().then(async (CampaignId: number) => {

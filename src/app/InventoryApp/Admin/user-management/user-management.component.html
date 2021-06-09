@@ -27,7 +27,7 @@
             <div class="example-container mat-elevation-z8">
 
                 <dx-data-grid #UsersGrid id="gridContainer" [allowColumnResizing]="true" [columnAutoWidth]="true"
-                    [remoteOperations]="true" [dataSource]="store" [showBorders]="true">
+                    [remoteOperations]="true" [dataSource]="DS" [showBorders]="true">
                     <dxi-column [caption]="'Id'" dataField="Id" [visible]="false" [formItem]="{visible: false}"
                         dataType="number">
                     </dxi-column>

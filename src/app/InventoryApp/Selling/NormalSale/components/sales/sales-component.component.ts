@@ -17,6 +17,7 @@ import { NormalSatisService } from 'app/InventoryApp/services/normal-satis.servi
 import { SwalService } from 'app/InventoryApp/services/Swal.Service';
 import { DxDataGridComponent, DxLookupComponent } from 'devextreme-angular';
 import CustomStore from 'devextreme/data/custom_store';
+import DataSource from 'devextreme/data/data_source';
 import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -46,7 +47,7 @@ export class SalesComponentComponent implements OnInit {
   // Here I am using DevExtreme
   displayedColumnsSelledProducts = ['ProductName', 'ProductBarcode', 'ProductCode', 'ColorName', 'Gender', 'ProductYear', 'SellingPrice', 'Size', 'BranchName'];
   SoledProductsDatasource: SaleUserBranchProductsDTO[];
-  soledProductsStore: CustomStore;
+  soledProductsDS: DataSource;
   // I am using this to unsubscribe after leaving component
   private unsubscribe: Subscription[] = [];
 
@@ -109,7 +110,9 @@ export class SalesComponentComponent implements OnInit {
     let storeOptions: DxStoreOptions = {
       loadUrl: "NormalSatis/GetSelledProductsByUserId", loadParams: { Id: this.userDetails.userId }, Key: "Id"
     };
-    this.soledProductsStore = this.dxStore.GetStore(storeOptions);
+    this.soledProductsDS = new DataSource({
+      store: this.dxStore.GetStore(storeOptions)
+    })
     // this.normalSatisSerice.GetSoledProductsByUserID(1).toPromise().then((res: UIResponse<SaleUserBranchProductsDTO[]>) => {
     //   this.SoledProductsDatasource = res.Entity;
     //   this.ProductsToSellTableRows = [];
@@ -234,8 +237,8 @@ export class SalesComponentComponent implements OnInit {
   //   );
   // }
 
-  focusOutWhenProductCodeEntered(value: string) {
-    if (value.length == 12) {
+  focusOutWhenProductCodeEntered(event) {
+    if (event.target.value.length == 12) {
       this.PriceInput.nativeElement.focus();
     }
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DxStoreOptions } from 'app/InventoryApp/Models/DxStoreOptions';
 import { DxStoreService } from 'app/InventoryApp/services/dx-store.service';
 import CustomStore from 'devextreme/data/custom_store';
+import DataSource from 'devextreme/data/data_source';
 
 @Component({
   selector: 'app-soled-products',
@@ -9,7 +10,7 @@ import CustomStore from 'devextreme/data/custom_store';
   styleUrls: ['./soled-products.component.scss']
 })
 export class SoledProductsComponent implements OnInit {
-  soledProductsStore: CustomStore;
+  soledProductsDS: DataSource;
   today: Date = new Date();
   constructor(private dxStore: DxStoreService) { }
 
@@ -17,7 +18,9 @@ export class SoledProductsComponent implements OnInit {
     let storeOptions: DxStoreOptions = {
       loadUrl: "NormalSatis/GetSelledProductsByUserId", Key: "Id"
     };
-    this.soledProductsStore = this.dxStore.GetStore(storeOptions);
+    this.soledProductsDS = new DataSource({
+      store: this.dxStore.GetStore(storeOptions)
+    })
   }
 
 }

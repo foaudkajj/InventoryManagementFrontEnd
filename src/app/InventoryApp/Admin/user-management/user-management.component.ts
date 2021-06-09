@@ -9,6 +9,7 @@ import { DxStoreOptions } from 'app/InventoryApp/Models/DxStoreOptions';
 import { RoleService } from 'app/InventoryApp/services/Role.Service';
 import { Role } from 'app/InventoryApp/Models/Role';
 import { SwalService } from 'app/InventoryApp/services/Swal.Service';
+import DataSource from 'devextreme/data/data_source';
 
 @Component({
   selector: 'app-user-management',
@@ -20,7 +21,7 @@ export class UserManagementComponent implements OnInit {
   rolList: Role[];
   UsersGridDataSource: any;
   @ViewChild('UsersGrid') UsersGrid: DxDataGridComponent
-  store: CustomStore;
+  DS: DataSource;
   UserStatus = [{ Id: 1, Name: 'Aktif' }, { Id: 0, Name: 'Pasif' }];
   constructor(public translate: TranslateService,
     private branchesService: BranchesService,
@@ -50,7 +51,9 @@ export class UserManagementComponent implements OnInit {
       onRemoved: () => this.UsersGrid.instance.refresh(),
       onUpdated: () => this.UsersGrid.instance.refresh()
     };
-    this.store = this.dxStore.GetStore(storeOption);
+    this.DS = new DataSource({
+      store: this.dxStore.GetStore(storeOption)
+    })
 
   }
 

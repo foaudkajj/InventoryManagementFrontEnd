@@ -29,7 +29,7 @@
                 <dx-data-grid #soledProductsGrid [remoteOperations]="true" [hoverStateEnabled]="true"
                     [allowColumnResizing]="true" [allowColumnReordering]="true" [columnAutoWidth]="true"
                     [showColumnLines]="true" [showRowLines]="true" [showBorders]="true" [rowAlternationEnabled]="true"
-                    id="gridContainer" [dataSource]="soledProductsStore"
+                    id="gridContainer" [dataSource]="soledProductsDS"
                     [masterDetail]="{ enabled: true, template: 'detail' }">
                     <dxo-scrolling columnRenderingMode="virtual" showScrollbar="always"></dxo-scrolling>
                     <dxo-filter-row [visible]="true"></dxo-filter-row>
@@ -62,7 +62,7 @@
             </div> -->
                     <dxo-summary>
                         <dxi-total-item column="Total" summaryType="sum"
-                            [valueFormat]="{type: 'currency', precision:'2'}">
+                            [valueFormat]="{type: 'currency', precision:2}">
                         </dxi-total-item>
                     </dxo-summary>
 

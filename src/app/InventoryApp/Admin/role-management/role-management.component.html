@@ -27,7 +27,7 @@
             <div class="example-container mat-elevation-z8">
 
                 <dx-data-grid #RolesGrid id="gridContainer" [allowColumnResizing]="true" [columnAutoWidth]="true"
-                    [remoteOperations]="true" [dataSource]="rolesGridStore" [showBorders]="true"
+                    [remoteOperations]="true" [dataSource]="rolesGridDS" [showBorders]="true"
                     [masterDetail]="{ enabled: true, template: 'detail' }">
                     <dxi-column [caption]="'Id'" dataField="Id" [visible]="false" [formItem]="{visible: false}"
                         dataType="number">
@@ -41,7 +41,7 @@
                     <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
 
                     <div *dxTemplate="let role of 'detail'">
-                        <dx-tree-list #PermessionsTree id="tree-list" [dataSource]="permessionsListStore" keyExpr="Id"
+                        <dx-tree-list #PermessionsTree id="tree-list" [dataSource]="permessionsListDS" keyExpr="Id"
                             parentIdExpr="ParentId" hasItemsExpr="IsParent" [showRowLines]="true" [showBorders]="true"
                             [columnAutoWidth]="true" [wordWrapEnabled]="true"
                             [(selectedRowKeys)]="role.data.RolePermessionsIds">

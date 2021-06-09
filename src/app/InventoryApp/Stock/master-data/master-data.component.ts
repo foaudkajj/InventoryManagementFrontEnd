@@ -12,6 +12,7 @@ import { AddPropertiesToProductTypeDto } from 'app/InventoryApp/Models/DTOs/AddP
 import { UIResponse } from 'app/InventoryApp/Models/UIResponse';
 import { GridConf } from 'app/InventoryApp/Models/DTOs/GridConf';
 import Query from "devextreme/data/query";
+import DataSource from 'devextreme/data/data_source';
 
 @Component({
   selector: 'app-master-data',
@@ -27,8 +28,8 @@ export class MasterDataComponent implements OnInit {
   formFields = [];
   // This is used to know the selected Master Data
   SelectedMDNumber: number;
-  MasterDataStore: CustomStore;
-  MasterDetailStore: CustomStore;
+  MasterDataDS: DataSource;
+  MasterDetailDS: DataSource;
   Columns: Column[];
   MasterDetailColumns: Column[];
   gridConf: GridConf = new GridConf();
@@ -102,21 +103,25 @@ export class MasterDataComponent implements OnInit {
 
 
 
-    this.MasterDataStore = this.dxStore.GetStore({
-      ...MasterDataStoreOptions,
-      onInserted: () => this.MasterDataGrid.instance.refresh(),
-      onRemoved: () => this.MasterDataGrid.instance.refresh(),
-      onUpdated: () => this.MasterDataGrid.instance.refresh()
-    });
+    this.MasterDataDS = new DataSource({
+      store: this.dxStore.GetStore({
+        ...MasterDataStoreOptions,
+        onInserted: () => this.MasterDataGrid.instance.refresh(),
+        onRemoved: () => this.MasterDataGrid.instance.refresh(),
+        onUpdated: () => this.MasterDataGrid.instance.refresh()
+      })
+    })
 
 
     if (value == 3) {
-      this.MasterDetailStore = this.dxStore.GetStore({
-        ...MasterDetailStoreOptions,
-        onInserted: () => this.MasterDetailGrid.instance.refresh(),
-        onRemoved: () => this.MasterDetailGrid.instance.refresh(),
-        onUpdated: () => this.MasterDetailGrid.instance.refresh()
-      });
+      this.MasterDetailDS = new DataSource({
+        store: this.dxStore.GetStore({
+          ...MasterDetailStoreOptions,
+          onInserted: () => this.MasterDetailGrid.instance.refresh(),
+          onRemoved: () => this.MasterDetailGrid.instance.refresh(),
+          onUpdated: () => this.MasterDetailGrid.instance.refresh()
+        })
+      })
     }
 
 

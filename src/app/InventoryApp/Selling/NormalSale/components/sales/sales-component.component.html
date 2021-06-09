@@ -18,9 +18,8 @@
                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                     <input #productCode type="text" minlength="12" maxlength="12"
                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                        (focusout)="productCodeFocusOut()"
-                        (change)="focusOutWhenProductCodeEntered($event.target.value)" formControlName="ProductBarcode"
-                        id="ProductBarcode" matInput
+                        (focusout)="productCodeFocusOut()" (change)="focusOutWhenProductCodeEntered($event)"
+                        formControlName="ProductBarcode" id="ProductBarcode" matInput
                         [placeholder]="_translate.instant('SELLING_MODULE.NORMAL_SALE.PRODUCT_CODE')">
                     <mat-error *ngIf="hasError('ProductBarcode', 'required')">
                         {{'VALIDATIONS.CONTROL_REQURIRED' | translate:{formName:
@@ -131,7 +130,7 @@
         <dx-data-grid #soledProductsGrid [remoteOperations]="true" [hoverStateEnabled]="true"
             [allowColumnResizing]="true" [allowColumnReordering]="true" [columnAutoWidth]="true"
             [showColumnLines]="true" [showRowLines]="true" [showBorders]="true" [rowAlternationEnabled]="true"
-            id="gridContainer" [dataSource]="soledProductsStore" [masterDetail]="{ enabled: true, template: 'detail' }">
+            id="gridContainer" [dataSource]="soledProductsDS" [masterDetail]="{ enabled: true, template: 'detail' }">
             <dxo-scrolling columnRenderingMode="virtual" showScrollbar="always"></dxo-scrolling>
             <dxo-filter-row [visible]="true"></dxo-filter-row>
             <dxo-header-filter [visible]="true"></dxo-header-filter>
@@ -152,7 +151,7 @@
             <dxo-group-panel [visible]="false"></dxo-group-panel>
             <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
             <dxo-summary>
-                <dxi-total-item column="Total" summaryType="sum" [valueFormat]="{type: 'currency', precision:'2'}">
+                <dxi-total-item column="Total" summaryType="sum" [valueFormat]="{type: 'currency', precision:2}">
                 </dxi-total-item>
             </dxo-summary>
 

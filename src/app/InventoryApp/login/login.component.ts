@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
         if (loginResponse.entity.isAuthenticated) {
             this._fuseNavigationService.register('menu', loginResponse.entity.navigationItems);
             this._fuseNavigationService.setCurrentNavigation('menu')
-            this.router.navigate(['stock'])
+            this.router.navigate(['dashboard'])
         } else {
             this.swal.showErrorMessage(loginResponse.message)
         }

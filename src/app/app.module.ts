@@ -39,10 +39,10 @@ const appRoutes: Routes = [
         loadChildren: () => import('./InventoryApp/inventory-app.module').then(m => m.InventoryAppModule),
     },
 
-    {
-        path: 'usertypeselect',
-        loadChildren: () => import('./InventoryApp/user-type-selecting-page/user-type-selecting-page.module').then(m => m.UserTypeSelectingPageModule),
-    }
+    // {
+    //     path: 'usertypeselect',
+    //     loadChildren: () => import('./InventoryApp/user-type-selecting-page/user-type-selecting-page.module').then(m => m.UserTypeSelectingPageModule),
+    // }
 ];
 
 @NgModule({

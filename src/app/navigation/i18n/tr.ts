@@ -166,8 +166,30 @@ export const locale = {
 				MOST_PROFITABLE_PRODUCTS: "En Çok kârlı Ürünler",
 				LEAST_PROFITABLE_PRODUCTS: "En Az kârlı Ürünler",
 				BEST_SELLING_CATEGORIES_BY_GENDER: "En Çok Satan Kategoriler - Cinsiyete Göre",
-				TOTAL_PROFIT_CATEGORY_GENDER: "Kategori ve Cinsiyete Göre Toplam Kâr"
+				TOTAL_PROFIT_CATEGORY_GENDER: "Kategori ve Cinsiyete Göre Toplam Kâr",
+				EOD_REPORT: "Gün Sonu Raporu"
+			},
+
+		},
+		FINANCE: {
+			TRANSACTION_ACCOUNT: {
+				TITLE: 'Cari Hesaplar',
+				TRANSACTION_CARD: 'Kart Sahibi',
+				TRANSACTION_DATE: 'İşlem Tarihi',
+				AMOUNT: 'Tutar',
+				DESCRIPTION: 'Açıklama',
+				PAYMENT_METHOD: 'Ödeme Yöntemi',
+				TRANSACTION_TYPE: 'İşlem Tipi'
+
+			},
+			TRANSACTION_CARD: {
+				TITLE: 'Cari Hesap Kartları',
+				OWNER_NAME: 'Hesap Adı',
+				CARD_CODE: 'Hesap Kodu',
+				CURRENCY: 'Para Birimi',
+				EMAIL: 'Email',
 			}
+
 		},
 		ADMIN_MODULE: {
 			USER_MANAGEMENT: {
@@ -199,7 +221,8 @@ export const locale = {
 			}
 		},
 		THEME: {
-			LOGOUT_BUTTON: "Çıkış Yap"
+			LOGOUT_BUTTON: "Çıkış Yap",
+			EOD_BUTTON: "Gün Sonu"
 		},
 		EXCEPTIONS: {
 			NO_ENOUGHT_COUNT: "Stokta bu üründen kalmamıştır.",
@@ -230,7 +253,10 @@ export const locale = {
 			ADMIN_MODULE_PAGES: "Admin Modulü Sayfaları",
 			SELLING_MODULE_PAGES: "Satış Modulü Sayfaları",
 			SOLED_PRODUCTS: "Satılan Ürünler",
-			PRODUCT_REPORTS: "Ürün Raporları"
+			PRODUCT_REPORTS: "Ürün Raporları",
+			FINANCE_MODULE: 'Finans',
+			TRANSACTION_ACCOUNT: 'İşlemler',
+			TRANSACTION_CARD: 'Cari Hesap'
 		},
 		AUTH: {
 			GENERAL: {
@@ -276,6 +302,15 @@ export const locale = {
 				MIN_LENGTH_FIELD: 'Minimum field length:',
 				MAX_LENGTH_FIELD: 'Maximum field length:',
 				INVALID_FIELD: 'Field is not valid',
+			}
+		},
+		ENUMS: {
+			TransactionTypes: {
+				Collection: 'Tahsilat',
+				Payment: 'Ödeme',
+				Debiting: 'Borçlandır',
+				Crediting: 'Alacaklandır',
+				Virman: 'Virman'
 			}
 		},
 		ECOMMERCE: {

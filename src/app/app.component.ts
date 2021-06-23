@@ -90,22 +90,24 @@ export class AppComponent implements OnInit, OnDestroy {
         // this._fuseNavigationService.register('adminNavigation', this.adminNavigation);
 
         if (this.navigationItems) {
-            this._fuseNavigationService.register('sellingNavigation', this.navigationItems.filter(fi => fi.key == 'sellingModuleType').sort((a, b) => a.priority - b.priority)[0]?.children);
-            this._fuseNavigationService.register('stockNavigation', this.navigationItems.filter(fi => fi.key == 'stockModuleType').sort((a, b) => a.priority - b.priority)[0]?.children);
-            this._fuseNavigationService.register('adminNavigation', this.navigationItems.filter(fi => fi.key == 'adminModuleType').sort((a, b) => a.priority - b.priority)[0]?.children);
+            this._fuseNavigationService.register('menu', this.navigationItems);
+            this._fuseNavigationService.setCurrentNavigation('menu');
+            // this._fuseNavigationService.register('sellingNavigation', this.navigationItems.filter(fi => fi.key == 'sellingModuleType').sort((a, b) => a.priority - b.priority)[0]?.children);
+            // this._fuseNavigationService.register('stockNavigation', this.navigationItems.filter(fi => fi.key == 'stockModuleType').sort((a, b) => a.priority - b.priority)[0]?.children);
+            // this._fuseNavigationService.register('adminNavigation', this.navigationItems.filter(fi => fi.key == 'adminModuleType').sort((a, b) => a.priority - b.priority)[0]?.children);
 
 
-            this.router.events.subscribe((event: any) => {
-                if (event instanceof NavigationStart) {
-                    if (event.url.toLowerCase().includes('/stock'))
-                        this._fuseNavigationService.setCurrentNavigation('stockNavigation');
-                    else if (event.url.toLowerCase().includes('/selling'))
-                        this._fuseNavigationService.setCurrentNavigation('sellingNavigation');
-                    else
-                        this._fuseNavigationService.setCurrentNavigation('adminNavigation');
+            // this.router.events.subscribe((event: any) => {
+            //     if (event instanceof NavigationStart) {
+            //         if (event.url.toLowerCase().includes('/stock'))
+            //             this._fuseNavigationService.setCurrentNavigation('stockNavigation');
+            //         else if (event.url.toLowerCase().includes('/selling'))
+            //             this._fuseNavigationService.setCurrentNavigation('sellingNavigation');
+            //         else
+            //             this._fuseNavigationService.setCurrentNavigation('adminNavigation');
 
-                }
-            });
+            //     }
+            // });
 
         } else {
             this.router.navigate(["login"]);

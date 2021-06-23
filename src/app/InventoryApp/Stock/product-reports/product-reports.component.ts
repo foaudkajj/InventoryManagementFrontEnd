@@ -19,6 +19,7 @@ export class ProductReportsComponent implements OnInit {
     { Value: 'LeastProfitableProducts', Translate: 'STOCK_MODULE.PRODUCT_REPORTS.LEAST_PROFITABLE_PRODUCTS' },
     { Value: 'BestSellingCategoriesByGender', Translate: 'STOCK_MODULE.PRODUCT_REPORTS.BEST_SELLING_CATEGORIES_BY_GENDER' },
     { Value: 'TotalProfitAccordingToCategoryAndGender', Translate: 'STOCK_MODULE.PRODUCT_REPORTS.TOTAL_PROFIT_CATEGORY_GENDER' },
+    { Value: 'Eod', Translate: 'STOCK_MODULE.PRODUCT_REPORTS.EOD_REPORT' },
 
   ];
   selectedReport = '';

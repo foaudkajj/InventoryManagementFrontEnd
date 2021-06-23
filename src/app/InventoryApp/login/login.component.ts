@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { UserService } from '../services/user.service';
 import { LoginRequest } from '../Models/LoginRequest';
 import { SwalService } from '../services/Swal.Service';
+import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 
 @Component({
     selector: 'login',
@@ -31,7 +32,8 @@ export class LoginComponent implements OnInit {
         private router: Router,
         public translate: TranslateService,
         private userSerivce: UserService,
-        private swal: SwalService
+        private swal: SwalService,
+        private _fuseNavigationService: FuseNavigationService
     ) {
         // Configure the layout
         this._fuseConfigService.config = {
@@ -70,7 +72,9 @@ export class LoginComponent implements OnInit {
         let loginRequest: LoginRequest = { userName: this.loginForm.controls.email.value, password: this.loginForm.controls.password.value }
         let loginResponse = await this.userSerivce.Login(loginRequest).toPromise() as any;
         if (loginResponse.entity.isAuthenticated) {
-            this.router.navigate(['usertypeselect'])
+            this._fuseNavigationService.register('menu', loginResponse.entity.navigationItems);
+            this._fuseNavigationService.setCurrentNavigation('menu')
+            this.router.navigate(['stock'])
         } else {
             this.swal.showErrorMessage(loginResponse.message)
         }

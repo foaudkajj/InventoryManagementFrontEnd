@@ -168,4 +168,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         localStorage.removeItem("user");
         this.router.navigate(['/']);
     }
+
+    eod() {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        let todayFormatted = yyyy + '-' + mm + '-' + dd;
+        let url = this.router.createUrlTree(['ReportViewer'], { queryParams: { ReportName: `Eod?ReportDate=${todayFormatted}` } })
+        window.open('#' + url.toString(), '_blank')
+    }
 }

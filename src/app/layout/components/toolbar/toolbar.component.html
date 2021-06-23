@@ -44,7 +44,10 @@
                     <mat-icon>mail</mat-icon>
                     <span>Inbox</span>
                 </button> -->
-
+                <button mat-menu-item class="" (click)="eod()">
+                    <mat-icon>event_busy</mat-icon>
+                    <span>{{ 'THEME.EOD_BUTTON' | translate }}</span>
+                </button>
                 <button mat-menu-item class="" (click)="logOut()">
                     <mat-icon>exit_to_app</mat-icon>
                     <span>{{ 'THEME.LOGOUT_BUTTON' | translate }}</span>

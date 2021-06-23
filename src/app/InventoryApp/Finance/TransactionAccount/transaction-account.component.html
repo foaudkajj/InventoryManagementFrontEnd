@@ -1,0 +1,76 @@
+<div id="maidDefenetion" class="page-layout carded fullwidth">
+
+    <!-- TOP BACKGROUND -->
+    <!-- <div class="top-bg accent"></div> -->
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- CONTENT HEADER -->
+        <!-- <div class="header accent p-24" fxLayout="row" fxLayoutAlign="start center">
+            <h2 class="m-0">Full width with content scroll</h2>
+        </div> -->
+        <!-- / CONTENT HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT TOOLBAR -->
+            <div class="toolbar primary px-24 py-8">
+                <span>{{ 'FINANCE.TRANSACTION_ACCOUNT.TITLE' | translate}}</span>
+            </div>
+            <!-- / CONTENT TOOLBAR -->
+
+            <!-- CONTENT -->
+            <div class="example-container mat-elevation-z8">
+
+                <dx-data-grid #grid [remoteOperations]="true" id="gridContainer" [dataSource]="TransactionAccountDS"
+                    [showBorders]="true">
+                    <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
+                    </dxo-editing>
+                    <dxi-column [caption]="'Id'" dataField="Id" dataType="number" [visible]=false
+                        [formItem]="{visible:false}">
+                    </dxi-column>
+                    <dxi-column [caption]="'FINANCE.TRANSACTION_ACCOUNT.TRANSACTION_CARD' | translate"
+                        dataField="TransactionCardId">
+                        <dxo-lookup [dataSource]="TransactionCardsStore" displayExpr="OwnerName" valueExpr="Id">
+                        </dxo-lookup>
+                    </dxi-column>
+
+                    <dxi-column [caption]="'FINANCE.TRANSACTION_ACCOUNT.TRANSACTION_DATE' | translate" dataType="date"
+                        dataField="Date" format="dd.MM.yyyy, HH:mm" dataField="TransactionDate">
+                        <!-- [filterValue]="today" -->
+                    </dxi-column>
+                    <dxi-column [caption]="'FINANCE.TRANSACTION_ACCOUNT.TRANSACTION_TYPE' | translate"
+                        dataField="TransactionType">
+                        <dxo-lookup [dataSource]="TransactionTypeStore" [displayExpr]="getEnumTextTranslation"
+                            valueExpr="Id">
+                        </dxo-lookup>
+                    </dxi-column>
+                    <dxi-column [caption]="'FINANCE.TRANSACTION_ACCOUNT.AMOUNT' | translate" dataField="Amount"
+                        format="currency" dataType="number" alignment="left">
+                        <dxo-format type="currency" precision="2"></dxo-format>
+                    </dxi-column>
+                    <dxi-column [caption]="'FINANCE.TRANSACTION_ACCOUNT.DESCRIPTION' | translate"
+                        dataField="Description"></dxi-column>
+                    <dxi-column [caption]="'FINANCE.TRANSACTION_ACCOUNT.PAYMENT_METHOD' | translate"
+                        dataField="PaymentMethod">
+                        <dxo-lookup [dataSource]="PaymentMethodsStore" displayExpr="PaymentName" valueExpr="Id">
+                        </dxo-lookup>
+                    </dxi-column>
+                    <dxo-filter-row [visible]="true"></dxo-filter-row>
+                    <dxo-header-filter [visible]="true"></dxo-header-filter>
+                    <dxo-group-panel [visible]="true"></dxo-group-panel>
+                    <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
+                    <dxo-summary>
+                        <dxi-total-item column="Amount" summaryType="TotalAmount"
+                            [valueFormat]="{type: 'currency', precision:2}">
+                        </dxi-total-item>
+                    </dxo-summary>
+                </dx-data-grid>
+
+            </div>
+        </div>
+    </div>
+</div>
